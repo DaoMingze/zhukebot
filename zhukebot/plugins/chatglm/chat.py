@@ -25,7 +25,7 @@ chatGLM_chat = on_command("hi", aliases={"你好"}, priority=5)
 @chatGLM_chat.handle()
 async def chatGLM_help_chat(bot: Bot, event: Event, message: Message = CommandArg()):
     history = []
-    query = message
+    query = message.extract_plain_text().strip()
     response, history = model.chat(tokenizer, query, history=history)
     msg = Message(response)
     await chatGLM_chat.finish(msg)
