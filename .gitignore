@@ -3,3 +3,4 @@
 accounts
 *.code-workspace
 zhukebot/data
+__pycache__
