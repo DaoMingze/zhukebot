@@ -45,7 +45,6 @@ async def set_(bot: Bot, event: GroupMessageEvent, args=CommandArg()):
 
 @on.handle()
 async def on_(bot: Bot, event: GroupMessageEvent, args=CommandArg()):
-
     if args[0] in ["on", "开启"]:
         set = True
     else:

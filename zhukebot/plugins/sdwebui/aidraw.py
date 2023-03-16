@@ -21,8 +21,7 @@ from .backend import Draw
 from .config import config
 from .plugins.anlas import anlas_check, anlas_set
 from .plugins.daylimit import DayLimit
-from .utils import (BASE_TAG, CHINESE_COMMAND, HTAGS, LOW_QUALITY, C,
-                    sendtosuperuser)
+from .utils import BASE_TAG, CHINESE_COMMAND, HTAGS, LOW_QUALITY, C, sendtosuperuser
 from .utils.translation import translate
 from .version import Version
 
@@ -31,8 +30,10 @@ gennerating = False
 wait_list = deque([])
 
 aidraw_parser = ArgumentParser()
-aidraw_parser.add_argument("-m", "--model", "-模型", type=str,help="设置模型", dest="model")
-aidraw_parser.add_argument("-w", "--sampler", "-采样", type=str,help="设置采样方法", dest="sampler")
+aidraw_parser.add_argument("-m", "--model", "-模型", type=str, help="设置模型", dest="model")
+aidraw_parser.add_argument(
+    "-w", "--sampler", "-采样", type=str, help="设置采样方法", dest="sampler"
+)
 aidraw_parser.add_argument("tags", nargs="*", help="标签")
 aidraw_parser.add_argument("-r", "--resolution", "-形状", help="画布形状/分辨率", dest="shape")
 aidraw_parser.add_argument(
@@ -64,6 +65,7 @@ aidraw_matcher = C.shell_command(
     aliases=CHINESE_COMMAND,
     parser=aidraw_parser,
 )
+
 
 @aidraw_matcher.handle()
 async def aidraw_get(args: ParserExit = ShellCommandArgs()):
@@ -248,7 +250,7 @@ async def fifo_gennerate(aidraw: Draw = None):
 
         gennerating = False
         logger.info("队列结束")
-        #await Version.check_update()
+        # await Version.check_update()
 
 
 async def _run_gennerate(aidraw: Draw):

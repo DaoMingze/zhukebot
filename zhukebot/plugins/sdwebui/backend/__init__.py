@@ -1,8 +1,10 @@
 from ..config import config
 from .base import DrawBase
 
+
 class Draw(DrawBase):
     """队列中的单个请求"""
+
     MAX_RESOLUTION: int = 32
 
     async def fromresp(self, resp):

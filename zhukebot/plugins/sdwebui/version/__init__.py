@@ -60,6 +60,7 @@ async def install():
     _, error = await proc.communicate()
     return bool(error)
 
+
 @reboot.handle()
 async def reboot_handle():
     await reboot.send(f"{nickname}正在重启中~")

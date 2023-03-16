@@ -31,7 +31,7 @@ class DrawBase:
         noise: float = None,
         shape: str = "p",
         model: str = None,
-        sampler: str ="k_euler_ancestral",
+        sampler: str = "k_euler_ancestral",
         clip: int = None,
         **kwargs,
     ):
@@ -83,9 +83,7 @@ class DrawBase:
         self.clip: int = clip or 1
         self.width, self.height = self.extract_shape(shape)
         # 数值合法检查
-        if self.steps <= 0 or self.steps > (
-            self.MAX_STEPS if config.sd_paid else 28
-        ):
+        if self.steps <= 0 or self.steps > (self.MAX_STEPS if config.sd_paid else 28):
             self.steps = 28
         if self.strength < 0 or self.strength > 1:
             self.strength = 0.7
