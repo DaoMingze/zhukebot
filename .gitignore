@@ -7,3 +7,4 @@ zhukebot/data
 data
 __pycache__
 error.log
+error.*.log
