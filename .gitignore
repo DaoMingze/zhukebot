@@ -1,0 +1,5 @@
+.venv
+.env.dev
+accounts
+*.code-workspace
+zhukebot/data
