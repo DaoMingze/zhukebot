@@ -12,6 +12,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "apscheduler"
+version = "3.10.1"
+requires_python = ">=3.6"
+summary = "In-process task scheduler with Cron-like capabilities"
+dependencies = [
+    "pytz",
+    "setuptools>=0.7",
+    "six>=1.4.0",
+    "tzlocal!=3.*,>=2.0",
+]
+
+[[package]]
 name = "arrow"
 version = "1.2.3"
 requires_python = ">=3.6"
@@ -247,6 +259,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nonebot-plugin-apscheduler"
+version = "0.2.0"
+requires_python = ">=3.8,<4.0"
+summary = "APScheduler Support for NoneBot2"
+dependencies = [
+    "apscheduler<4.0.0,>=3.7.0",
+    "nonebot2<3.0.0,>=2.0.0-rc.1",
+]
+
+[[package]]
 name = "nonebot-plugin-gocqhttp"
 version = "0.6.8"
 requires_python = ">=3.8,<4.0"
@@ -397,6 +419,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "pytz"
+version = "2022.7.1"
+summary = "World timezone definitions, modern and historical"
+
+[[package]]
+name = "pytz-deprecation-shim"
+version = "0.1.0.post0"
+requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
+summary = "Shims to make deprecation of pytz easier"
+dependencies = [
+    "tzdata; python_version >= \"3.6\"",
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0"
 requires_python = ">=3.6"
@@ -428,6 +464,12 @@ dependencies = [
     "idna",
     "rfc3986==1.5.0",
 ]
+
+[[package]]
+name = "setuptools"
+version = "67.6.0"
+requires_python = ">=3.7"
+summary = "Easily download, build, install, upgrade, and uninstall Python packages"
 
 [[package]]
 name = "six"
@@ -473,6 +515,22 @@ name = "typing-extensions"
 version = "4.5.0"
 requires_python = ">=3.7"
 summary = "Backported and Experimental Type Hints for Python 3.7+"
+
+[[package]]
+name = "tzdata"
+version = "2022.7"
+requires_python = ">=2"
+summary = "Provider of IANA time zone data"
+
+[[package]]
+name = "tzlocal"
+version = "4.2"
+requires_python = ">=3.6"
+summary = "tzinfo object for the local timezone"
+dependencies = [
+    "pytz-deprecation-shim",
+    "tzdata; platform_system == \"Windows\"",
+]
 
 [[package]]
 name = "urllib3"
@@ -529,12 +587,16 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:4f86ef429d769aa10d372a3a2898d1db7d70501cc98ef25b829ce4759f822c7b"
+content_hash = "sha256:ab3866321a1924ed4eae78ae5f56d9122e608ea4597e7e6e4a1361f60c3c2ea5"
 
 [metadata.files]
 "anyio 3.6.2" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/77/2b/b4c0b7a3f3d61adb1a1e0b78f90a94e2b6162a043880704b7437ef297cad/anyio-3.6.2-py3-none-any.whl", hash = "sha256:fbbe32bd270d2a2ef3ed1c5d45041250284e31fc0a4df4a5a6071842051a51e3"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/8b/94/6928d4345f2bc1beecbff03325cad43d320717f51ab74ab5a571324f4f5a/anyio-3.6.2.tar.gz", hash = "sha256:25ea0d673ae30af41a0c442f81cf3b38c7e79fdc7b60335a4c14e05eb0947421"},
+]
+"apscheduler 3.10.1" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/d0/08/952d9570f4897dc2b30166fca5afd3a2cd19b3d408abdb470978484e8a09/APScheduler-3.10.1-py3-none-any.whl", hash = "sha256:e813ad5ada7aff36fb08cdda746b520531eaac7757832abc204868ba78e0c8f6"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/ea/ed/f1ad88e88208c24db80dcaae7a5a339bb283956984f8fa59933d2806413a/APScheduler-3.10.1.tar.gz", hash = "sha256:0293937d8f6051a0f493359440c1a1b93e882c57daf0197afeff0e727777b96e"},
 ]
 "arrow 1.2.3" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/67/67/4bca5a595e2f89bff271724ddb1098e6c9e16f7f3d018d120255e3c30313/arrow-1.2.3-py3-none-any.whl", hash = "sha256:5a49ab92e3b7b71d96cd6bfcc4df14efefc9dfa96ea19045815914a6ab6b1fe2"},
@@ -902,6 +964,10 @@ content_hash = "sha256:4f86ef429d769aa10d372a3a2898d1db7d70501cc98ef25b829ce4759
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/3b/e9/2e38ae0b991467a0360ef24d4da937287135600a91a890bf1f5ce051ec62/nonebot_adapter_onebot-2.2.1-py3-none-any.whl", hash = "sha256:db22c92a541f243ef427a7080096fb28751fec213bc75b111e2c9ed89e121d94"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/d3/9d/459fd101cb6d87f9a7ddd738be218f3ff71525d71219b672268d7f716e92/nonebot_adapter_onebot-2.2.1.tar.gz", hash = "sha256:2f77ff2345cc98e493c3bf00a5fd7112cf20e66ebeac062bbb8de56b4d07040e"},
 ]
+"nonebot-plugin-apscheduler 0.2.0" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/77/34/11d54a11bf7c6256bf61598e9f2b93df6bf4b1cc2b58f26ff1140539be81/nonebot-plugin-apscheduler-0.2.0.tar.gz", hash = "sha256:7b63e99a611b657533b48fcf1f8c6627c18c2eb3fa820a906cd4ec4666c0ceb0"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/b4/e0/08455966af13f69ee39b14ac345f77c5a7c5b2fbd671b0182a18e195173f/nonebot_plugin_apscheduler-0.2.0-py3-none-any.whl", hash = "sha256:9285ee84ca1cfa4db73c86cedb5911bbbd25a21ec0cd5f22447cd12f89e48fb4"},
+]
 "nonebot-plugin-gocqhttp 0.6.8" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/07/43/ef3b60c4bdbdfe5e656bdb7f43516619bc45db3d055d8bff9eda82bbf292/nonebot_plugin_gocqhttp-0.6.8.tar.gz", hash = "sha256:b467b6ed5aae7d37194c32f549eb7ef7cddf386a3cc0c219171e06bcb026587a"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/d9/35/060e8fc319d54a2a7b6db3450bd6af6076cc97ca2f1c57168d76a9e97e9d/nonebot_plugin_gocqhttp-0.6.8-py3-none-any.whl", hash = "sha256:37bb6e44bcece7d6b16a39c1971c555b82576cfb03120151bc276fe3110aae9a"},
@@ -1012,6 +1078,14 @@ content_hash = "sha256:4f86ef429d769aa10d372a3a2898d1db7d70501cc98ef25b829ce4759
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/b4/85/6aa722a11307ec572682023b76cad4c52cda708dfc25fcb4b4a6051da7ab/python_slugify-8.0.1-py2.py3-none-any.whl", hash = "sha256:70ca6ea68fe63ecc8fa4fcf00ae651fc8a5d02d93dcd12ae6d4fc7ca46c4d395"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/de/63/0f60208d0d3dde1a87d30a82906fa9b00e902b57f1ae9565d780de4b41d1/python-slugify-8.0.1.tar.gz", hash = "sha256:ce0d46ddb668b3be82f4ed5e503dbc33dd815d83e2eb6824211310d3fb172a27"},
 ]
+"pytz 2022.7.1" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/03/3e/dc5c793b62c60d0ca0b7e58f1fdd84d5aaa9f8df23e7589b39cc9ce20a03/pytz-2022.7.1.tar.gz", hash = "sha256:01a0681c4b9684a28304615eba55d1ab31ae00bf68ec157ec3708a8182dbbcd0"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/2e/09/fbd3c46dce130958ee8e0090f910f1fe39e502cc5ba0aadca1e8a2b932e5/pytz-2022.7.1-py2.py3-none-any.whl", hash = "sha256:78f4f37d8198e0627c5f1143240bb0206b8691d8d7ac6d78fee88b78733f8c4a"},
+]
+"pytz-deprecation-shim 0.1.0.post0" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/94/f0/909f94fea74759654390a3e1a9e4e185b6cd9aa810e533e3586f39da3097/pytz_deprecation_shim-0.1.0.post0.tar.gz", hash = "sha256:af097bae1b616dde5c5744441e2ddc69e74dfdcb0c263129610d85b87445a59d"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/eb/73/3eaab547ca809754e67e06871cff0fc962bafd4b604e15f31896a0f94431/pytz_deprecation_shim-0.1.0.post0-py2.py3-none-any.whl", hash = "sha256:8314c9692a636c8eb3bda879b9f119e350e93223ae83e70e80c31675a0fdc1a6"},
+]
 "pyyaml 6.0" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/02/25/6ba9f6bb50a3d4fbe22c1a02554dc670682a07c8701d1716d19ddea2c940/PyYAML-6.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:f84fbc98b019fef2ee9a1cb3ce93e3187a6df0b2538a651bfb890254ba9f90b5"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/08/f4/ffa743f860f34a5e8c60abaaa686f82c9ac7a2b50e5a1c3b1eb564d59159/PyYAML-6.0-cp39-cp39-win_amd64.whl", hash = "sha256:b3d267842bf12586ba6c734f89d1f5b871df0273157918b0ccefa29deb05c21c"},
@@ -1062,6 +1136,10 @@ content_hash = "sha256:4f86ef429d769aa10d372a3a2898d1db7d70501cc98ef25b829ce4759
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/79/30/5b1b6c28c105629cc12b33bdcbb0b11b5bb1880c6cfbd955f9e792921aa8/rfc3986-1.5.0.tar.gz", hash = "sha256:270aaf10d87d0d4e095063c65bf3ddbc6ee3d0b226328ce21e036f946e421835"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/c4/e5/63ca2c4edf4e00657584608bee1001302bbf8c5f569340b78304f2f446cb/rfc3986-1.5.0-py2.py3-none-any.whl", hash = "sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97"},
 ]
+"setuptools 67.6.0" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/25/f3/d68c20919bc774c6cb127f1762f2f2f999d700a58198556e883dd3700e58/setuptools-67.6.0.tar.gz", hash = "sha256:2ee892cd5f29f3373097f5a814697e397cf3ce313616df0af11231e2ad118077"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/c3/9e/8a7ba2c9984a060daa6c6f9fff4d576b7ace3936239d6b771541eab972ed/setuptools-67.6.0-py3-none-any.whl", hash = "sha256:b78aaa36f6b90a074c1fa651168723acbf45d14cb1196b6f02c0fd07f17623b2"},
+]
 "six 1.16.0" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
@@ -1089,6 +1167,14 @@ content_hash = "sha256:4f86ef429d769aa10d372a3a2898d1db7d70501cc98ef25b829ce4759
 "typing-extensions 4.5.0" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/31/25/5abcd82372d3d4a3932e1fa8c3dbf9efac10cc7c0d16e78467460571b404/typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/d3/20/06270dac7316220643c32ae61694e451c98f8caf4c8eab3aa80a2bedf0df/typing_extensions-4.5.0.tar.gz", hash = "sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"},
+]
+"tzdata 2022.7" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/5b/30/b7abfb11be6642d26de1c1840d25e8d90333513350ad0ebc03101d55e13b/tzdata-2022.7.tar.gz", hash = "sha256:fe5f866eddd8b96e9fcba978f8e503c909b19ea7efda11e52e39494bad3a7bfa"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/fa/5e/f99a7df3ae2079211d31ec23b1d34380c7870c26e99159f6e422dcbab538/tzdata-2022.7-py2.py3-none-any.whl", hash = "sha256:2b88858b0e3120792a3c0635c23daf36a7d7eeeca657c323da299d2094402a0d"},
+]
+"tzlocal 4.2" = [
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/31/b7/3bc2c1868f27677139b772e4fde95265b93151912fd90eb874827943bfcf/tzlocal-4.2-py3-none-any.whl", hash = "sha256:89885494684c929d9191c57aa27502afc87a579be5cdd3225c77c463ea043745"},
+    {url = "https://pypi.tuna.tsinghua.edu.cn/packages/7d/b9/164d5f510e0547ae92280d0ca4a90407a15625901afbb9f57a19d9acd9eb/tzlocal-4.2.tar.gz", hash = "sha256:ee5842fa3a795f023514ac2d801c4a81d1743bbe642e3940143326b3a00addd7"},
 ]
 "urllib3 1.26.15" = [
     {url = "https://pypi.tuna.tsinghua.edu.cn/packages/21/79/6372d8c0d0641b4072889f3ff84f279b738cd8595b64c8e0496d4e848122/urllib3-1.26.15.tar.gz", hash = "sha256:8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305"},
