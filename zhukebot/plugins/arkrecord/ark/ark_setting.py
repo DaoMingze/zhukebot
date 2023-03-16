@@ -1,13 +1,15 @@
-import sqlite3 as sq, os
+import os
 import shutil
+import sqlite3 as sq
 
-import nonebot
+from nonebot import get_driver
 from nonebot.log import logger
-from .ark_utils import *
+
 from .ark_style import *
+from .ark_utils import *
 
 # 读取基础配置
-basic_config = nonebot.get_driver().config
+basic_config = get_driver().config
 if "arkrecord_db_path" in dir(basic_config):
     arkrecord_db_path = basic_config.arkrecord_db_path
 else:
