@@ -1,5 +1,8 @@
+.venv
+venv
 .env.dev
 accounts
 *.code-workspace
 zhukebot/data
+data
 __pycache__
