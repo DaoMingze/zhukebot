@@ -1,0 +1,22 @@
+[tool.pdm]
+
+[project]
+name = "nonebot-plugin-chatglm"
+version = "0.1.0"
+description = "基于ChatGLM-6B的NoneBot2插件"
+authors = [
+    {name = "dao_mingze", email = "dao_mingze@163.com"},
+]
+dependencies = [
+    "protobuf==3.20.0",
+    "transformers==4.26.1",
+    "icetk>=0.0.4",
+    "cpm-kernels>=1.0.11",
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
