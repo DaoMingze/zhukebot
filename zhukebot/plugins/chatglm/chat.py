@@ -68,12 +68,12 @@ async def chatGLM_help_chat(bot: Bot, event: Event, message: Message = CommandAr
         with open(rec, "a", encoding="utf-8") as file_new:
             json.dump(record,file_new)
 
-    def genetext(user, prompt):
+    def genetext(user, prompt, history):
         query = prompt
         response, history = model.chat(tokenizer, query, history=history)
         history2json(user, history)
         return response
 
-    response = genetext(qq_id, prompt)
+    response = genetext(qq_id, prompt, history)
     msg = Message(response)
     await chatGLM_chat.finish(msg)
