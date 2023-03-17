@@ -138,6 +138,7 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 - [ ] 保存对话记录以实现多轮对话
 - [ ] 配置角色功能
 - [ ] 图片输出功能
+- [ ] 其他中文文本生成模型
 
 ## 致谢
 
