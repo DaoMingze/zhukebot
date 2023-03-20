@@ -8,6 +8,7 @@ right_path = __file__.rstrip(os.path.basename(__file__))  # 获取当前文件�
 os.chdir(right_path)  # 将工作路径改至目标路径
 
 # Custom your logger
+'''
 from nonebot.log import logger, default_format
 
 logger.add(
@@ -19,6 +20,7 @@ logger.add(
     format=default_format,
     encoding="utf-8",
 )
+'''
 # You can pass some keyword args config to init function
 nonebot.init()
 # Please DO NOT modify this file unless you know what you are doing!
