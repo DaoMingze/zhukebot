@@ -1,4 +1,6 @@
 [tool.pdm]
+homepage = "https://github.com/DaoMingze/zhukebot/tree/main/zhukebot/plugins/chatglm"
+
 
 [project]
 name = "nonebot-plugin-chatglm"
@@ -9,14 +11,21 @@ authors = [
 ]
 dependencies = [
     "protobuf==3.20.0",
-    "transformers==4.26.1",
+    "transformers>=4.26.1",
     "icetk>=0.0.4",
     "cpm-kernels>=1.0.11",
+    "nonebot2>=2.0.0rc3",
+    "nonebot-adapter-onebot>=2.2.2",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
 
 [build-system]
-requires = ["pdm-pep517>=1.0"]
-build-backend = "pdm.pep517.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+
+
+

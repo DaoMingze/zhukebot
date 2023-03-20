@@ -6,7 +6,7 @@
 
 # nonebot-plugin-chatglm
 
-_✨ NoneBot [chatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
+_✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 ![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
 ![Python](https://img.shields.io/badge/python-3.9+-blue)
@@ -17,7 +17,7 @@ _✨ NoneBot [chatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 ## 介绍
 
-使用[chatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[nonebot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地 AI chat 插件。
+使用[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[nonebot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地 AI chat 插件。
 
 ### 环境要求
 
@@ -31,7 +31,7 @@ _✨ NoneBot [chatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 需要 13GiB 左右的存储空间（模型），NVIDIA 显卡（使用 CUDA）、6G 及以上的显存[^1]。
 
-> 实际可以低于python3.9，但没测试过。
+> 实际可以低于 python3.9，但没测试过。
 
 [^1]: CPU 推理也可，但需要 16G 及以上的内存，可自行修改。
 
@@ -120,18 +120,19 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 
 在 nonebot2 项目的`.env`文件中添加下表中的必填配置
 
-|    配置项    | 必填 |     类型      | 默认值 |             说明             |
-| :----------: | :--: | :-----------: | :----: | :--------------------------: |
-| chatglm_path |  是  |      str      |   无   | chatglm 模型及其配置文档路径 |
-| chatglm_cmd  |  否  | str/list[str] |  "hi"  |           对话命令           |
+|    配置项    | 必填  |     类型      | 默认值 |             说明             |
+| :----------: | :---: | :-----------: | :----: | :--------------------------: |
+| chatglm_model |  是   |      str      |   无   | chatglm 模型及其配置文档路径 |
+| chatglm_his | 否 | str | "./data/history/" | 历史记录保存路径
+| chatglm_cmd  |  否   | str/list[str] |  "hi"  |           对话命令           |
 
 ## 使用
 
 ### 指令表
 
-| 指令 |  权限  | 需要@ |   范围    |      说明       |
-| :--: | :----: | :---: | :-------: | :-------------: |
-|  hi  | 所有人 |  否   | 私聊/群聊 | 与 chatglm 对话 |
+| 指令  |  权限  | 需要@ |   范围    |      说明       |
+| :---: | :----: | :---: | :-------: | :-------------: |
+|  hi   | 所有人 |  否   | 私聊/群聊 | 与 chatglm 对话 |
 
 ## ToDo
 
