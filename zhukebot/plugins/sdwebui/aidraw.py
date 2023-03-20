@@ -23,7 +23,6 @@ from .plugins.anlas import anlas_check, anlas_set
 from .plugins.daylimit import DayLimit
 from .utils import BASE_TAG, CHINESE_COMMAND, HTAGS, LOW_QUALITY, C, sendtosuperuser
 from .utils.translation import translate
-from .version import Version
 
 cd = {}
 gennerating = False
@@ -250,7 +249,6 @@ async def fifo_gennerate(aidraw: Draw = None):
 
         gennerating = False
         logger.info("队列结束")
-        # await Version.check_update()
 
 
 async def _run_gennerate(aidraw: Draw):
