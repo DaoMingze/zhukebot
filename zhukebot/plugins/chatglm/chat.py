@@ -3,7 +3,7 @@ import os
 from nonebot import get_driver
 from nonebot.adapters.onebot.v11 import Bot, Event, Message
 from nonebot.params import CommandArg
-from nonebot.plugin import on_command, on_regex
+from nonebot.plugin import on_command, on_keyword
 from transformers import AutoModel, AutoTokenizer
 from torch import compile
 
@@ -56,7 +56,7 @@ def choicerole(role):
 
 
 # on_regex("角色")
-chatGLM_chat = on_command(chatglm_cmd, aliases={"你好"}, priority=5)
+chatGLM_chat = on_command(chatglm_cmd, priority=5)
 # query = choicerole("0")  # 载入默认
 # response, history = model.chat(tokenizer, query, history=history)
 # record = [history]
@@ -74,7 +74,7 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     await chatGLM_chat.finish(msg)
 
 
-chatGLM_print = on_command(cmd="zhuke print", aliases="打印记录", priority=5)
+chatGLM_print = on_keyword(["zhuke print", "打印记录"], priority=50)
 
 
 @chatGLM_print.handle()
@@ -84,7 +84,8 @@ async def printrecord(bot: Bot, event: Event):
     await chatGLM_print.finish(msg)
 
 
-chatGLM_clear = on_command(cmd="zhuke clear", aliases="清空记录", priority=5)
+"""
+chatGLM_clear = on_command("zhuke clear", aliases=["清空记录"], priority=5)
 
 
 @chatGLM_clear.handle()
@@ -94,3 +95,4 @@ async def clear(bot: Bot, event: Event):
     savehistory(qq_id,context)
     msg = Message("已清空")
     await chatGLM_clear.finish(msg)
+"""

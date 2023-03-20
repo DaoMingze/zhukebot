@@ -1,31 +1,27 @@
 [tool.pdm]
-homepage = "https://github.com/DaoMingze/zhukebot/tree/main/zhukebot/plugins/chatglm"
-
+version = { source = "scm" }
+build = { includes = ["nonebot_plugin_chatglm"] }
 
 [project]
 name = "nonebot-plugin-chatglm"
-version = "0.1.0"
+version = "0.1.1"
 description = "基于ChatGLM-6B的NoneBot2插件"
-authors = [
-    {name = "dao_mingze", email = "dao_mingze@163.com"},
-]
+authors = [{ name = "dao_mingze", email = "dao_mingze@163.com" }]
+requires-python = ">=3.7"
+readme = "README.md"
+license = { text = "MIT" }
 dependencies = [
     "protobuf==3.20.0",
     "transformers>=4.26.1",
     "icetk>=0.0.4",
     "cpm-kernels>=1.0.11",
+    "nonebot-adapter-onebot",
     "nonebot2>=2.0.0rc3",
-    "nonebot-adapter-onebot>=2.2.2",
 ]
-requires-python = ">=3.9"
-readme = "README.md"
-license = {text = "MIT"}
+
+[project.urls]
+repository = "https://github.com/DaoMingze/zhukebot/tree/main/zhukebot/plugins/chatglm"
 
 [build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
-
-
-
-
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
