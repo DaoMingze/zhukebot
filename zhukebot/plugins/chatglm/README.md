@@ -17,7 +17,7 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 ## 介绍
 
-使用[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[nonebot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地中文（汉语） AI chat 插件。
+使用[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[NoneBot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地中文（汉语） AI chat 插件。
 
 ### 环境要求
 
@@ -27,11 +27,9 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 |   INT8   |   10GB   |
 |   INT4   |   6GB    |
 
-使用 INT4 量化后的[模型](https://huggingface.co/THUDM/chatglm-6b-int4)。需要 4.2 GB 左右的存储空间（模型），NVIDIA 显卡（使用 CUDA）、6G 及以上的显存[^1]。
+使用 INT4 量化后的[模型](https://huggingface.co/THUDM/chatglm-6b-int4)。需要 4.2 GB 左右的存储空间（模型），NVIDIA 显卡（使用 CUDA）、6G 及以上的显存。现在默认使用 CPU 推理，方便开箱即用，但速度较慢。
 
-> 实际可以低于 python3.9，但没测试过。
-
-[^1]: CPU 推理也可，但需要 16G 及以上的内存，可自行修改。
+> 实际可以低于 Python 3.9（但none-adapter-onebot要求Python 3.8+）。
 
 ## 安装与更新
 
@@ -106,15 +104,41 @@ plugins = ["nonebot_plugin_chatglm"]
 
 ## 配置
 
-下载模型及其配置文件，→[清华云盘](https://cloud.tsinghua.edu.cn/d/fb9f16d6dc8f482596c2/)（仅模型文件）、[🤗 Hugging Face](https://huggingface.co/THUDM/chatglm-6b)（完整文件），约 12.8 GiB。
+### 下载模型及其配置文件
 
-可关注[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)更新![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)
+如果没有设置路径，则会自动下载到用户目录下的`.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4`。
 
-安装模型运行所需依赖
+- 如果是较小显存（< 10 G）且只用聊天对话模型（ChatGLM-6B-INT4）[^1]则没用必要修改。
+- 如果使用6B完整模型，则可以自行设置路径。
+
+模型的具体使用，还请关注[原仓库说明](https://github.com/THUDM/ChatGLM-6B)↓提交检测
+
+![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)
+
+[^1]: 在其他位置配置量化后的INT4模型，发生一些编译错误，暂时~~懒得~~没有能力解决。
+
+手动下载：
+
+→[清华云盘](https://cloud.tsinghua.edu.cn/d/fb9f16d6dc8f482596c2/)（仅模型文件，是6B完整模型，显存较小需要量化使用，暂未设置，需要自行在`chat.py`文件中修改）
+
+→[🤗 Hugging Face](https://huggingface.co/THUDM/chatglm-6b-int4)（完整文件），约 4.2 GB。
+
+
+### 安装运行所需依赖
+
+如果使用pip安装，实际已经自动安装了以下依赖，在此说明是为了方便检查
+
+1、模型所需的依赖
 
 ```bash
 pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 ```
+
+2、`NoneBot`运行所需依赖
+
+安装这个插件，那必然是已经有了`NoneBot`项目，或者移步去[NoneBot2](https://github.com/nonebot/nonebot2]查看。由于还不会根据项目自动切换适配器，因此需要安装`nonebot-adapter-onebot`，以便调用`Onebotv11`进行通信。
+
+### 配置
 
 在 nonebot2 项目的`.env`文件中添加下表中的必填配置
 
@@ -143,12 +167,14 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 - [ ] 其他中文文本生成模型
   - [ ] 尝试使用`ChatRWKV`
 
+如有其他功能需求，欢迎提issues，当然如果您实现了某些功能或修复了问题，也非常欢迎您提PR。
+
 ## 更新说明
 
-- 2023-03-21，更新到0.1.3，默认使用`ChatGLM-6B-INT4`模型、CPU推理；修复忘记设置包名导致的无法使用问题。
+- 2023-03-21，更新说明文件，更新插件到0.1.3，默认使用`ChatGLM-6B-INT4`模型、CPU推理，便于开箱即用；修复忘记设置包名导致的无法使用问题。
 
 ## 致谢
 
 - [@A-kirami](https://github.com/A-kirami) 项目使用了 README[模板](https://github.com/A-kirami/nonebot-plugin-template)，有修改
-- [chatGLM-6B](https://github.com/THUDM/ChatGLM-6B)
+- [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)
 - [nonebot2](https://github.com/nonebot/nonebot2)
