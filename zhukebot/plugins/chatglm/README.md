@@ -111,9 +111,9 @@ plugins = ["nonebot_plugin_chatglm"]
 - 如果是较小显存（< 10 G）且只用聊天对话模型（ChatGLM-6B-INT4）[^1]则没用必要修改。
 - 如果使用6B完整模型，则可以自行设置路径。
 
-模型的具体使用，还请关注[原仓库说明](https://github.com/THUDM/ChatGLM-6B)↓提交检测
+模型的具体使用，还请关注[原仓库说明](https://github.com/THUDM/ChatGLM-6B)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)
+提交检测→![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)
 
 [^1]: 在其他位置配置量化后的INT4模型，发生一些编译错误，暂时~~懒得~~没有能力解决。
 
@@ -136,7 +136,7 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 
 2、`NoneBot`运行所需依赖
 
-安装这个插件，那必然是已经有了`NoneBot`项目，或者移步去[NoneBot2](https://github.com/nonebot/nonebot2]查看。由于还不会根据项目自动切换适配器，因此需要安装`nonebot-adapter-onebot`，以便调用`Onebotv11`进行通信。
+安装这个插件，那必然是已经有了`NoneBot`项目，或者移步去[NoneBot2](https://github.com/nonebot/nonebot2)查看。由于还不会根据项目自动切换适配器，因此需要安装`nonebot-adapter-onebot`，以便调用`Onebotv11`进行通信。
 
 ### 配置
 
