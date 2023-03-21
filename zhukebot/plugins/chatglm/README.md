@@ -17,7 +17,7 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 ## 介绍
 
-使用[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[nonebot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地 AI chat 插件。
+使用[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[nonebot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地中文（汉语） AI chat 插件。
 
 ### 环境要求
 
@@ -118,19 +118,22 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 
 在 nonebot2 项目的`.env`文件中添加下表中的必填配置
 
-|    配置项    | 必填  |     类型      | 默认值 |             说明             |
-| :----------: | :---: | :-----------: | :----: | :--------------------------: |
-| chatglm_model |  否   |      str      |   "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4/"   | chatglm 模型及其配置文档路径 |
-| chatglm_his | 否 | str | "./data/history/" | 历史记录保存路径
-| chatglm_cmd  |  否   | str/list[str] |  "hi"  |           对话命令           |
+|    配置项     | 必填 |     类型      |                                     默认值                                      |             说明             |
+| :-----------: | :--: | :-----------: | :-----------------------------------------------------------------------------: | :--------------------------: |
+|   chat_mode   |  否  |      str      |                                       cpu                                       |    运行模式，cuda 或 cpu     |
+| chatglm_model |  否  |      str      | "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4/" | chatglm 模型及其配置文档路径 |
+|  chatglm_his  |  否  |      str      |                                "./data/history/"                                |       历史记录保存路径       |
+|  chatglm_cmd  |  否  | str/list[str] |                                      "hi"                                       |           对话命令           |
 
 ## 使用
 
 ### 指令表
 
-| 指令  |  权限  | 需要@ |   范围    |      说明       |
-| :---: | :----: | :---: | :-------: | :-------------: |
-|  hi   | 所有人 |  否   | 私聊/群聊 | 与 chatglm 对话 |
+| 指令 |  权限  | 需要@ |   范围    |      说明       |
+| :--: | :----: | :---: | :-------: | :-------------: |
+|  hi  | 所有人 |  否   | 私聊/群聊 | 与 chatglm 对话 |
+| 清空记录 | 所有人 | 否 | 私聊/群聊 | 清空自己的对话历史记录 |
+| 导出记录 | 所有人 | 否 | 群聊 | 导出记录文件到群中|
 
 ## ToDo
 
@@ -138,6 +141,11 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 - [ ] 配置角色功能
 - [ ] 图片输出功能
 - [ ] 其他中文文本生成模型
+  - [ ] 尝试使用`ChatRWKV`
+
+## 更新说明
+
+- 2023-03-21，更新到0.1.3，默认使用`ChatGLM-6B-INT4`模型、CPU推理；修复忘记设置包名导致的无法使用问题。
 
 ## 致谢
 

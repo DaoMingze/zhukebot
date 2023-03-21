@@ -1,40 +1,13 @@
 import json
 import os
 
-from nonebot import get_driver
-from nonebot.adapters.onebot.v11 import (
-    Bot,
-    Event,
-    GroupMessageEvent,
-    Message,
-    PrivateMessageEvent,
-)
+from nonebot.adapters.onebot.v11 import (Bot, Event, GroupMessageEvent,
+                                         Message, PrivateMessageEvent)
 from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command, on_keyword
-from torch import compile
-from transformers import AutoModel, AutoTokenizer
 
-basic_config = get_driver().config
-if "chatglm_model" in dir(basic_config):
-    model_path = basic_config.chatglm_model
-else:
-    model_path = "THUDM/chatglm-6b-int4"
-
-if "chatglm_cmd" in dir(basic_config):
-    chatglm_cmd = basic_config.chatglm_cmd
-else:
-    chatglm_cmd = "hi"
-
-if "chatglm_record" in dir(basic_config):
-    chatglm_record = basic_config.chatglm_record
-else:
-    chatglm_record = "./data/history/"
-
-tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
-
-model = compile(model).eval()
+from .config import *
 
 
 def readjson(name):

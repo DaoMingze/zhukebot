@@ -460,7 +460,7 @@ dependencies = [
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:49cda994a19f1cf289919e72ba43fd66d32821329b93b9f8598cb765af3512c0"
+content_hash = "sha256:c95f17268604b025d238e8e64ce379f7e9df5365ede0bfa20d67f78d8f4a4128"
 
 [metadata.files]
 "certifi 2022.12.7" = [

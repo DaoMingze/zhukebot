@@ -2,6 +2,7 @@ from nonebot.plugin import PluginMetadata
 
 from .chat import *
 from .help import *
+from .config import *
 
 __plugin_meta__ = PluginMetadata(
     name="ChatGLM聊天",
@@ -9,7 +10,7 @@ __plugin_meta__ = PluginMetadata(
     usage="hi[聊天内容]，清空记录，导出记录",
     extra={
         "author": "daomingze",
-        "version": "0.1.2",
+        "version": "0.1.3",
         "priority": 8,
     },
 )
