@@ -27,9 +27,7 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 |   INT8   |   10GB   |
 |   INT4   |   6GB    |
 
-已配置 INT4 量化，可自行修改`chat.py`文件调整。
-
-需要 13GiB 左右的存储空间（模型），NVIDIA 显卡（使用 CUDA）、6G 及以上的显存[^1]。
+使用 INT4 量化后的[模型](https://huggingface.co/THUDM/chatglm-6b-int4)。需要 4.2 GB 左右的存储空间（模型），NVIDIA 显卡（使用 CUDA）、6G 及以上的显存[^1]。
 
 > 实际可以低于 python3.9，但没测试过。
 
@@ -122,7 +120,7 @@ pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
 
 |    配置项    | 必填  |     类型      | 默认值 |             说明             |
 | :----------: | :---: | :-----------: | :----: | :--------------------------: |
-| chatglm_model |  是   |      str      |   无   | chatglm 模型及其配置文档路径 |
+| chatglm_model |  否   |      str      |   "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4/"   | chatglm 模型及其配置文档路径 |
 | chatglm_his | 否 | str | "./data/history/" | 历史记录保存路径
 | chatglm_cmd  |  否   | str/list[str] |  "hi"  |           对话命令           |
 

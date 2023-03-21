@@ -1,17 +1,25 @@
 import json
 import os
+
 from nonebot import get_driver
-from nonebot.adapters.onebot.v11 import Bot, Event, Message
+from nonebot.adapters.onebot.v11 import (
+    Bot,
+    Event,
+    GroupMessageEvent,
+    Message,
+    PrivateMessageEvent,
+)
+from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command, on_keyword
-from transformers import AutoModel, AutoTokenizer
 from torch import compile
+from transformers import AutoModel, AutoTokenizer
 
 basic_config = get_driver().config
 if "chatglm_model" in dir(basic_config):
     model_path = basic_config.chatglm_model
 else:
-    raise RuntimeError("请在.env文件中配置模型存放路径")
+    model_path = "THUDM/chatglm-6b-int4"
 
 if "chatglm_cmd" in dir(basic_config):
     chatglm_cmd = basic_config.chatglm_cmd
@@ -24,12 +32,7 @@ else:
     chatglm_record = "./data/history/"
 
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
-model = (
-    AutoModel.from_pretrained(model_path, trust_remote_code=True)
-    .half()
-    .quantize(4)
-    .cuda()
-)
+model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
 
 model = compile(model).eval()
 
@@ -56,7 +59,7 @@ def choicerole(role):
 
 
 # on_regex("角色")
-chatGLM_chat = on_command(chatglm_cmd, priority=5)
+chatGLM_chat = on_command(chatglm_cmd, priority=8)
 # query = choicerole("0")  # 载入默认
 # response, history = model.chat(tokenizer, query, history=history)
 # record = [history]
@@ -70,29 +73,39 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     query = prompt
     response, new = model.chat(tokenizer, query, history=history)
     savehistory(qq_id, new)
-    msg = Message(response)
+    msg = Message(f"[CQ:at,qq={qq_id}]{response}")
     await chatGLM_chat.finish(msg)
 
 
-chatGLM_print = on_keyword(["zhuke print", "打印记录"], priority=50)
+chatGLM_print = on_keyword([chatglm_cmd + "print", "导出记录"], priority=50, block=True)
 
 
 @chatGLM_print.handle()
-async def printrecord(bot: Bot, event: Event):
+async def user_export_handle(bot: Bot, event: Event):
     qq_id = event.get_user_id()
-    msg = readjson(qq_id)
-    await chatGLM_print.finish(msg)
+    if isinstance(event, PrivateMessageEvent):  # gocq不支持私聊传文件
+        await chatGLM_print.finish(
+            Message(f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令")
+        )
+    try:
+        response = chatglm_record + qq_id + "rec.json"
+    except Exception as e:
+        logger.error(e)
+        await chatGLM_print.finish(Message(f"[CQ:at,qq={qq_id}]{str(e)}"))
+    await bot.upload_group_file(
+        group_id=event.group_id,
+        file=response,
+        name=response.split(os.sep)[-1],
+    )
 
 
-"""
-chatGLM_clear = on_command("zhuke clear", aliases=["清空记录"], priority=5)
+chatGLM_clear = on_keyword([chatglm_cmd + "clear", "清空记录"], priority=50)
 
 
 @chatGLM_clear.handle()
 async def clear(bot: Bot, event: Event):
     qq_id = event.get_user_id()
     context = []
-    savehistory(qq_id,context)
+    savehistory(qq_id, context)
     msg = Message("已清空")
     await chatGLM_clear.finish(msg)
-"""
