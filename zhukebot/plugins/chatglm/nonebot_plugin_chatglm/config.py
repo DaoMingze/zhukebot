@@ -23,7 +23,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 if "chatglm_mode" in dir(basic_config):
     chatglm_mode = basic_config.chatglm_cmd.chatglm_mode
     print(f"启用{chatglm_mode}模式")
-    if chatglm_mode == "cuda":
+    if chatglm_mode.lower() == "cuda":
         model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
     else:
         model = AutoModel.from_pretrained(model_path, trust_remote_code=True).float()
