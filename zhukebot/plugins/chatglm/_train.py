@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True)
-model = AutoModelForSeq2SeqLM.from_pretrained("BAAI/glm-10b-chinese", trust_remote_code=True).half().cuda()
+model = AutoModelForSeq2SeqLM.from_pretrained("THUDM/chatglm-6b-int4", trust_remote_code=True).half().cuda()
 #model = model.eval()
 
 inputs = tokenizer("凯旋门位于意大利米兰市古城堡旁。1807年为纪念[MASK]而建，门高25米，顶上矗立两武士青铜古兵车铸像。", return_tensors="pt")

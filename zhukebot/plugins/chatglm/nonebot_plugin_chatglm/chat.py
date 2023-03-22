@@ -1,6 +1,7 @@
 import json
 import os
-
+import time
+from nonebot.permission import SUPERUSER
 from nonebot.adapters.onebot.v11 import (Bot, Event, GroupMessageEvent,
                                          Message, PrivateMessageEvent)
 from nonebot.log import logger
@@ -8,7 +9,7 @@ from nonebot.params import CommandArg
 from nonebot.plugin import on_command, on_keyword
 
 from .config import *
-
+import torch
 
 def readjson(name):
     filename = chatglm_record + name + "rec.json"
@@ -41,11 +42,18 @@ chatGLM_chat = on_command(chatglm_cmd, priority=8)
 @chatGLM_chat.handle()
 async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     qq_id = event.get_user_id()
+    nowtime = time.time()
+    deltatime = nowtime - cd.get(qq_id, 0)
+    if deltatime < chatglm_cd:
+        await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]，ChatGLM认为您问得太快了，您需要{chatglm_cd - int(deltatime)}秒来思考这个问题的价值。"))
+    else:
+        cd[qq_id] = nowtime
     prompt = message.extract_plain_text().strip()
     history = readjson(qq_id)
     query = prompt
     response, new = model.chat(tokenizer, query, history=history)
     savehistory(qq_id, new)
+    torch.cuda.empty_cache()
     msg = Message(f"[CQ:at,qq={qq_id}]{response}")
     await chatGLM_chat.finish(msg)
 

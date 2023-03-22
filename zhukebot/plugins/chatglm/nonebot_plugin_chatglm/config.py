@@ -21,13 +21,23 @@ else:
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
 if "chatglm_mode" in dir(basic_config):
-    chatglm_mode = basic_config.chatglm_cmd.chatglm_mode
+    chatglm_mode = basic_config.chatglm_mode
     print(f"启用{chatglm_mode}模式")
     if chatglm_mode.lower() == "cuda":
         model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
+        model = compile(model).eval()
+    elif chatglm_mode.lower() == "rwkv":
+        from .mini_rwkv import *
     else:
         model = AutoModel.from_pretrained(model_path, trust_remote_code=True).float()
+        model = compile(model).eval()
 else:
     model = AutoModel.from_pretrained(model_path, trust_remote_code=True).float()
+    model = compile(model).eval()
 
-model = compile(model).eval()
+if "chatglm_cd" in dir(basic_config):
+    chatglm_cd = basic_config.chatglm_cd
+else:
+    chatglm_cd = 30
+
+cd = {}
