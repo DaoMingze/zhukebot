@@ -3,4 +3,3 @@ dist
 ./.pdm.toml
 test.py
 pdf_reader
-zhukebot/plugins/_chatrwkv
