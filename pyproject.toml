@@ -10,6 +10,7 @@ dependencies = [
     "beautifulsoup4>=4.11.2",
     "nonebot-plugin-apscheduler>=0.2.0",
     #"nonebot-plugin-all4one>=0.1.0a2",
+
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -25,8 +26,8 @@ plugins = [
     "nonebot_plugin_help",
     "nonebot_plugin_apscheduler",
     "nonebot_plugin_htmlrender",
-#    "nonebot_plugin_all4one"
-"nonebot_plugin_gocqhttp"
+    #   "nonebot_plugin_all4one"
+
 ]
 plugin_dirs = ["zhukebot/plugins"]
 builtin_plugins = ["echo"]
