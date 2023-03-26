@@ -12,11 +12,11 @@ class Config(BaseSettings):
     """模型加载模式，默认CPU加载"""
     chatglm_cmd: list = ["hi"]
     """调用机器人命令"""
-    chatglm_cd: int = 60
+    chatglm_cd: int = 10
     """冷却时间"""
     chatglm_record: str = "./data/chatglm/"
     """历史记录存放路径"""
-    chatglm_memo: int = 10
+    chatglm_memo: int = 5
     """记录对话轮数"""
     chatglm_tome: bool = False
     """是否需要at机器人"""
@@ -26,7 +26,7 @@ class Config(BaseSettings):
     """是否转图片"""
     chatglm_width: int = 640
     """图片宽度"""
-    nickname: list[str] = ["ChatGLM"]
+    nickname: set[str] = "ChatGLM"
     """机器人的昵称"""
 
     class Config:
@@ -64,5 +64,4 @@ else:
 model = compile(model).eval()
 
 cd = {}
-nickname = config.nickname[0]
-logger.debug(f"启用{config.chatglm_mode}模式")
+nickname = config.nickname.pop()

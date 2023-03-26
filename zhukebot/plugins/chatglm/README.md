@@ -156,13 +156,15 @@ pip install pypdf2
 
 在 nonebot2 项目的`.env`或`.env.prod`或`.env.dev`（根据实际选择）文件中添加下表中的配置。默认情况下，无需添加配置即可启用。
 
-|    配置项     | 必填 |     类型      |                                     默认值                                      |             说明             |
-| :-----------: | :--: | :-----------: | :-----------------------------------------------------------------------------: | :--------------------------: |
-|   chat_mode   |  否  |      str      |                                       cpu                                       |    运行模式，cuda 或 cpu     |
-| chatglm_model |  否  |      str      | "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4/" | chatglm 模型及其配置文档路径 |
-|  chatglm_record  |  否  |      str      |                                "./data/history/"                                |       历史记录保存路径       |
-|  chatglm_cmd  |  否  | str/list[str] |                                      "hi"                                       |           对话命令           |
-|    chat_cd    |  否  |      int      |                                       60                                        |    冷却时间，避免高频调用    |
+|     配置项     | 必填 |   类型    |                                     默认值                                      |             说明             |
+| :------------: | :--: | :-------: | :-----------------------------------------------------------------------------: | :--------------------------: |
+|   chat_mode    |  否  |    str    |                                       cpu                                       |    运行模式，cuda 或 cpu     |
+| chatglm_model  |  否  |    str    | "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4-qe/" | chatglm 模型及其配置文档路径 |
+| chatglm_record |  否  |    str    |                                "./data/history/"                                |       历史记录保存路径       |
+|  chatglm_cmd   |  否  | list[str] |                                     ["hi"]                                      |           对话命令           |
+|    chat_cd     |  否  |    int    |                                       30                                        |    冷却时间，避免高频调用    |
+
+- 正常聊天使用来说，30 秒冷却较为合适；复杂问题聊天，60 秒较为合适。建议根据实际测试进行调整。
 
 ### 附加文件
 

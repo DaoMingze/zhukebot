@@ -1,9 +1,6 @@
 from nonebot.plugin import PluginMetadata
 
-from . import config, chat, help
-
-# from .chatpdf import *
-
+from . import chat, config
 
 __plugin_meta__ = PluginMetadata(
     name="ChatGLM聊天",
