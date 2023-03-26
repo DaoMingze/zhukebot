@@ -26,7 +26,7 @@ class Config(BaseSettings):
     """是否转图片"""
     chatglm_width: int = 640
     """图片宽度"""
-    nickname: set[str] = "ChatGLM"
+    nickname: list[str] = "ChatGLM"
     """机器人的昵称"""
 
     class Config:
@@ -64,4 +64,4 @@ else:
 model = compile(model).eval()
 
 cd = {}
-nickname = config.nickname.pop()
+nickname = config.nickname[0]
