@@ -23,7 +23,7 @@ license = {text = "MIT"}
 adapters = [
     { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
 ]
-plugins = ["nonebot_plugin_gocqhttp", "nonebot_plugin_status", "nonebot_plugin_guild_patch", "nonebot_plugin_revoke", "nonebot_plugin_learning_chat", "nonebot_plugin_help", "nonebot_plugin_apscheduler"]
+plugins = ["nonebot_plugin_gocqhttp", "nonebot_plugin_status", "nonebot_plugin_guild_patch", "nonebot_plugin_revoke", "nonebot_plugin_help", "nonebot_plugin_apscheduler", "nonebot_plugin_htmlrender", "nonebot_plugin_chatgpt"]
 plugin_dirs = ["zhukebot/plugins"]
 builtin_plugins = ["echo"]
 

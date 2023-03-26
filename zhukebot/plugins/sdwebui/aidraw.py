@@ -21,7 +21,8 @@ from .backend import Draw
 from .config import config
 from .plugins.anlas import anlas_check, anlas_set
 from .plugins.daylimit import DayLimit
-from .utils import BASE_TAG, CHINESE_COMMAND, HTAGS, LOW_QUALITY, C, sendtosuperuser
+from .utils import (BASE_TAG, CHINESE_COMMAND, HTAGS, LOW_QUALITY, C,
+                    sendtosuperuser)
 from .utils.translation import translate
 
 cd = {}

@@ -13,7 +13,7 @@ jsonpath = Path("data/sdwebui/config.json").resolve()
 nickname = (
     list(driver.config.nickname)[0]
     if len(driver.config.nickname)
-    else "nonebot-plugin-sdwebui"
+    else "sdwebui"
 )
 
 
