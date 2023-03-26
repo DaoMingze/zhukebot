@@ -3,6 +3,8 @@ import os
 
 import nonebot
 from nonebot.adapters.onebot.v11 import Adapter
+#from nonebot.adapters.console import Adapter
+
 
 right_path = __file__.rstrip(os.path.basename(__file__))  # 获取当前文件的所在路径
 os.chdir(right_path)  # 将工作路径改至目标路径
@@ -26,6 +28,7 @@ nonebot.init()
 # Please DO NOT modify this file unless you know what you are doing!
 driver = nonebot.get_driver()
 driver.register_adapter(Adapter)
+
 # As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
 # nonebot.load_builtin_plugin("echo")
 # nonebot.load_plugin("nonebot_plugin_gocqhttp")
