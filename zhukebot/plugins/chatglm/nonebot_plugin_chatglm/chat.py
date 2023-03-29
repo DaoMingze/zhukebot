@@ -38,7 +38,7 @@ def chat(id, query, history):
 """
 
 
-chatGLM_chat = on_command(config.chatglm_cmd[0], priority=8)
+chatGLM_chat = on_command(config.chatglm_cmd[0], priority=50)
 
 
 cmd_help = {
@@ -58,6 +58,17 @@ async def chat_get(event: Event, args: ParserExit = CommandArg()):
 """
 
 
+def check_simple(ctx):
+    ctx = ctx_pure(ctx)
+    simple = eval(readfile("simple", "txt"))
+    for i in simple.keys():
+        a = re.match(i, ctx)
+        if a != None:
+            ctx = simple.get(i)
+            return True, ctx
+    return False, ctx
+
+
 @chatGLM_chat.handle()
 async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     # group_id
@@ -70,7 +81,6 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
                 f"[CQ:at,qq={qq_id}]{nickname}认为您问得太快了，您需要{config.chatglm_cd - int(deltatime)}秒来思考这个问题的价值。"
             )
         )
-    #ctx = ctx_pure(message)
     ctx = message.extract_plain_text().strip()
     # 判断简单问题
     simple = eval(readfile("simple", "txt"))  # 可以以此加载一些专业词典或免责声明，实际上是fakeAI（假冒AI），最好不要用
@@ -105,18 +115,18 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     await chatGLM_chat.finish(msg)
 
 
-chatGLM_print = on_keyword([config.chatglm_cmd[0] + "导出记录"], priority=50, block=True)
+chatGLM_print = on_keyword([config.chatglm_cmd[0] + "导出记录"], priority=40, block=True)
 
 
 @chatGLM_print.handle()
 async def user_export_handle(bot: Bot, event: Event):
     qq_id = event.get_user_id()
-    '''
+    """
     if isinstance(event, PrivateMessageEvent):  # gocq不支持私聊传文件
         await chatGLM_print.finish(
             Message(f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令")
         )
-    '''
+    """
     try:
         response = config.chatglm_record + qq_id + ".json"
     except Exception as e:
@@ -129,7 +139,7 @@ async def user_export_handle(bot: Bot, event: Event):
     )
 
 
-chatGLM_clear = on_keyword([config.chatglm_cmd[0] + "clear"] + ["清空记录"], priority=50)
+chatGLM_clear = on_keyword([config.chatglm_cmd[0] + "clear"] + ["清空记录"], priority=40)
 
 
 @chatGLM_clear.handle()
@@ -147,6 +157,7 @@ chatGLM_allclear = on_command("清理全部", permission=SUPERUSER, priority=50)
 @chatGLM_allclear.handle()
 async def allclear(bot: Bot, event: Event):
     shutil.rmtree(config.chatglm_record)
+
 
 chatGLM_help = on_keyword(["对话帮助"], priority=50)
 

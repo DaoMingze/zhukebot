@@ -7,9 +7,12 @@
 _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 ![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
 ![Python](https://img.shields.io/badge/python-3.8+-blue)
-[![PyPI](https://img.shields.io/pypi/v/nonebot_plugin_chatglm)](https://pypi.org/project/nonebot-plugin-chatglm)
+![nonebot](https://img.shields.io/badge/nonebot-2-red)
+![onebot](https://img.shields.io/badge/onebot-11-white)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
+[![PyPI](https://img.shields.io/pypi/v/nonebot_plugin_chatglm)](https://pypi.org/project/nonebot-plugin-chatglm)
 
 </div>
 
@@ -21,20 +24,20 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 <div align="center">
 
-|    量化等级    |      内存要求       |            策略            |
-| :------------: | :-----------------: | :------------------------: |
-|       无       |         CPU         |          .float()          |
-| FP16（无量化） |      13GB 显存      |       .half().cuda()       |
+|    量化等级    |      内存要求       |                       策略 |
+|:--------------:|:-------------------:|---------------------------:|
+|       无       |         CPU         |                   .float() |
+| FP16（无量化） |      13GB 显存      |             .half().cuda() |
 |      INT8      |      10GB 显存      | .half().quantize(8).cuda() |
 |      INT4      | 6GB 显存，13GB 内存 | .half().quantize(4).cuda() |
-|   INT4 模型    |     5.2GB 显存      |       .half().cuda()       |
-|  INT4-QE 模型  |     4.3GB 显存      |       .half().cuda()       |
+|   INT4 模型    |     5.2GB 显存      |             .half().cuda() |
+|  INT4-QE 模型  |     4.3GB 显存      |             .half().cuda() |
 
 </div>
 
 现在默认使用 CPU 推理，方便开箱即用，但速度较慢。
 
-$S_{模型大小}\times 1.024= S_{所需显存}$
+硬件需求上：训练>微调>推理，但本插件仅考虑推理应用场景。
 
 > 实际可以低于 Python 3.9（但 none-adapter-onebot 要求 Python 3.8+）。
 
@@ -42,10 +45,12 @@ $S_{模型大小}\times 1.024= S_{所需显存}$
 
 ### 软件环境
 
+指除去 Python 和 nonebot 以外的软件环境
+
 #### CUDA
 
-- Windows：见[CUDA 官方文档|英文](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
-- Linux：见[CUDA 官方文档|英文](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+- Windows：见[CUDA 官方文档 | 英文](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
+- Linux：见[CUDA 官方文档 | 英文](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
 
 #### PyTorch
 
@@ -115,22 +120,58 @@ plugins = ["nonebot_plugin_chatglm"]
 
 > 模型简介：ChatGLM-6B 是一个开源的、支持中英双语的对话语言模型，基于[General Language Model (GLM)](https://github.com/THUDM/GLM) 架构，具有 62 亿参数。结合模型量化技术，用户可以在消费级的显卡上进行本地部署（INT4 量化级别下最低只需 6GB 显存）。 ChatGLM-6B 使用了和 ChatGPT 相似的技术，针对中文问答和对话进行了优化。经过约 1T 标识符的中英双语训练，辅以监督微调、反馈自助、人类反馈强化学习等技术的加持，62 亿参数的 ChatGLM-6B 已经能生成相当符合人类偏好的回答。
 
-默认使用`HuggingFace Hub`加载，即如果没有设置路径，则会自动下载到用户目录下的`.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4`。
+#### 选择模型
 
-- 如果是较小显存（< 10 G）且只用聊天对话模型（ChatGLM-6B-INT4）[^1]则没用必要修改。
+<div align="center">
+
+ChatGLM-6B 系列模型
+
+| 模型名称                                                              | 量化情况                            | 权重大小 |
+|-----------------------------------------------------------------------|-------------------------------------|---------:|
+| [ChatGLM-6B](https://huggingface.co/THUDM/chatglm-6b)                 | 无                                  |  13.73GB |
+| [ChatGLM-6B-INT4](https://huggingface.co/THUDM/chatglm-6b-int4)       | INT4: GLM Block                     |   4.06GB |
+| [ChatGLM-6B-INT4-QE](https://huggingface.co/THUDM/chatglm-6b-int4-qe) | INT4: GLM Block, Embedding, LM Head |   3.13GB |
+
+</div>
+
+- 如果是较小显存（< 10 G）且只用聊天对话模型（ChatGLM-6B-INT4-QE）[^1]则没用必要修改。
 - 如果使用 6B 完整模型，则可以自行设置路径。
-
-模型的具体使用，还请关注[原仓库说明](https://github.com/THUDM/ChatGLM-6B)，提交检测 →![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)
 
 [^1]: 在其他位置配置量化后的 INT4 模型，发生一些编译错误，暂时~~懒得~~没有能力解决。
 
+#### 下载模型
+
+默认使用`HuggingFace Hub`加载，即如果没有设置路径，则会自动下载到用户目录下的`.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4-qe`，可以通过下面的代码转移模型。
+
+自动下载：
+
+- 无需设置，默认下载`ChatGLM-6B-INT4-QE`模型
+- 在`.env`文件中增加`chatglm_model = str`，其中 str 为字符串格式的 Hugging Face Hub 路径（用户名/仓库）。
+
+自动下载后转移模型到指定路径
+
+```python
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModel
+model_name = input("HF HUB路径，例如 THUDM/chatglm-6b-int4-qe: ")
+model_path = input("本地存放路径，例如 ./path/modelname: ")
+#用AutoModelForSeq2SeqLM.from_pretrained()下载模型
+tokenizer = AutoTokenizer.from_pretrained(model_name,trust_remote_code=True,revision="main")
+model = AutoModelForSeq2SeqLM.from_pretrained(model_name,trust_remote_code=True,revision="main")
+#用 PreTrainedModel.save_pretrained()保存模型到指定位置
+tokenizer.save_pretrained(model_path,trust_remote_code=True,revision="main")
+model.save_pretrained(model_path,trust_remote_code=True,revision="main")
+```
+
 手动下载：
 
-→[清华云盘](https://cloud.tsinghua.edu.cn/d/fb9f16d6dc8f482596c2/)（仅模型文件，是 6B 完整模型，显存较小需要量化使用，暂未设置，需要自行在`chat.py`文件中修改）
+- [清华云盘](https://cloud.tsinghua.edu.cn/d/fb9f16d6dc8f482596c2/)（仅模型文件，是 6B 完整模型，显存较小需要量化使用，暂未设置，需要自行在`chat.py`文件中修改）
+- [🤗 Hugging Face](https://huggingface.co/THUDM/chatglm-6b-int4)（完整文件），约 4.2 GB。
 
-→[🤗 Hugging Face](https://huggingface.co/THUDM/chatglm-6b-int4)（完整文件），约 4.2 GB。
+#### 模型更新与其他使用
 
-### 安装运行所需依赖
+模型的具体使用，还请关注[原仓库说明](https://github.com/THUDM/ChatGLM-6B)，提交检测 →[![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)](https://github.com/THUDM/ChatGLM-6B)
+
+### 运行所需依赖
 
 如果使用 pip 安装，实际已经自动安装了以下依赖，在此说明是为了方便检查
 
@@ -156,15 +197,15 @@ pip install pypdf2
 
 在 nonebot2 项目的`.env`或`.env.prod`或`.env.dev`（根据实际选择）文件中添加下表中的配置。默认情况下，无需添加配置即可启用。
 
-|     配置项     | 必填 |   类型    |                                     默认值                                      |             说明             |
-| :------------: | :--: | :-------: | :-----------------------------------------------------------------------------: | :--------------------------: |
-|   chat_mode    |  否  |    str    |                                       cpu                                       |    运行模式，cuda 或 cpu     |
+| 配置项         | 必填 |   类型    | 默认值                                                                             |             说明             |
+|----------------|:----:|:---------:|------------------------------------------------------------------------------------|:----------------------------:|
+| chat_mode      |  否  |    str    | cpu                                                                                |    运行模式，cuda 或 cpu     |
 | chatglm_model  |  否  |    str    | "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4-qe/" | chatglm 模型及其配置文档路径 |
-| chatglm_record |  否  |    str    |                                "./data/history/"                                |       历史记录保存路径       |
-|  chatglm_cmd   |  否  | list[str] |                                     ["hi"]                                      |           对话命令           |
-|    chat_cd     |  否  |    int    |                                       30                                        |    冷却时间，避免高频调用    |
+| chatglm_record |  否  |    str    | "./data/chatglm/"                                                                  |       历史记录保存路径       |
+| chatglm_cmd    |  否  | list[str] | ["hi"]                                                                             |           对话命令           |
+| chat_cd        |  否  |    int    | 30                                                                                 |    冷却时间，避免高频调用    |
 
-- 正常聊天使用来说，30 秒冷却较为合适；复杂问题聊天，60 秒较为合适。建议根据实际测试进行调整。
+> 正常聊天使用来说，30 秒冷却较为合适；复杂问题聊天，60 秒较为合适。建议根据实际测试进行调整。
 
 ### 附加文件
 
@@ -197,11 +238,11 @@ pip install pypdf2
 
 ### 指令表
 
-|     指令     |    权限    | 需要@ |   范围    |          说明           |
-| :----------: | :--------: | :---: | :-------: | :---------------------: |
-|      hi      |   所有人   |  否   | 私聊/群聊 |     与 chatglm 对话     |
-|   清空记录   |   所有人   |  否   | 私聊/群聊 | 清空自己的对话历史记录  |
-|   导出记录   |   所有人   |  否   |   群聊    |   导出记录文件到群中    |
+|   指令   |    权限    | 需要@ |   范围    | 说明                    |
+|:--------:|:----------:|:-----:|:---------:|-------------------------|
+|    hi    |   所有人   |  否   | 私聊/群聊 | 与 chatglm 对话         |
+| 清空记录 |   所有人   |  否   | 私聊/群聊 | 清空自己的对话历史记录  |
+| 导出记录 |   所有人   |  否   |   群聊    | 导出记录文件到群中      |
 | 清理全部 | 超级管理员 |  否   |   私聊    | 手动处理`out of memory` |
 
 ## 待办

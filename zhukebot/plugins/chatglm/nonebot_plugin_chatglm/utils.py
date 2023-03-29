@@ -15,28 +15,28 @@ def readfile(name: str, suff: str = "json"):
     return new
 
 
-def savehistory(name, context):
+def savehistory(id:str, context:str):
+    '''存储与机器人的聊天记录'''
     path = config.chatglm_record + "history/"
     if os.path.exists(path) == False:
         os.mkdir(path)
-    with open(path + name + ".json", "w", encoding="utf-8") as f:
+    with open(path + id + ".json", "w", encoding="utf-8") as f:
         f.write(json.dumps(context))
 
 
-def check_cd(qq_id):
+def check_cd(id):
+    '''基于发言人，检查冷却时间'''
     nowtime = time.time()
-    deltatime = nowtime - cd.get(qq_id, 0)
+    deltatime = nowtime - cd.get(id, 0)
     if deltatime < config.chatglm_cd:
         return True, deltatime
     else:
-        cd[qq_id] = nowtime
+        cd[id] = nowtime
         return False, deltatime
 
-
-def choicerole(role=str):
+def choicerole(role:str = ""):
+    '''选择预设角色'''
     roles = readfile("roles", "json")
-    if role == "":
-        role = "catgirl"
     roleprompt = roles[f"{role}"]
     return roleprompt
 
@@ -50,8 +50,8 @@ emoji = re.compile(
 
 
 def ctx_pure(ctx: str):
+    '''净化输入文本'''
     ctx = ctx.extract_plain_text().strip()
     ctx = re.sub(emoji, "", ctx)
     ctx = re.sub("\[CQ[^\s]*?]", "", ctx)
-    print(ctx)
     return ctx
