@@ -1,6 +1,7 @@
 import os
 import shutil
 import sqlite3 as sq
+from datetime import datetime
 
 from nonebot import get_driver
 from nonebot.log import logger
@@ -28,8 +29,12 @@ def get_user_config_path(config_file: str):
     if os_type in ["Windows", "Linux"]:
         db_dir = arkrecord_db_path
     else:
-        logger.error("不支持的操作系统！开发者仅做了Windows和Linux的适配（由于没有苹果电脑）。建议联系开发者或自行修改源码。")
-        raise RuntimeError("不支持的操作系统！开发者仅做了Windows和Linux的适配（由于没有苹果电脑）。建议联系开发者或自行修改源码。")
+        logger.error(
+            "不支持的操作系统！开发者仅做了Windows和Linux的适配（由于没有苹果电脑）。建议联系开发者或自行修改源码。"
+        )
+        raise RuntimeError(
+            "不支持的操作系统！开发者仅做了Windows和Linux的适配（由于没有苹果电脑）。建议联系开发者或自行修改源码。"
+        )
     if not os.path.exists(db_dir):
         os.makedirs(db_dir)
     user_db_path = os.path.join(db_dir, config_file)
@@ -109,7 +114,7 @@ user_id_field = "user_id"
 user_name_field = "user_name"
 ark_token_field = "ark_token"
 channel_field = "channel"
-""" 
+"""
 ark_record
 """
 ark_record_table = "ark_record"
@@ -132,7 +137,7 @@ max_pool_count = 8  # 最多显示几个卡池信息
 放到ark_utils里面好一点
 但是我懒得弄了
 """
-from datetime import datetime
+
 
 log_file_path = get_user_config_path("ark_log.txt")
 

@@ -46,7 +46,9 @@ async def translate_bing(text: str, to: str):
             headers=header,
         ) as resp:
             if resp.status != 200:
-                logger.error(f"Bing翻译接口调用失败,错误代码{resp.status},{await resp.text()}")
+                logger.error(
+                    f"Bing翻译接口调用失败,错误代码{resp.status},{await resp.text()}"
+                )
                 return None
             jsonresult = await resp.json()
             result = jsonresult[0]["translations"][0]["text"]
@@ -72,7 +74,9 @@ async def translate_deepl(text: str, to: str):
             "https://api-free.deepl.com/v2/translate", params=params
         ) as resp:
             if resp.status != 200:
-                logger.error(f"DeepL翻译接口调用失败,错误代码{resp.status},{await resp.text()}")
+                logger.error(
+                    f"DeepL翻译接口调用失败,错误代码{resp.status},{await resp.text()}"
+                )
                 return None
             jsonresult = await resp.json()
             result = jsonresult["translations"][0]["text"]
@@ -92,9 +96,13 @@ async def translate_youdao(input: str, type: str):
         type = "ZH_CH2EN"
     async with aiohttp.ClientSession() as session:
         data = {"doctype": "json", "type": type, "i": input}
-        async with session.post("http://fanyi.youdao.com/translate", data=data) as resp:
+        async with session.post(
+            "http://fanyi.youdao.com/translate", data=data
+        ) as resp:
             if resp.status != 200:
-                logger.error(f"有道翻译接口调用失败,错误代码{resp.status},{await resp.text()}")
+                logger.error(
+                    f"有道翻译接口调用失败,错误代码{resp.status},{await resp.text()}"
+                )
                 return None
             result = await resp.json()
             result = result["translateResult"][0][0]["tgt"]
@@ -116,7 +124,9 @@ async def translate_google_proxy(input: str, to: str):
             "https://hf.space/embed/mikeee/gradio-gtr/+/api/predict", json=data
         ) as resp:
             if resp.status != 200:
-                logger.error(f"谷歌代理翻译接口调用失败,错误代码{resp.status},{await resp.text()}")
+                logger.error(
+                    f"谷歌代理翻译接口调用失败,错误代码{resp.status},{await resp.text()}"
+                )
                 return None
             result = await resp.json()
             result = result["data"][0]

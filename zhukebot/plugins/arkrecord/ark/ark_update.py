@@ -1,22 +1,30 @@
-import os, sys, json
-import requests as req
-from .ark_setting import (
-    operator_profile_dir,
-    tot_pool_info_file,
-    get_tot_pool_info,
-    tot_pool_info,
-    arkgacha_db,
-    write_log2file,
-)
-from .ark_db import rewrite_db
-from nonebot.log import logger
-from nonebot.plugin import on_keyword, on_command
-from nonebot.adapters.onebot.v11 import Bot, Event, PrivateMessageEvent
-from nonebot.adapters.onebot.v11.message import Message, MessageSegment
-from bs4 import BeautifulSoup as bs
+import json
+import os
+import sys
 from collections import defaultdict as ddict
 
-__all__ = ["ark_update_handle", "ark_manual_update_handle", "ark_db_rewrite_handle"]
+import requests as req
+from bs4 import BeautifulSoup as bs
+from nonebot.adapters.onebot.v11 import Bot, Event, PrivateMessageEvent
+from nonebot.adapters.onebot.v11.message import Message, MessageSegment
+from nonebot.log import logger
+from nonebot.plugin import on_command, on_keyword
+
+from .ark_db import rewrite_db
+from .ark_setting import (
+    arkgacha_db,
+    get_tot_pool_info,
+    operator_profile_dir,
+    tot_pool_info,
+    tot_pool_info_file,
+    write_log2file,
+)
+
+__all__ = [
+    "ark_update_handle",
+    "ark_manual_update_handle",
+    "ark_db_rewrite_handle",
+]
 
 
 def get_prts_pool_info(pinfo: dict):
@@ -37,7 +45,9 @@ def get_prts_pool_info(pinfo: dict):
                 td0 = tr.find_all("td")[0]
                 # 不知道为什么prts在卡池名称前面加上了 寻访模拟/
                 pname = td0.find("a").attrs["title"].strip().strip("寻访模拟/")
-                pinfo[pname] = {"is_exclusive": True if g_type else False}  # 判断是否为限定
+                pinfo[pname] = {
+                    "is_exclusive": True if g_type else False
+                }  # 判断是否为限定
             except:
                 continue
     return pinfo
@@ -60,7 +70,10 @@ def read_cur_profiles():
     """获取已有头像对应的干员名称"""
     pro_names = ddict(
         int,
-        {p.split(".")[0].split("_")[1]: 1 for p in os.listdir(operator_profile_dir)},
+        {
+            p.split(".")[0].split("_")[1]: 1
+            for p in os.listdir(operator_profile_dir)
+        },
     )
     return pro_names
 
@@ -121,7 +134,9 @@ async def ark_update_handle(bot: Bot, event: Event):
         await ark_update_event.finish(
             Message(f'[CQ:at,qq={event.get_user_id()}]{str(e) + "获取更新失败！"}')
         )
-    await ark_update_event.finish(Message(f"[CQ:at,qq={event.get_user_id()}]{info}"))
+    await ark_update_event.finish(
+        Message(f"[CQ:at,qq={event.get_user_id()}]{info}")
+    )
 
 
 """手动更新卡池系列"""

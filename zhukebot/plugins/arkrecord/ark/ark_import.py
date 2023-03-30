@@ -1,10 +1,14 @@
-import requests as req, time, json, urllib
+import json
+import time
+import urllib
 from typing import Literal
+
+import requests as req
+from nonebot.log import logger
+
+from .ark_db import *
 from .ark_setting import *
 from .ark_utils import *
-from .ark_db import *
-
-from nonebot.log import logger
 
 __all__ = ["download_file"]
 

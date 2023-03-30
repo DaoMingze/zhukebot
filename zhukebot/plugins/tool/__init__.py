@@ -1,11 +1,10 @@
-
-
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.permission import SUPERUSER
 
 driver = get_driver()
 nickname = driver.config.nickname.pop()
+
 
 async def sendtosuperuser(message):
     # 将消息发送给superuser

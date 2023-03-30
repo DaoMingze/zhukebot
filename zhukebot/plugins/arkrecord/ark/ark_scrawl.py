@@ -1,11 +1,15 @@
-import requests as req, time, json, urllib
+import json
+import time
+import urllib
 from typing import Literal
-from .ark_drawer import ArkImage
+
+import requests as req
+from nonebot.log import logger
+
 from .ark_db import *
+from .ark_drawer import ArkImage
 from .ark_setting import *
 from .ark_utils import *
-
-from nonebot.log import logger
 
 __all__ = ["url_scrawler", "user_ark_analyser"]
 
@@ -31,7 +35,9 @@ def url_scrawler(token: str, channel: Literal[1, 2]):
         _type_: _description_
     """
     token = urllib.parse.quote(token)  # 存的是
-    base_url = "https://ak.hypergryph.com/user/api/inquiry/gacha?token=" + token
+    base_url = (
+        "https://ak.hypergryph.com/user/api/inquiry/gacha?token=" + token
+    )
     params = {"channelId": channel}
     draw_info_list = []
     try:
@@ -50,12 +56,17 @@ def url_scrawler(token: str, channel: Literal[1, 2]):
         warning_info = "未获取到有效寻访信息。正在返回缓存信息" if not draw_info_list else ""
         return warning_info, draw_info_list
     except Exception as e:
-        warning_info = "未成功访问寻访页面，token可能已经失效。正在返回缓存信息" if not draw_info_list else ""
+        warning_info = (
+            "未成功访问寻访页面，token可能已经失效。正在返回缓存信息" if not draw_info_list else ""
+        )
         return warning_info, []
 
 
 def user_ark_analyser(
-    db: sq.Connection, user_info: str, max_read_count=float("inf"), pool_name="all"
+    db: sq.Connection,
+    user_info: str,
+    max_read_count=float("inf"),
+    pool_name="all",
 ):
     """_summary_
     抽卡分析主函数
@@ -78,7 +89,12 @@ def user_ark_analyser(
         url_db_writer(db, record_info_list, user_id, private_tot_pool_info)
     # 读数据库
     db_reader = ArkDBReader(
-        db, user_id, user_name, max_read_count, pool_name, private_tot_pool_info
+        db,
+        user_id,
+        user_name,
+        max_read_count,
+        pool_name,
+        private_tot_pool_info,
     )
     db_reader.query_all_items()
     query_info = db_reader.query_result

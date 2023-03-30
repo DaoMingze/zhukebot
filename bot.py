@@ -27,7 +27,8 @@ nonebot.init()
 driver = nonebot.get_driver()
 driver.register_adapter(Adapter)
 
-# As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
+# As an alternative, you should use command `nb`
+# or modify `pyproject.toml` to load plugins
 nonebot.load_from_toml("pyproject.toml")
 # Modify some config / config depends on loaded configs
 # config = driver.config

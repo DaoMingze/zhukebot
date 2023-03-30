@@ -1,9 +1,15 @@
-from nonebot.adapters.onebot.v11 import GROUP_ADMIN, GROUP_OWNER, Bot, GroupMessageEvent
+from nonebot.adapters.onebot.v11 import (
+    GROUP_ADMIN,
+    GROUP_OWNER,
+    Bot,
+    GroupMessageEvent,
+)
 from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.permission import SUPERUSER
-from .utils import aliases, C
+
 from .config import config
+from .utils import C, aliases
 
 # TODO
 on = C.command(

@@ -83,7 +83,9 @@ class DrawBase:
         self.clip: int = clip or 1
         self.width, self.height = self.extract_shape(shape)
         # 数值合法检查
-        if self.steps <= 0 or self.steps > (self.MAX_STEPS if config.sd_paid else 28):
+        if self.steps <= 0 or self.steps > (
+            self.MAX_STEPS if config.sd_paid else 28
+        ):
             self.steps = 28
         if self.strength < 0 or self.strength > 1:
             self.strength = 0.7
@@ -119,7 +121,11 @@ class DrawBase:
         """
         if config.sd_paid == 1:
             anlas = 0
-            if (self.width * self.height > 409600) or self.image or self.batch > 1:
+            if (
+                (self.width * self.height > 409600)
+                or self.image
+                or self.batch > 1
+            ):
                 anlas = round(
                     self.width
                     * self.height

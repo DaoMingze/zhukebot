@@ -1,9 +1,12 @@
-from nonebot.log import logger
-from nonebot.plugin import on_keyword
+import os
+import random as rd
+
 from nonebot.adapters.onebot.v11 import Bot, Event
 from nonebot.adapters.onebot.v11.message import Message, MessageSegment
+from nonebot.log import logger
+from nonebot.plugin import on_keyword
+
 from .ark_setting import *
-import random as rd, os
 
 random_operator_event = on_keyword(["随机干员", "方舟随机干员"], priority=50)
 

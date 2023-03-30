@@ -1,12 +1,18 @@
-import json, time, requests as req, sqlite3 as sq, csv
-import xlsxwriter as xlw, urllib
+import csv
+import json
+import sqlite3 as sq
+import time
+import urllib
 from math import ceil
-from .ark_setting import *
+
+import requests as req
+import xlsxwriter as xlw
 from nonebot.log import logger
 
-""" 
-读写数据库
-"""
+from .ark_setting import *
+
+# 读写数据库
+
 __all__ = [
     "get_user_uid",
     "write_token2db",
@@ -137,7 +143,10 @@ def read_token_from_db(db: sq.Connection, qq_id: str):
 
 
 def url_db_writer(
-    db: sq.Connection, draw_info_list: list, user_id: str, private_tot_pool_info: dict
+    db: sq.Connection,
+    draw_info_list: list,
+    user_id: str,
+    private_tot_pool_info: dict,
 ):
     """_summary_
     将单次爬取到的寻访记录写入数据库
@@ -376,7 +385,13 @@ class ArkDBReader:
         self.cursor.execute(star_sql)
         star_info = list(self.cursor.fetchall())
         star_info.sort()
-        tmp_lst = {"desc": [], "count": [], "avg": [], "text": f"", "title": f"星级分布"}
+        tmp_lst = {
+            "desc": [],
+            "count": [],
+            "avg": [],
+            "text": f"",
+            "title": f"星级分布",
+        }
         for star in star_info:
             tmp_lst["desc"].append(f"{star[0]}星")
             tmp_lst["count"].append(star[1])
@@ -421,18 +436,24 @@ class ArkDBReader:
                         if idx - last_mark_idx < 0:
                             indi_info["desc"] += f"花费至少 {idx + 1} 抽获得"
                         else:
-                            indi_info["desc"] += f"花费 {idx - last_mark_idx} 抽获得"
+                            indi_info[
+                                "desc"
+                            ] += f"花费 {idx - last_mark_idx} 抽获得"
                         last_mark_idx = idx
                     else:
                         # 如果不统计花费的抽数，就统计最近几抽
-                        indi_info["desc"] += f"该类池最近第{len(char_info_lst)-idx}抽获得"
+                        indi_info[
+                            "desc"
+                        ] += f"该类池最近第{len(char_info_lst)-idx}抽获得"
                     tmp_info["chars"].append(indi_info)
                     tmp_info["count"] += 1
 
         if not tmp_info["chars"]:
             tmp_info["describe"] = f"没有获得{query_params['op_type']}\n"
         else:
-            tmp_info["chars"].sort(key=lambda item: item["record_id"], reverse=True)
+            tmp_info["chars"].sort(
+                key=lambda item: item["record_id"], reverse=True
+            )
             tmp_info["chars"] = tmp_info["chars"][:max_char_count]
             tmp_info[
                 "describe"

@@ -27,11 +27,12 @@ star_colors = {  # 干员头像框颜色
 pie_colors = ("#595959", "#333333", "#7f7f7f", "#1F77B4")  # 饼图颜色，（3，4，5，6）
 pie_explode = (0, 0, 0, 0.2)  # 某部分突出显示，值越大，距离中心越远
 pie_angle = 45  # 开始角度
-pie_wedgeprops = {  #'edgecolor':'#f2f2f2',#内外框颜色
-    #'linestyle':'-',#线型
-    #'linewidth':3,#线宽
-    #'facecolor':'white',
-    #'alpha':0.5,#透明度
+pie_wedgeprops = {
+    # 'edgecolor':'#f2f2f2',#内外框颜色
+    # 'linestyle':'-',#线型
+    # 'linewidth':3,#线宽
+    # 'facecolor':'white',
+    # 'alpha':0.5,#透明度
     # 更多参考matplotlib.patches.Wedge
 }
 
@@ -105,7 +106,10 @@ desc_star_p = {
         "w": pie_star_p["h"] * 0.8,
         "h": pie_star_p["h"],
         "radii": 14,  # 圆角半径
-        "pos": (histo_pool_p["w"] + histo_pool_p["pos"][0] + x_step, pie_p_pos_y),
+        "pos": (
+            histo_pool_p["w"] + histo_pool_p["pos"][0] + x_step,
+            pie_p_pos_y,
+        ),
         "bcolor": img_bcolor,
     },
     "title": {
@@ -115,8 +119,12 @@ desc_star_p = {
         "color": text_fcolor,
     },
 }
-desc_star_p["title"]["fsize"] = desc_title_fsize_prop * desc_star_p["bimage"]["h"]
-desc_star_p["text"]["fsize"] = desc_text_fsize_prop * desc_star_p["bimage"]["h"]
+desc_star_p["title"]["fsize"] = (
+    desc_title_fsize_prop * desc_star_p["bimage"]["h"]
+)
+desc_star_p["text"]["fsize"] = (
+    desc_text_fsize_prop * desc_star_p["bimage"]["h"]
+)
 desc_star_p["title"]["pos"] = (
     0.03 * desc_star_p["bimage"]["w"],
     0.03 * desc_star_p["bimage"]["w"],
@@ -134,7 +142,9 @@ desc_shuiwei_p = {
         "h": pie_star_p["h"],
         "radii": 14,  # 圆角半径
         "pos": (
-            desc_star_p["bimage"]["w"] + desc_star_p["bimage"]["pos"][0] + x_step,
+            desc_star_p["bimage"]["w"]
+            + desc_star_p["bimage"]["pos"][0]
+            + x_step,
             pie_p_pos_y,
         ),
         "bcolor": img_bcolor,
@@ -154,13 +164,17 @@ desc_shuiwei_p["title"]["pos"] = (
 )
 desc_shuiwei_p["text"]["pos"] = (
     0.03 * desc_shuiwei_p["bimage"]["w"],
-    1.12 * (desc_shuiwei_p["title"]["pos"][1] + desc_shuiwei_p["title"]["fsize"]),
+    1.12
+    * (desc_shuiwei_p["title"]["pos"][1] + desc_shuiwei_p["title"]["fsize"]),
 )
 
 
 # 卡池情况描述样式
 desc_pool_p = {
-    "pos": (desc_star_p["bimage"]["w"] + desc_star_p["bimage"]["pos"][0], pie_p_pos_y),
+    "pos": (
+        desc_star_p["bimage"]["w"] + desc_star_p["bimage"]["pos"][0],
+        pie_p_pos_y,
+    ),
     "w": pie_star_p["h"] * desc_w_prop,
     "h": pie_star_p["h"],
     "color": "brown",
@@ -196,7 +210,7 @@ char_drawer_p = {
     "pos_star6char": (
         x_step + 0.5 * base_img_w,
         base_img_h,
-    ),  #'pos_star6char':((0.5+(0.5-w_prop)/2)*base_img_w,base_img_h)
+    ),  # 'pos_star6char':((0.5+(0.5-w_prop)/2)*base_img_w,base_img_h)
     "bcolor": img_bcolor,  # x,y
     "radii": 15,
 }
@@ -259,7 +273,9 @@ char_text_p = {
 char_text_p["name_pos"] = (profile_pos_y * 1.5 + profile_w, profile_pos_y)
 char_text_p["desc_pos"] = (
     profile_pos_y * 1.5 + profile_w,
-    profile_pos_y + char_text_p["char_name_fsize"] + 0.05 * indi_char_drawer_p["h"],
+    profile_pos_y
+    + char_text_p["char_name_fsize"]
+    + 0.05 * indi_char_drawer_p["h"],
 )
 
 title_img_p = {
@@ -271,7 +287,9 @@ def get_bottom_img_pos():
     return (
         0,
         int(
-            char_drawer_p["pos_newchar"][1] + char_drawer_p["h_int"] + 0.03 * base_img_h
+            char_drawer_p["pos_newchar"][1]
+            + char_drawer_p["h_int"]
+            + 0.03 * base_img_h
         ),
     )
 

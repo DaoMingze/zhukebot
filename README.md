@@ -1,14 +1,18 @@
+<div align="center">
+
 # zhukebot
 
-![python](https://img.shields.io/badge/python-3.9+-blue)
-[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
-![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
-![GitHub repo size](https://img.shields.io/github/repo-size/daomingze/zhukebot)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
+![python](https://img.shields.io/badge/python-3.9+-blue)[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+<br/>
+![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)![GitHub repo size](https://img.shields.io/github/repo-size/daomingze/zhukebot)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
 
 <!--![GitHub release](https://img.shields.io/github/v/release/daomingze/zhukebot)-->
 
 烛客：我的 nonebot 机器人
+
+</div>
+
+## 简介
 
 运行环境：debian11、cuda11.8、Python3.9.2、pythorch2.0、nonebot2
 

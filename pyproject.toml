@@ -37,3 +37,15 @@ builtin_plugins = ["echo"]
 [build-system]
 requires = ["pdm-pep517>=1.0"]
 build-backend = "pdm.pep517.api"
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+	\.git
+	| \.venv
+	| build
+	| dist
+)/
+'''

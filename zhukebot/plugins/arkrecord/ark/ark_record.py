@@ -1,18 +1,21 @@
-from nonebot.log import logger
-from nonebot.plugin import on_keyword
+from urllib.parse import urlencode
+
+import requests as req
 from nonebot.adapters.onebot.v11 import (
     Bot,
     Event,
-    PrivateMessageEvent,
     GroupMessageEvent,
+    PrivateMessageEvent,
 )
 from nonebot.adapters.onebot.v11.message import Message, MessageSegment
+from nonebot.log import logger
+from nonebot.plugin import on_keyword
 from nonebot.typing import T_State
 
 from .ark_db import *
+from .ark_import import *
 from .ark_scrawl import *
 from .ark_setting import *
-from .ark_import import *
 
 
 def parse_user_token(raw_str: str) -> str:
@@ -56,10 +59,14 @@ async def user_export_handle(bot: Bot, event: Event):
         )
     try:
         user_info = read_token_from_db(arkgacha_db, qq_id)
-        response = export_record2file(arkgacha_db, user_info, qq_id, tot_pool_info)
+        response = export_record2file(
+            arkgacha_db, user_info, qq_id, tot_pool_info
+        )
     except Exception as e:
         logger.error(e)
-        await user_analysis_event.finish(Message(f"[CQ:at,qq={qq_id}]{str(e)}"))
+        await user_analysis_event.finish(
+            Message(f"[CQ:at,qq={qq_id}]{str(e)}")
+        )
     await bot.upload_group_file(
         group_id=event.group_id,
         file=response,
@@ -67,14 +74,13 @@ async def user_export_handle(bot: Bot, event: Event):
     )
 
 
-from urllib.parse import urlencode
-import requests as req
-
 import_record_event = on_keyword(["群文件测试"], priority=80)
 
 
 @import_record_event.handle()
-async def import_record_handle(bot: Bot, event: GroupMessageEvent, state: T_State):
+async def import_record_handle(
+    bot: Bot, event: GroupMessageEvent, state: T_State
+):
     import_file_name = str(event.get_message()).split(" ")[1]
     group_file_info = await bot.call_api(
         "get_group_root_files", **{"group_id": event.group_id}
@@ -87,7 +93,9 @@ async def import_record_handle(bot: Bot, event: GroupMessageEvent, state: T_Stat
             break
     else:  # 没有找到对应的文件
         await user_analysis_event.finish(
-            Message("[CQ:at,qq={}]{}".format(event.get_user_id(), "没有找到对应名称群文件"))
+            Message(
+                "[CQ:at,qq={}]{}".format(event.get_user_id(), "没有找到对应名称群文件")
+            )
         )
 
     url = await bot.call_api(
@@ -126,7 +134,9 @@ async def user_analysis_handle(bot: Bot, event: Event):
         warning_info = next(ana_gnrt)
         if warning_info:
             await user_analysis_event.send(
-                Message("[CQ:at,qq={}]{}".format(event.get_user_id(), warning_info))
+                Message(
+                    "[CQ:at,qq={}]{}".format(event.get_user_id(), warning_info)
+                )
             )
         img_path = next(ana_gnrt)
 

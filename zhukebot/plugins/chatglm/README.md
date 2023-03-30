@@ -9,6 +9,7 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 ![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
 ![Python](https://img.shields.io/badge/python-3.8+-blue)
+[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![nonebot](https://img.shields.io/badge/nonebot-2-red)
 ![onebot](https://img.shields.io/badge/onebot-11-white)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)

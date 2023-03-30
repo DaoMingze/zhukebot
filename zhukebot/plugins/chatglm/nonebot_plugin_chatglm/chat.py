@@ -1,6 +1,7 @@
 import os
 import re
 import shutil
+
 from nonebot.adapters.onebot.v11 import Bot, Event, Message
 from nonebot.exception import ParserExit
 from nonebot.log import logger
@@ -63,7 +64,7 @@ def check_simple(ctx):
     simple = eval(readfile("simple", "txt"))
     for i in simple.keys():
         a = re.match(i, ctx)
-        if a != None:
+        if a:
             ctx = simple.get(i)
             return True, ctx
     return False, ctx
@@ -83,10 +84,12 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
         )
     ctx = message.extract_plain_text().strip()
     # 判断简单问题
-    simple = eval(readfile("simple", "txt"))  # 可以以此加载一些专业词典或免责声明，实际上是fakeAI（假冒AI），最好不要用
+    simple = eval(
+        readfile("simple", "txt")
+    )  # 可以以此加载一些专业词典或免责声明，实际上是fakeAI（假冒AI），最好不要用
     for i in simple.keys():
         a = re.match(i, ctx)
-        if a != None:
+        if a:
             ctx = simple.get(i)
             await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{ctx}"))
     # 判断记忆
@@ -100,7 +103,7 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     try:
         response, new = model.chat(tokenizer, query, history=history)
         savehistory(qq_id, new)
-        if response == None:
+        if response is None:
             raise RuntimeError("Error")
     except Exception as e:
         logger.exception("生成失败", stack_info=True)
@@ -115,7 +118,9 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     await chatGLM_chat.finish(msg)
 
 
-chatGLM_print = on_keyword([config.chatglm_cmd[0] + "导出记录"], priority=40, block=True)
+chatGLM_print = on_keyword(
+    [config.chatglm_cmd[0] + "导出记录"], priority=40, block=True
+)
 
 
 @chatGLM_print.handle()
@@ -139,7 +144,9 @@ async def user_export_handle(bot: Bot, event: Event):
     )
 
 
-chatGLM_clear = on_keyword([config.chatglm_cmd[0] + "clear"] + ["清空记录"], priority=40)
+chatGLM_clear = on_keyword(
+    [config.chatglm_cmd[0] + "clear"] + ["清空记录"], priority=40
+)
 
 
 @chatGLM_clear.handle()

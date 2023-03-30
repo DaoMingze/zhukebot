@@ -1,19 +1,20 @@
-from io import BytesIO
-from PIL import Image, ImageDraw, ImageFont
-from typing import Tuple, Union, Optional, Literal
-import PIL
-import numpy as np
-from nonebot.log import logger
-from matplotlib import pyplot as plt
-from matplotlib import font_manager as fm
 import asyncio as asy
 import os
 import time
-
+from io import BytesIO
 from math import ceil
+from typing import Literal, Optional, Tuple, Union
+
+import numpy as np
+import PIL
+from matplotlib import font_manager as fm
+from matplotlib import pyplot as plt
+from nonebot.log import logger
+from PIL import Image, ImageDraw, ImageFont
+
 from .ark_setting import *
 
-""" 
+"""
 利用PIL和PLT制图
 """
 
@@ -38,7 +39,10 @@ def pil_font(font_size: int, font_path: str):
 
 
 def set_plt_font(font_size: int = 16, font_path: str = ark_text_font_path):
-    return {"size": font_size, "fontproperties": fm.FontProperties(fname=font_path)}
+    return {
+        "size": font_size,
+        "fontproperties": fm.FontProperties(fname=font_path),
+    }
 
 
 def plt_tick_font(font_size: int = 16, font_path: str = ark_text_font_path):
@@ -59,7 +63,9 @@ class ArkImageDrawer:
         img_w: int,
         img_h: int,
         img_type="RGBA",
-        background_color: Union[str, Tuple[float, float, float]] = base_img_back_color,
+        background_color: Union[
+            str, Tuple[float, float, float]
+        ] = base_img_back_color,
     ) -> None:  # 默认字体路径
         self.img_w, self.img_h = img_w, img_h
         self.img_type = img_type
@@ -177,9 +183,9 @@ class CharImage(BaseImage):
         char_type: str = "star6char",
         record_info: dict = {},
         radii: int = 15,
-        background_color: Union[str, Tuple[float, float, float]] = char_drawer_p[
-            "bcolor"
-        ],
+        background_color: Union[
+            str, Tuple[float, float, float]
+        ] = char_drawer_p["bcolor"],
     ) -> None:
         super().__init__()
         self.line_cnt = line_cnt
@@ -226,7 +232,9 @@ class CharImage(BaseImage):
                 )
                 # 绘制图片和文字
                 # 背景
-                backgrouond = Image.new("RGBA", size=(500, 500), color=op_fcolor)
+                backgrouond = Image.new(
+                    "RGBA", size=(500, 500), color=op_fcolor
+                )
                 indi_drawer.dpaste(backgrouond, (0, 0))
                 indi_drawer.dpaste(char_profile, char_text_p["profile_pos"])
                 indi_drawer.dtext(
@@ -259,7 +267,9 @@ class CharImage(BaseImage):
         Returns:
             _type_: _description_
         """
-        char_profile_path = operator_profile_dir + "/" + f"profile_{char_name}.png"
+        char_profile_path = (
+            operator_profile_dir + "/" + f"profile_{char_name}.png"
+        )
         try:
             char_profile0 = Image.open(char_profile_path)
         except:  # 没有头像没更新就用海猫
@@ -280,16 +290,22 @@ class CharImage(BaseImage):
             char_profile = Image.open(rainbow_img_path)
         # 背景
         profile_backgrouond = Image.new(
-            "RGBA", size=(char_profile0.width, char_profile0.height), color=op_fcolor
+            "RGBA",
+            size=(char_profile0.width, char_profile0.height),
+            color=op_fcolor,
         )
-        char_profile.paste(profile_backgrouond, (3, 3), mask=profile_backgrouond)
+        char_profile.paste(
+            profile_backgrouond, (3, 3), mask=profile_backgrouond
+        )
         char_profile0 = char_profile0.convert("RGBA")
         char_profile.paste(char_profile0, (3, 3), mask=char_profile0)  # 贴头像
         return char_profile
 
 
 class ArkImage(BaseImage):
-    def __init__(self, record_info: dict, user_id: str, img_param: tuple) -> None:
+    def __init__(
+        self, record_info: dict, user_id: str, img_param: tuple
+    ) -> None:
         super().__init__()
         img_wh = img_param[0]
         self.char_line_cnt = img_param[1]
@@ -389,8 +405,12 @@ class ArkImage(BaseImage):
             color=style["title_fcolor"],
         )
         bar = ax.barh(yrange, ycount, tick_label=ylabels, height=0.4)
-        ax.set_yticklabels(ylabels, fontsize=int(style["tick_fsize"]), color="white")
-        ax.bar_label(bar, ycount, fontsize=int(style["tick_fsize"]), color="white")
+        ax.set_yticklabels(
+            ylabels, fontsize=int(style["tick_fsize"]), color="white"
+        )
+        ax.bar_label(
+            bar, ycount, fontsize=int(style["tick_fsize"]), color="white"
+        )
         plt.subplots_adjust(
             left=0.4,
             right=0.72,
@@ -474,7 +494,10 @@ class ArkImage(BaseImage):
         先生成数个小画板，然后合成一个大画板，最后贴图
         """
         ci = CharImage(
-            self.char_line_cnt, char_type, self.record_info, char_drawer_p["radii"]
+            self.char_line_cnt,
+            char_type,
+            self.record_info,
+            char_drawer_p["radii"],
         )
         char_img = ci.draw_chars()
         char_img = ci.draw_chars()

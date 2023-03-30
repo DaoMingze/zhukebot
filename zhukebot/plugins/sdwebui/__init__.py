@@ -1,8 +1,9 @@
+from nonebot.log import logger
+from nonebot.plugin import PluginMetadata
+
 from . import config, manage
 from .aidraw import Draw
 from .help import help
-from nonebot.plugin import PluginMetadata
-from nonebot.log import logger
 
 logger.info("已加载SD WebUi 支持插件")
 

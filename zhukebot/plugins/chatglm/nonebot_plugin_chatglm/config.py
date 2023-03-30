@@ -2,7 +2,7 @@ from nonebot import get_driver
 from nonebot.log import logger
 from pydantic import BaseSettings
 from torch import compile, cuda
-from transformers import AutoModel, AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import AutoModel, AutoModelForSeq2SeqLM, AutoTokenizer
 
 
 class Config(BaseSettings):

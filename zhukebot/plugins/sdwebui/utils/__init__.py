@@ -1,3 +1,5 @@
+from nonebot import CommandGroup
+
 # 基础优化tag
 
 BASE_TAG = "masterpiece, best quality"
@@ -47,8 +49,6 @@ async def sendtosuperuser(message):
         )
         await asyncio.sleep(5)
 
-
-from nonebot import CommandGroup
 
 C = CommandGroup(
     "aidraw",

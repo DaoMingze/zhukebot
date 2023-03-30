@@ -79,9 +79,6 @@ class FIFO:
                 # self.backends.remove(minback)
                 pass
 
-    async def run(self, aidraw: Draw, model):
-        pass
-
     async def get_models(self):
         return str(self.backends)
 

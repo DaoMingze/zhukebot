@@ -21,8 +21,14 @@ from .backend import Draw
 from .config import config
 from .plugins.anlas import anlas_check, anlas_set
 from .plugins.daylimit import DayLimit
-from .utils import (BASE_TAG, CHINESE_COMMAND, HTAGS, LOW_QUALITY, C,
-                    sendtosuperuser)
+from .utils import (
+    BASE_TAG,
+    CHINESE_COMMAND,
+    HTAGS,
+    LOW_QUALITY,
+    C,
+    sendtosuperuser,
+)
 from .utils.translation import translate
 
 cd = {}
@@ -30,23 +36,31 @@ gennerating = False
 wait_list = deque([])
 
 aidraw_parser = ArgumentParser()
-aidraw_parser.add_argument("-m", "--model", "-模型", type=str, help="设置模型", dest="model")
+aidraw_parser.add_argument(
+    "-m", "--model", "-模型", type=str, help="设置模型", dest="model"
+)
 aidraw_parser.add_argument(
     "-w", "--sampler", "-采样", type=str, help="设置采样方法", dest="sampler"
 )
 aidraw_parser.add_argument("tags", nargs="*", help="标签")
-aidraw_parser.add_argument("-r", "--resolution", "-形状", help="画布形状/分辨率", dest="shape")
+aidraw_parser.add_argument(
+    "-r", "--resolution", "-形状", help="画布形状/分辨率", dest="shape"
+)
 aidraw_parser.add_argument(
     "-c", "--scale", "-服从", type=float, help="对输入的服从度", dest="scale"
 )
 aidraw_parser.add_argument(
     "-l", "--clip", "-层数", type=int, help="clip停止层数", dest="clip"
 )
-aidraw_parser.add_argument("-s", "--seed", "-种子", type=int, help="随机数种子", dest="seed")
+aidraw_parser.add_argument(
+    "-s", "--seed", "-种子", type=int, help="随机数种子", dest="seed"
+)
 aidraw_parser.add_argument(
     "-b", "--batch", "-数量", type=int, default=1, help="生成数量", dest="batch"
 )
-aidraw_parser.add_argument("-t", "--steps", "-步数", type=int, help="步数", dest="steps")
+aidraw_parser.add_argument(
+    "-t", "--steps", "-步数", type=int, help="步数", dest="steps"
+)
 aidraw_parser.add_argument(
     "-u", "--ntags", "-排除", default=" ", nargs="*", help="负面标签", dest="ntags"
 )
@@ -57,7 +71,12 @@ aidraw_parser.add_argument(
     "-n", "--noise", "-噪声", type=float, help="修改噪声", dest="noise"
 )
 aidraw_parser.add_argument(
-    "-o", "--override", "-不优化", action="store_true", help="不使用内置优化参数", dest="override"
+    "-o",
+    "--override",
+    "-不优化",
+    action="store_true",
+    help="不使用内置优化参数",
+    dest="override",
 )
 
 aidraw_matcher = C.shell_command(
@@ -68,7 +87,7 @@ aidraw_matcher = C.shell_command(
 
 
 @aidraw_matcher.handle()
-async def aidraw_get(args: ParserExit = ShellCommandArgs()):
+async def aidraw_check(args: ParserExit = ShellCommandArgs()):
     aidraw_matcher.finish("命令解析出错了!请不要输入奇奇怪怪的字符哦~(引号不闭合也不可以哦)")
 
 
@@ -109,12 +128,15 @@ async def aidraw_get(
         aidraw = Draw(user_id=user_id, group_id=group_id, **vars(args))
         # 检测是否有18+词条
         if not config.sd_nsfw:
-            pattern = re.compile(f"(\s|,|^)({HTAGS})(\s|,|$)")
+            pattern = re.compile(rf"(\s|,|^)({HTAGS})(\s|,|$)")
             if re.search(pattern, aidraw.tags) is not None:
                 await aidraw_matcher.finish(f"H是不行的!")
         if not args.override:
             aidraw.tags = (
-                BASE_TAG + await config.get_value(group_id, "tags") + "," + aidraw.tags
+                BASE_TAG
+                + await config.get_value(group_id, "tags")
+                + ","
+                + aidraw.tags
             )
             aidraw.ntags = LOW_QUALITY + aidraw.ntags
 
@@ -231,7 +253,9 @@ async def fifo_gennerate(aidraw: Draw = None):
                 loop = get_running_loop()
                 loop.call_later(
                     revoke,
-                    lambda: loop.create_task(bot.delete_msg(message_id=message_id)),
+                    lambda: loop.create_task(
+                        bot.delete_msg(message_id=message_id)
+                    ),
                 )
 
     if aidraw:
@@ -290,7 +314,7 @@ async def prepocess_tags(tags: list[str]):
     tags: str = "".join([i + " " for i in tags if isinstance(i, str)]).lower()
     tags = re.sub(emoji, "", tags)
     # 去除CQ码
-    tags = re.sub("\[CQ[^\s]*?]", "", tags)
+    tags = re.sub(r"\[CQ[^\s]*?]", "", tags)
     # 检测中文
     taglist = tags.split(",")
     tagzh = ""
