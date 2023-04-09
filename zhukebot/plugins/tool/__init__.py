@@ -25,6 +25,8 @@ async def sendtosuperuser(message):
         await asyncio.sleep(5)
 
 
+"""
 @driver.on_bot_connect
 async def on_start():
     await sendtosuperuser(f"{nickname}启动完成")
+"""
