@@ -1,5 +1,0 @@
-transformers
-nonebot-plugin-htmlrender
-nonebot-adapter-onebot
-beautifulsoup4
-pynvml
