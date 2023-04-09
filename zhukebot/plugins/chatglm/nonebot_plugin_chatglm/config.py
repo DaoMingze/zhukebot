@@ -1,3 +1,5 @@
+import os
+
 from nonebot import get_driver
 from nonebot.log import logger
 from pydantic import BaseSettings
@@ -26,7 +28,7 @@ class Config(BaseSettings):
     """是否转图片"""
     chatglm_width: int = 640
     """图片宽度"""
-    nickname: list[str] = "ChatGLM"
+    nickname: list[str] = ["ChatGLM"]
     """机器人的昵称"""
 
     class Config:
@@ -41,14 +43,34 @@ def torch_gc():
 
 
 config = Config(**get_driver().config.dict())  # 格式化加载配置
+
+model_name = "THUDM/chatglm-6b-int4-qe"
+model_path = config.chatglm_model
+if model_path == model_name:
+    print(f"已加载{config.chatglm_model}")
+elif os.path.exists(model_path) is None:
+    print(f"正在下载{model_name}，并保存到{model_path}")
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name, trust_remote_code=True, revision="main"
+    )
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        model_name, trust_remote_code=True, revision="main"
+    )
+    tokenizer.save_pretrained(
+        model_path, trust_remote_code=True, revision="main"
+    )
+    model.save_pretrained(model_path, trust_remote_code=True, revision="main")
+else:
+    model_path = model_name
+
 tokenizer = AutoTokenizer.from_pretrained(
-    config.chatglm_model, trust_remote_code=True, revision="main"
+    model_path, trust_remote_code=True, revision="main"
 )
-# model = AutoModelForSeq2SeqLM.from_pretrained("THUDM/chatglm-6b-int4-qe")
+#
 if config.chatglm_mode.lower() == "cuda":
     model = (
         AutoModel.from_pretrained(
-            config.chatglm_model, trust_remote_code=True, revision="main"
+            model_path, trust_remote_code=True, revision="main"
         )
         .half()
         .cuda()
@@ -58,7 +80,7 @@ if config.chatglm_mode.lower() == "cuda":
     CUDA_DEVICE = f"{DEVICE}:{DEVICE_ID}" if DEVICE_ID else DEVICE
 else:
     model = AutoModel.from_pretrained(
-        config.chatglm_model, trust_remote_code=True, revision="main"
+        model_path, trust_remote_code=True, revision="main"
     ).float()
 
 model = compile(model).eval()

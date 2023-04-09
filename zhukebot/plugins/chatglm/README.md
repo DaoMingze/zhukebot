@@ -6,14 +6,16 @@
 
 _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
-![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
-![Python](https://img.shields.io/badge/python-3.8+-blue)
+![python](https://img.shields.io/badge/python-3.8+-blue)
 [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-![nonebot](https://img.shields.io/badge/nonebot-2-red)
-![onebot](https://img.shields.io/badge/onebot-11-white)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DaoMingze/zhukebot/main.svg)](https://results.pre-commit.ci/latest/github/DaoMingze/zhukebot/main)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
 [![PyPI](https://img.shields.io/pypi/v/nonebot_plugin_chatglm)](https://pypi.org/project/nonebot-plugin-chatglm)
+
+![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
+![nonebot](https://img.shields.io/badge/nonebot-2-red)
+![onebot](https://img.shields.io/badge/onebot-11-white)
 
 </div>
 
@@ -40,7 +42,7 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 硬件需求上：训练>微调>推理，但本插件仅考虑推理应用场景。
 
-> 实际可以低于 Python 3.9（但 none-adapter-onebot 要求 Python 3.8+）。
+> none-adapter-onebot 要求 Python 3.8+
 
 ## 安装与更新
 
