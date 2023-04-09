@@ -4,6 +4,7 @@ venv
 accounts
 *.code-workspace
 zhukebot/data
+.pdm-python
 data
 __pycache__
 error.log
