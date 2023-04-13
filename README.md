@@ -27,7 +27,6 @@
 插件清单
 
 - sdwebui，精简自[nonebot-plugin-novelai](https://github.com/sena-nana/nonebot-plugin-novelai)，![licese](https://img.shields.io/github/license/sena-nana/nonebot-plugin-novelai?style=flat-square)
-- arkcord，来自[nonebot_plugin_arkrecord](https://github.com/zheuziihau/nonebot_plugin_arkrecord)，![licese](https://img.shields.io/github/license/zheuziihau/nonebot_plugin_arkrecord?style=flat-square)，仅更改资源位置等。
 - ChatGLM，为清华开源的[chatGLM-6B](https://github.com/THUDM/ChatGLM-6B)提供 nonebot 插件。
 - [ChatRWKV](https://github.com/BlinkDL/ChatRWKV)支持插件，还在调试
 

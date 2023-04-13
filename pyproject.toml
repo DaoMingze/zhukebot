@@ -24,8 +24,8 @@ plugins = [
     "nonebot_plugin_help",
     "nonebot_plugin_apscheduler",
     "nonebot_plugin_htmlrender",
-    "nonebot_plugin_gocqhttp",
-
+    #"nonebot_plugin_gocqhttp",
+    "nonebot_plugin_arkrecord",
 ]
 plugin_dirs = ["zhukebot/plugins"]
 builtin_plugins = ["echo"]
