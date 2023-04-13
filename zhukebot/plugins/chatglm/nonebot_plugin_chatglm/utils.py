@@ -22,7 +22,7 @@ def readfile(name: str, suff: str = "json"):
 
 def savehistory(id: str, context: str):
     """存储与机器人的聊天记录"""
-    path = config.chatglm_record + "history/"
+    path = config.chatglm_record
     if os.path.exists(path) is False:
         os.mkdir(path)
     with open(path + id + ".json", "w", encoding="utf-8") as f:
@@ -38,6 +38,17 @@ def check_cd(id):
     else:
         cd[id] = nowtime
         return False, deltatime
+
+
+def check_memo(id):
+    """基于发言人，检查记忆轮数"""
+    deltamemo = memo.get(id, 0)
+    if deltamemo < config.chatglm_memo:
+        memo[id] = deltamemo + 1
+        return True
+    else:
+        memo[id] = 0
+        return False
 
 
 def choicerole(role: str = ""):

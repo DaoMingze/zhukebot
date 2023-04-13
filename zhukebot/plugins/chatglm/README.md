@@ -21,7 +21,9 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 ## 介绍
 
-使用[ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B)为后端，[NoneBot2](https://github.com/nonebot/nonebot2)为平台的极其简单的本地中文（汉语） AI chat 插件。
+使用 [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 为后端，[NoneBot2](https://github.com/nonebot/nonebot2) 为平台的极其简单的本地中文（汉语） AI chat 插件。
+
+首次加载等待时间视 Hugging Face 下载速度而定。
 
 ### 环境要求
 
@@ -52,19 +54,19 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 #### CUDA
 
-- Windows：见[CUDA 官方文档 | 英文](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
-- Linux：见[CUDA 官方文档 | 英文](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
+- Windows：见 [CUDA 官方文档 | 英文](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
+- Linux：见 [CUDA 官方文档 | 英文](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
 
 #### PyTorch
 
-见[PyTorch 官方导引](https://pytorch.org/get-started/locally/)
+见 [PyTorch 官方导引](https://pytorch.org/get-started/locally/)
 
 ### 插件
 
 <details>
 <summary><b>（一）使用 nb-cli 安装与更新</b></summary>
 
-在 nonebot2 项目的根目录下打开命令行, 输入以下指令即可安装
+在 nonebot2 项目的根目录下打开命令行，输入以下指令即可安装
 
 ```bash
 nb plugin install nonebot-plugin-chatglm --upgrade
@@ -75,7 +77,7 @@ nb plugin install nonebot-plugin-chatglm --upgrade
 <details>
 
 <summary><b>（二）使用包管理器安装与更新</b></summary>
-1、在 nonebot2 项目的插件目录下, 打开命令行, 根据你使用的包管理器, 输入相应的安装命令：
+1、在 nonebot2 项目的插件目录下，打开命令行，根据你使用的包管理器，输入相应的安装命令：
 <details>
 <summary>pip</summary>
 
@@ -109,7 +111,7 @@ conda install nonebot-plugin-chatglm
 
 </details>
 
-2、打开 nonebot2 项目根目录下的 `pyproject.toml` 文件, 在 `[tool.nonebot]` 部分追加写入
+2、打开 nonebot2 项目根目录下的 `pyproject.toml` 文件，在 `[tool.nonebot]` 部分追加写入
 
 ```toml
 plugins = ["nonebot_plugin_chatglm"]
@@ -121,7 +123,7 @@ plugins = ["nonebot_plugin_chatglm"]
 
 ### ChatGLM 模型
 
-> 模型简介：ChatGLM-6B 是一个开源的、支持中英双语的对话语言模型，基于[General Language Model (GLM)](https://github.com/THUDM/GLM) 架构，具有 62 亿参数。结合模型量化技术，用户可以在消费级的显卡上进行本地部署（INT4 量化级别下最低只需 6GB 显存）。 ChatGLM-6B 使用了和 ChatGPT 相似的技术，针对中文问答和对话进行了优化。经过约 1T 标识符的中英双语训练，辅以监督微调、反馈自助、人类反馈强化学习等技术的加持，62 亿参数的 ChatGLM-6B 已经能生成相当符合人类偏好的回答。
+> 模型简介：ChatGLM-6B 是一个开源的、支持中英双语的对话语言模型，基于 [General Language Model (GLM)](https://github.com/THUDM/GLM) 架构，具有 62 亿参数。结合模型量化技术，用户可以在消费级的显卡上进行本地部署（INT4 量化级别下最低只需 6GB 显存）。 ChatGLM-6B 使用了和 ChatGPT 相似的技术，针对中文问答和对话进行了优化。经过约 1T 标识符的中英双语训练，辅以监督微调、反馈自助、人类反馈强化学习等技术的加持，62 亿参数的 ChatGLM-6B 已经能生成相当符合人类偏好的回答。
 
 #### 选择模型
 
@@ -137,7 +139,7 @@ ChatGLM-6B 系列模型
 
 </div>
 
-- 如果是较小显存（< 10 G）且只用聊天对话模型（ChatGLM-6B-INT4-QE）[^1]则没用必要修改。
+- 如果是较小显存（< 10 G）且只用聊天对话模型（ChatGLM-6B-INT4-QE）[^1] 则没用必要修改。
 - 如果使用 6B 完整模型，则可以自行设置路径。
 
 [^1]: 在其他位置配置量化后的 INT4 模型，发生一些编译错误，暂时~~懒得~~没有能力解决。
@@ -155,12 +157,12 @@ ChatGLM-6B 系列模型
 
 ```python
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModel
-model_name = input("HF HUB路径，例如 THUDM/chatglm-6b-int4-qe: ")
+model_name = input("HF HUB 路径，例如 THUDM/chatglm-6b-int4-qe: ")
 model_path = input("本地存放路径，例如 ./path/modelname: ")
-#用AutoModelForSeq2SeqLM.from_pretrained()下载模型
+#用 AutoModelForSeq2SeqLM.from_pretrained() 下载模型
 tokenizer = AutoTokenizer.from_pretrained(model_name,trust_remote_code=True,revision="main")
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name,trust_remote_code=True,revision="main")
-#用 PreTrainedModel.save_pretrained()保存模型到指定位置
+#用 PreTrainedModel.save_pretrained() 保存模型到指定位置
 tokenizer.save_pretrained(model_path,trust_remote_code=True,revision="main")
 model.save_pretrained(model_path,trust_remote_code=True,revision="main")
 ```
@@ -172,7 +174,7 @@ model.save_pretrained(model_path,trust_remote_code=True,revision="main")
 
 #### 模型更新与其他使用
 
-模型的具体使用，还请关注[原仓库说明](https://github.com/THUDM/ChatGLM-6B)，提交检测 →[![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)](https://github.com/THUDM/ChatGLM-6B)
+模型的具体使用，还请关注 [原仓库说明](https://github.com/THUDM/ChatGLM-6B)，提交检测 →[![GitHub last commit](https://img.shields.io/github/last-commit/THUDM/ChatGLM-6B?style=flat-square)](https://github.com/THUDM/ChatGLM-6B)
 
 ### 运行所需依赖
 
@@ -194,7 +196,7 @@ pip install pypdf2
 
 2、`NoneBot`运行所需依赖
 
-安装这个插件，那必然是已经有了`NoneBot`项目，或者移步去[NoneBot2](https://github.com/nonebot/nonebot2)查看。由于还不会根据项目自动切换适配器，因此需要安装`nonebot-adapter-onebot`，以便调用`Onebotv11`进行通信。
+安装这个插件，那必然是已经有了`NoneBot`项目，或者移步去 [NoneBot2](https://github.com/nonebot/nonebot2) 查看。由于还不会根据项目自动切换适配器，因此需要安装`nonebot-adapter-onebot`，以便调用`Onebotv11`进行通信。
 
 ### 配置
 
@@ -231,9 +233,9 @@ pip install pypdf2
 ```python
 {
     "": "我在，随时为您服务",
-    r"你好[吗]?|hello": "您好，很高兴与您在此相遇，但是您想问什么呢？",
-    r"你是[谁？]?": "我是ChatGLM，一个参数62亿的人工智能语言模型，由清华大学和智谱AI训练开源，代号ChatGLM-6B",
-    r"你的(主人|master)是[谁？]?": f"{superuser}"
+    r"你好 [吗]?|hello": "您好，很高兴与您在此相遇，但是您想问什么呢？",
+    r"你是 [谁？]?": "我是 ChatGLM，一个参数 62 亿的人工智能语言模型，由清华大学和智谱 AI 训练开源，代号 ChatGLM-6B",
+    r"你的（主人|master) 是 [谁？]?": f"{superuser}"
 }
 ```
 

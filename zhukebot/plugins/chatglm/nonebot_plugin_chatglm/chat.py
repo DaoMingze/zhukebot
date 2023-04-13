@@ -2,7 +2,12 @@ import os
 import re
 import shutil
 
-from nonebot.adapters.onebot.v11 import Bot, Event, Message
+from nonebot.adapters.onebot.v11 import (
+    Bot,
+    Event,
+    Message,
+    PrivateMessageEvent,
+)
 from nonebot.exception import ParserExit
 from nonebot.log import logger
 from nonebot.params import CommandArg
@@ -92,15 +97,17 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
             ctx = simple.get(i)
             await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{ctx}"))
     # 判断记忆
-    if config.chatglm_memo:
-        history = readfile(qq_id, "json")
+    print(check_memo(qq_id))
+    if check_memo(qq_id):
+        his = readfile(qq_id, "json")
     else:
-        history = []
+        his = []
+    print(his)
     # await chatGLM_chat.send(Message(f"[CQ:at,qq={qq_id}]{nickname}正在运算"))
     query = ctx
     # response = chat(qq_id, query, history)
     try:
-        response, new = model.chat(tokenizer, query, history=history)
+        response, new = model.chat(tokenizer, query, history=his)
         savehistory(qq_id, new)
         if response is None:
             raise RuntimeError("Error")
@@ -125,12 +132,10 @@ chatGLM_print = on_keyword(
 @chatGLM_print.handle()
 async def user_export_handle(bot: Bot, event: Event):
     qq_id = event.get_user_id()
-    """
     if isinstance(event, PrivateMessageEvent):  # gocq不支持私聊传文件
         await chatGLM_print.finish(
             Message(f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令")
         )
-    """
     try:
         response = config.chatglm_record + qq_id + ".json"
     except Exception as e:
@@ -152,6 +157,7 @@ chatGLM_clear = on_keyword(
 async def clear(bot: Bot, event: Event):
     qq_id = event.get_user_id()
     context = []
+    memo[qq_id] = 0
     savehistory(qq_id, context)
     msg = Message("已清空")
     await chatGLM_clear.finish(msg)
