@@ -44,9 +44,6 @@ def chat(id, query, history):
 """
 
 
-chatGLM_chat = on_command(config.chatglm_cmd[0], priority=50)
-
-
 cmd_help = {
     f"{config.chatglm_cmd}": "唤醒机器人",
     "-l": "控制输入长度",
@@ -62,17 +59,7 @@ async def chat_get(event: Event, args: ParserExit = CommandArg()):
         f"[CQ:at,qq={qq_id}]{nickname}认为您错误输入了命令，现告知您正确的输入格式：{{cmd_help}}"
     )
 """
-
-
-def check_simple(ctx):
-    ctx = ctx_pure(ctx)
-    simple = eval(readfile("simple", "txt"))
-    for i in simple.keys():
-        a = re.match(i, ctx)
-        if a:
-            ctx = simple.get(i)
-            return True, ctx
-    return False, ctx
+chatGLM_chat = on_command(config.chatglm_cmd[0], priority=50)
 
 
 @chatGLM_chat.handle()
@@ -89,21 +76,19 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
         )
     ctx = message.extract_plain_text().strip()
     # 判断简单问题
-    simple = eval(readfile("simple", "txt"))
-    # 可以以此加载一些专业词典或免责声明，实际上是fakeAI（假冒AI），最好不要用
-    for i in simple.keys():
-        a = re.match(i, ctx)
-        if a:
-            ctx = simple.get(i)
-            await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{ctx}"))
-    # 判断记忆
-    print(check_memo(qq_id))
-    if check_memo(qq_id):
-        his = readfile(qq_id, "json")
-    else:
-        his = []
-    print(his)
+    flag_stats, ctx = check_simple(ctx)
+    if flag_stats:
+        await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{ctx}"))
+    # 判断是否角色扮演
+    his = botrole.get(qq_id, [])
+    if his == []:
+        # 判断记忆
+        if check_memo(qq_id):
+            his = readfile(qq_id, "json")
+        else:
+            his = []
     # await chatGLM_chat.send(Message(f"[CQ:at,qq={qq_id}]{nickname}正在运算"))
+    print(his)
     query = ctx
     # response = chat(qq_id, query, history)
     try:
@@ -124,6 +109,17 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
     await chatGLM_chat.finish(msg)
 
 
+chatGLM_chooserole = on_command("设置chatglm角色", priority=30)
+
+
+@chatGLM_chooserole.handle()
+async def role(bot: Bot, event: Event, message: Message = CommandArg()):
+    qq_id = event.get_user_id()
+    ctx = message.extract_plain_text().strip()
+    saverole(qq_id, ctx)
+    await chatGLM_chooserole.finish(Message(f"[CQ:at,qq={qq_id}]您选取的角色是{ctx}"))
+
+
 chatGLM_print = on_keyword(
     [config.chatglm_cmd[0] + "export", "导出记录"], priority=40, block=True
 )
@@ -137,7 +133,7 @@ async def user_export_handle(bot: Bot, event: Event):
             Message(f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令")
         )
     try:
-        response = config.chatglm_record + qq_id + ".json"
+        response = record + qq_id + ".json"
     except Exception as e:
         logger.error(e)
         await chatGLM_print.finish(Message(f"[CQ:at,qq={qq_id}]{str(e)}"))
@@ -168,7 +164,7 @@ chatGLM_allclear = on_command("清理全部", permission=SUPERUSER, priority=50)
 
 @chatGLM_allclear.handle()
 async def allclear(bot: Bot, event: Event):
-    shutil.rmtree(config.chatglm_record)
+    shutil.rmtree(record)
 
 
 chatGLM_help = on_keyword(["对话帮助"], priority=50)

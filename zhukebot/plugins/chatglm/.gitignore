@@ -2,4 +2,3 @@ build
 dist
 ./.pdm.toml
 test.py
-pdf_reader

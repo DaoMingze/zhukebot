@@ -16,8 +16,8 @@ class Config(BaseSettings):
     """调用机器人命令"""
     chatglm_cd: int = 10
     """冷却时间"""
-    chatglm_record: str = "./data/chatglm/"
-    """历史记录存放路径"""
+    chatglm_path: str = "./data/chatglm/"
+    """chatglm相关中间文件存放路径"""
     chatglm_memo: int = 5
     """记录对话轮数"""
     chatglm_tome: bool = False
@@ -45,7 +45,6 @@ def torch_gc():
 config = Config(**get_driver().config.dict())  # 格式化加载配置
 model_name = "THUDM/chatglm-6b-int4-qe"
 model_path = config.chatglm_model
-print(os.path.exists(model_path))
 if os.path.exists(model_path) is False:
     print(f"正在下载{model_name}，并保存到{model_path}")
     tokenizer = AutoTokenizer.from_pretrained(
@@ -58,6 +57,8 @@ if os.path.exists(model_path) is False:
         model_path, trust_remote_code=True, revision="main"
     )
     model.save_pretrained(model_path, trust_remote_code=True, revision="main")
+elif os.path.exists(model_path):
+    print(f"正从{model_path}加载模型")
 else:
     model_path = model_name
     print(f"已加载{model_name}")
@@ -87,3 +88,5 @@ model = compile(model).eval()
 cd = {}
 nickname = config.nickname[0]
 memo = {}
+record = config.chatglm_path + "record/"
+botrole = {"": []}

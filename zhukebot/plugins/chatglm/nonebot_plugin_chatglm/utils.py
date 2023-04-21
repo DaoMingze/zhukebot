@@ -4,11 +4,13 @@ import re
 import time
 
 from .config import *
+from .prompt import *
 
 
-def readfile(name: str, suff: str = "json"):
+def readfile(name: str, path: str = record, suff: str = "json"):
     """读取chatglm_record路径下的文件，输入文件名和后缀"""
-    filename = config.chatglm_record + name + "." + suff
+    filename = path + name + "." + suff
+    print(os.path.exists(filename))
     if os.path.exists(filename):
         with open(filename, "r+", encoding="utf-8") as f:
             if suff == "txt":
@@ -22,10 +24,9 @@ def readfile(name: str, suff: str = "json"):
 
 def savehistory(id: str, context: str):
     """存储与机器人的聊天记录"""
-    path = config.chatglm_record
-    if os.path.exists(path) is False:
-        os.mkdir(path)
-    with open(path + id + ".json", "w", encoding="utf-8") as f:
+    if os.path.exists(record) is False:
+        os.mkdir(record)
+    with open(record + id + ".json", "w", encoding="utf-8") as f:
         f.write(json.dumps(context))
 
 
@@ -51,11 +52,14 @@ def check_memo(id):
         return False
 
 
-def choicerole(role: str = ""):
-    """选择预设角色"""
-    roles = readfile("roles", "json")
-    roleprompt = roles[f"{role}"]
-    return roleprompt
+def saverole(id: str, role: str = ""):
+    """记录用户所选角色"""
+    if role == "" or "取消":
+        botrole[id] = []
+    botrole[id] = [roles[role]]
+    savehistory(id, botrole[id])
+    with open(record + "botroles.json", "w", encoding="utf-8") as f:
+        f.write(json.dumps(botrole))
 
 
 emoji = re.compile(
@@ -73,3 +77,16 @@ def ctx_pure(ctx: str):
     ctx = re.sub(emoji, "", ctx)
     ctx = re.sub(r"\[CQ[^\s]*?]", "", ctx)
     return ctx
+
+
+def check_simple(ctx):
+    """
+    可以以此加载一些专业词典或免责声明，实际上是fakeAI（假冒AI），最好不要用
+    """
+    # ctx = ctx_pure(ctx)
+    for i in simple:
+        a = re.match(i, ctx)
+        if a:
+            ctx = simple.get(i)
+            return True, ctx
+    return False, ctx

@@ -11,11 +11,11 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DaoMingze/zhukebot/main.svg)](https://results.pre-commit.ci/latest/github/DaoMingze/zhukebot/main)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
 [![PyPI](https://img.shields.io/pypi/v/nonebot_plugin_chatglm)](https://pypi.org/project/nonebot-plugin-chatglm)
-
-![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/nonebot-plugin-chatglm)
 ![nonebot](https://img.shields.io/badge/nonebot-2-red)
 ![onebot](https://img.shields.io/badge/onebot-11-white)
+![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
 
 </div>
 
@@ -29,14 +29,14 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 <div align="center">
 
-|    量化等级    |      内存要求       |                       策略 |
-|:--------------:|:-------------------:|---------------------------:|
-|       无       |         CPU         |                   .float() |
-| FP16（无量化） |      13GB 显存      |             .half().cuda() |
-|      INT8      |      10GB 显存      | .half().quantize(8).cuda() |
-|      INT4      | 6GB 显存，13GB 内存 | .half().quantize(4).cuda() |
-|   INT4 模型    |     5.2GB 显存      |             .half().cuda() |
-|  INT4-QE 模型  |     4.3GB 显存      |             .half().cuda() |
+| 量化等级       | 推理       | 微调 |                       策略 |
+| -------------- | ---------- | ---- | -------------------------: |
+| 无             | CPU        |      |                   .float() |
+| FP16（无量化） | 13GB 显存  | 14GB |             .half().cuda() |
+| INT8           | 8GB 显存   | 9GB  | .half().quantize(8).cuda() |
+| INT4           | 6GB 显存   | 7GB  | .half().quantize(4).cuda() |
+| INT4 模型      | 5.2GB 显存 |      |             .half().cuda() |
+| INT4-QE 模型   | 4.3GB 显存 |      |             .half().cuda() |
 
 </div>
 
@@ -132,7 +132,7 @@ plugins = ["nonebot_plugin_chatglm"]
 ChatGLM-6B 系列模型
 
 | 模型名称                                                              | 量化情况                            | 权重大小 |
-|-----------------------------------------------------------------------|-------------------------------------|---------:|
+| --------------------------------------------------------------------- | ----------------------------------- | -------: |
 | [ChatGLM-6B](https://huggingface.co/THUDM/chatglm-6b)                 | 无                                  |  13.73GB |
 | [ChatGLM-6B-INT4](https://huggingface.co/THUDM/chatglm-6b-int4)       | INT4: GLM Block                     |   4.06GB |
 | [ChatGLM-6B-INT4-QE](https://huggingface.co/THUDM/chatglm-6b-int4-qe) | INT4: GLM Block, Embedding, LM Head |   3.13GB |
@@ -182,16 +182,16 @@ model.save_pretrained(model_path,trust_remote_code=True,revision="main")
 
 1、模型所需的依赖
 
-ChatGLM，默认
+ChatGLM 推理
 
 ```bash
-pip install protobuf==3.20.0 transformers==4.26.1 icetk cpm_kernels
+pip install -U protobuf transformers>=4.23.1 cpm_kernels sentencepiece
 ```
 
-pdf，附加
+ChatGLM 微调
 
 ```bash
-pip install pypdf2
+pip install -U rouge_chinese nltk jieba datasets
 ```
 
 2、`NoneBot`运行所需依赖
@@ -203,13 +203,16 @@ pip install pypdf2
 在 nonebot2 项目的`.env`或`.env.prod`或`.env.dev`（根据实际选择）文件中添加下表中的配置。默认情况下，无需添加配置即可启用。
 
 | 配置项         | 必填 |   类型    | 默认值                                                                             |             说明             |
-|----------------|:----:|:---------:|------------------------------------------------------------------------------------|:----------------------------:|
+| -------------- | :--: | :-------: | ---------------------------------------------------------------------------------- | :--------------------------: |
 | chat_mode      |  否  |    str    | cpu                                                                                |    运行模式，cuda 或 cpu     |
 | chatglm_model  |  否  |    str    | "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4-qe/" | chatglm 模型及其配置文档路径 |
-| chatglm_record |  否  |    str    | "./data/chatglm/"                                                                  |       历史记录保存路径       |
+| chatglm_path |  否  |    str    | "./data/chatglm/"                                                                  |       插件相关中间文件保存路径       |
 | chatglm_cmd    |  否  | list[str] | ["hi"]                                                                             |           对话命令           |
 | chat_cd        |  否  |    int    | 30                                                                                 |    冷却时间，避免高频调用    |
+| chatglm_memo | 否 | int | 5 | 保存对话轮数|
 
+> 如果要较好的使用，强烈建议将`chat_mode`设置为`cuda`。
+>
 > 正常聊天使用来说，30 秒冷却较为合适；复杂问题聊天，60 秒较为合适。建议根据实际测试进行调整。
 
 ### 附加文件
@@ -232,10 +235,9 @@ pip install pypdf2
 
 ```python
 {
-    "": "我在，随时为您服务",
-    r"你好 [吗]?|hello": "您好，很高兴与您在此相遇，但是您想问什么呢？",
-    r"你是 [谁？]?": "我是 ChatGLM，一个参数 62 亿的人工智能语言模型，由清华大学和智谱 AI 训练开源，代号 ChatGLM-6B",
-    r"你的（主人|master) 是 [谁？]?": f"{superuser}"
+    r"你好[吗]?|hello": "您好，很高兴与您在此相遇，但是您想问什么呢？",
+    r"你是[谁？]?": "我是 ChatGLM，一个参数 62 亿的人工智能语言模型，由清华大学和智谱 AI 训练开源，代号 ChatGLM-6B",
+    r"你的(主人|master)是[谁？]?": f"[CQ:at,qq={superusers}]",
 }
 ```
 
@@ -244,7 +246,7 @@ pip install pypdf2
 ### 指令表
 
 |   指令   |    权限    | 需要@ |   范围    | 说明                    |
-|:--------:|:----------:|:-----:|:---------:|-------------------------|
+| :------: | :--------: | :---: | :-------: | ----------------------- |
 |    hi    |   所有人   |  否   | 私聊/群聊 | 与 chatglm 对话         |
 | 清空记录 |   所有人   |  否   | 私聊/群聊 | 清空自己的对话历史记录  |
 | 导出记录 |   所有人   |  否   |   群聊    | 导出记录文件到群中      |
@@ -267,7 +269,7 @@ pip install pypdf2
 
 尚无
 
-## [更新说明](updatelog.md)
+## [更新说明](changelog.md)
 
 ## 参考与致谢
 
@@ -281,5 +283,4 @@ pip install pypdf2
 
 - [nonebot-plugin-novelai](https://github.com/sena-nana/nonebot-plugin-novelai)，学习的对象，cd 使用来自于此
 - [nonebot-plugin-ChatGLM6B](https://github.com/QNLanYang/nonebot_plugin_ChatGLM6B)，与本项目相似，但本项目从中学习转图片、对话记忆。
-- [nonebot_plugin_chatpdf](https://github.com/Alpaca4610/nonebot_plugin_chatpdf)
 - [ChatGLM-6B API](https://github.com/imClumsyPanda/ChatGLM-6B-API)、[ChatGLM-webui](https://github.com/Akegarasu/ChatGLM-webui)
