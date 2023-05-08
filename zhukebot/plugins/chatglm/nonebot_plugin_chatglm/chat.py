@@ -1,11 +1,14 @@
+import asyncio
 import os
 import re
 import shutil
+from collections import deque
 
 from nonebot.adapters.onebot.v11 import (
     Bot,
     Event,
     Message,
+    MessageSegment,
     PrivateMessageEvent,
 )
 from nonebot.exception import ParserExit
@@ -25,25 +28,6 @@ if config.chatglm_pic:
 # 模块化/函数化功能
 
 
-"""
-def chat(id, query, history):
-    try:
-        response, new = model.chat(tokenizer, query, history=history)
-        if response == None:
-            raise RuntimeError("Error")
-    except Exception as e:
-        logger.exception("生成失败", stack_info=True)
-        # 抓取错误
-        message = f"抱歉，{nickname}遭遇了以下错误：\n"
-        for i in e.args:
-            message += str(i)
-        return message
-    savehistory(id, new)
-    torch_gc()
-    return response
-"""
-
-
 cmd_help = {
     f"{config.chatglm_cmd}": "唤醒机器人",
     "-l": "控制输入长度",
@@ -59,43 +43,58 @@ async def chat_get(event: Event, args: ParserExit = CommandArg()):
         f"[CQ:at,qq={qq_id}]{nickname}认为您错误输入了命令，现告知您正确的输入格式：{{cmd_help}}"
     )
 """
-chatGLM_chat = on_command(config.chatglm_cmd[0], priority=50)
+chat_queue: deque = deque([])
+
+if config.chatglm_tome:
+    chatGLM_chat = on_command(
+        tuple(config.chatglm_cmd), rule=to_me(), priority=1
+    )
+else:
+    chatGLM_chat = on_command(tuple(config.chatglm_cmd), priority=1)
+
+
+class prompt_context:
+    async def args(
+        self, bot: Bot, event: Event, message: Message = CommandArg()
+    ):
+        # group_id
+        self.qq_id = event.get_user_id()
+        self.query = message.extract_plain_text().strip()
+        flag_cd, deltatime = check_cd(self.qq_id)
+        if flag_cd:
+            await chatGLM_chat.finish(
+                Message(
+                    f"[CQ:at,qq={self.qq_id}]{nickname}认为您问得太快了，您需要{config.chatglm_cd - int(deltatime)}秒来思考这个问题的价值。"
+                )
+            )
+        # 判断简单问题
+        flag_stats, query = check_simple(self.query)
+        if flag_stats:
+            await chatGLM_chat.finish(
+                Message(f"[CQ:at,qq={self.qq_id}]{query}")
+            )
+        await chatGLM_chat.send(
+            Message(f"[CQ:at,qq={self.qq_id}]{nickname}正在运算，请稍候。")
+        )
+        # 判断是否角色扮演
+        if history := botrole.get(self.qq_id, []) == []:
+            # 判断记忆
+            if check_memo(self.qq_id):
+                self.history = readfile(self.qq_id, "json")
+            else:
+                self.history = []
+        print(f"角色记忆内容为{history}")
 
 
 @chatGLM_chat.handle()
-async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
-    # group_id
-    qq_id = event.get_user_id()
-    # 判断冷却时间
-    flag_cd, deltatime = check_cd(qq_id)
-    if flag_cd:
-        await chatGLM_chat.finish(
-            Message(
-                f"[CQ:at,qq={qq_id}]{nickname}认为您问得太快了，您需要{config.chatglm_cd - int(deltatime)}秒来思考这个问题的价值。"
-            )
-        )
-    ctx = message.extract_plain_text().strip()
-    # 判断简单问题
-    flag_stats, ctx = check_simple(ctx)
-    if flag_stats:
-        await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{ctx}"))
-    # 判断是否角色扮演
-    his = botrole.get(qq_id, [])
-    if his == []:
-        # 判断记忆
-        if check_memo(qq_id):
-            his = readfile(qq_id, "json")
-        else:
-            his = []
-    # await chatGLM_chat.send(Message(f"[CQ:at,qq={qq_id}]{nickname}正在运算"))
-    print(his)
-    query = ctx
-    # response = chat(qq_id, query, history)
+async def _chatgen(input: prompt_context):
+    start = time.time()
     try:
-        response, new = model.chat(tokenizer, query, history=his)
-        savehistory(qq_id, new)
+        response, new = model.chat(tokenizer, input.query, input.history)
+        savehistory(input.qq_id, new)
         if response is None:
             raise RuntimeError("Error")
+        message = f"{response}"
     except Exception as e:
         logger.exception("生成失败", stack_info=True)
         # 抓取错误
@@ -103,10 +102,23 @@ async def chat(bot: Bot, event: Event, message: Message = CommandArg()):
         for i in e.args:
             message += str(i)
         await chatGLM_chat.finish(Message(message))
-
     torch_gc()
-    msg = Message(f"[CQ:at,qq={qq_id}]{response}")
-    await chatGLM_chat.finish(msg)
+    await chat_answer(response)
+    end = time.time()
+    print(end - start)
+
+
+async def chat_answer(bot: Bot, event: Event, response):
+    if config.chatglm_pic:  # 转图片
+        if response.count("```") % 2 != 0:
+            response += "\n```"
+        img = await md_to_pic(response, width=config.chatglm_width)
+        response = MessageSegment.image(img)
+    if config.chatglm_rply:  # 回复方式
+        ans = MessageSegment.reply(event.message_id) + response
+        await chatGLM_chat.finish(ans)
+    else:
+        await chatGLM_chat.finish(response, at_sender=True)
 
 
 chatGLM_chooserole = on_command("设置chatglm角色", priority=30)

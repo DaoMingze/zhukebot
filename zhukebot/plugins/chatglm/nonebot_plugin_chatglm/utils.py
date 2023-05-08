@@ -10,7 +10,6 @@ from .prompt import *
 def readfile(name: str, path: str = record, suff: str = "json"):
     """读取chatglm_record路径下的文件，输入文件名和后缀"""
     filename = path + name + "." + suff
-    print(os.path.exists(filename))
     if os.path.exists(filename):
         with open(filename, "r+", encoding="utf-8") as f:
             if suff == "txt":

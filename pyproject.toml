@@ -17,15 +17,17 @@ license = { text = "MIT" }
 [tool.nonebot]
 adapters = [
     { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" },
-    { name = "Console", module_name = "nonebot.adapters.console", project_link = "nonebot-adapter-console", desc = "基于终端的交互式适配器" }
+    { name = "Console", module_name = "nonebot.adapters.console", project_link = "nonebot-adapter-console", desc = "基于终端的交互式适配器" },
+    {name = "Walle-Q", module_name = "nonebot_adapter_walleq"}
 ]
 plugins = [
     "nonebot_plugin_revoke",
     "nonebot_plugin_help",
     "nonebot_plugin_apscheduler",
-    "nonebot_plugin_htmlrender",
-    #"nonebot_plugin_gocqhttp",
+    "nonebot_plugin_gocqhttp",
     "nonebot_plugin_arkrecord",
+    "nonebot_plugin_moyu",
+    #"nonebot_plugin_novelai",
 ]
 plugin_dirs = ["zhukebot/plugins"]
 builtin_plugins = ["echo"]

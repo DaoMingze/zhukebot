@@ -26,20 +26,27 @@ class Config(BaseSettings):
     """是否群聊共用记录"""
     chatglm_pic: bool = False
     """是否转图片"""
+    chatglm_rply: bool = False
+    """是否回复，否则at"""
     chatglm_width: int = 640
     """图片宽度"""
     nickname: list[str] = ["ChatGLM"]
     """机器人的昵称"""
+    # 数值合法性检查
+    if chatglm_mode.lower() == "cuda":
+        if cuda.is_available is False:
+            chatglm_mode = "cpu"
 
     class Config:
         extra = "ignore"
 
 
 def torch_gc():
-    if cuda.is_available():
-        with cuda.device(CUDA_DEVICE):
-            cuda.empty_cache()
-            cuda.ipc_collect()
+    if config.chatglm_mode.lower() == "cuda":
+        if cuda.is_available():
+            with cuda.device(CUDA_DEVICE):
+                cuda.empty_cache()
+                cuda.ipc_collect()
 
 
 config = Config(**get_driver().config.dict())  # 格式化加载配置
@@ -83,7 +90,8 @@ else:
         model_path, trust_remote_code=True, revision="main"
     ).float()
 
-model = compile(model).eval()
+model = compile(model)
+model = model.eval()
 
 cd = {}
 nickname = config.nickname[0]
