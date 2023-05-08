@@ -6,14 +6,14 @@
 
 _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
-![python](https://img.shields.io/badge/python-3.8+-blue)
+[![python](https://img.shields.io/badge/python-3.8+-blueyellow?logo=python)](https://www.python.org/)
 [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DaoMingze/zhukebot/main.svg)](https://results.pre-commit.ci/latest/github/DaoMingze/zhukebot/main)
 [![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
-[![PyPI](https://img.shields.io/pypi/v/nonebot_plugin_chatglm)](https://pypi.org/project/nonebot-plugin-chatglm)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/nonebot-plugin-chatglm)
-![nonebot](https://img.shields.io/badge/nonebot-2-red)
-![onebot](https://img.shields.io/badge/onebot-11-white)
+[![PyPI](https://img.shields.io/pypi/v/nonebot_plugin_chatglm?logo=pypi&logoColor=yellow)](https://pypi.org/project/nonebot-plugin-chatglm)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/nonebot-plugin-chatglm?logo=pypi&logoColor=yellow)
+[![nonebot](https://img.shields.io/badge/nonebot-2-red?logo=)](https://v2.nonebot.dev/)
+[![onebot](https://img.shields.io/badge/OneBot-11-black?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABwCAMAAADxPgR5AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAxQTFRF////29vbr6+vAAAAk1hCcwAAAAR0Uk5T////AEAqqfQAAAKcSURBVHja7NrbctswDATQXfD//zlpO7FlmwAWIOnOtNaTM5JwDMa8E+PNFz7g3waJ24fviyDPgfhz8fHP39cBcBL9KoJbQUxjA2iYqHL3FAnvzhL4GtVNUcoSZe6eSHizBcK5LL7dBr2AUZlev1ARRHCljzRALIEog6H3U6bCIyqIZdAT0eBuJYaGiJaHSjmkYIZd+qSGWAQnIaz2OArVnX6vrItQvbhZJtVGB5qX9wKqCMkb9W7aexfCO/rwQRBzsDIsYx4AOz0nhAtWu7bqkEQBO0Pr+Ftjt5fFCUEbm0Sbgdu8WSgJ5NgH2iu46R/o1UcBXJsFusWF/QUaz3RwJMEgngfaGGdSxJkE/Yg4lOBryBiMwvAhZrVMUUvwqU7F05b5WLaUIN4M4hRocQQRnEedgsn7TZB3UCpRrIJwQfqvGwsg18EnI2uSVNC8t+0QmMXogvbPg/xk+Mnw/6kW/rraUlvqgmFreAA09xW5t0AFlHrQZ3CsgvZm0FbHNKyBmheBKIF2cCA8A600aHPmFtRB1XvMsJAiza7LpPog0UJwccKdzw8rdf8MyN2ePYF896LC5hTzdZqxb6VNXInaupARLDNBWgI8spq4T0Qb5H4vWfPmHo8OyB1ito+AysNNz0oglj1U955sjUN9d41LnrX2D/u7eRwxyOaOpfyevCWbTgDEoilsOnu7zsKhjRCsnD/QzhdkYLBLXjiK4f3UWmcx2M7PO21CKVTH84638NTplt6JIQH0ZwCNuiWAfvuLhdrcOYPVO9eW3A67l7hZtgaY9GZo9AFc6cryjoeFBIWeU+npnk/nLE0OxCHL1eQsc1IciehjpJv5mqCsjeopaH6r15/MrxNnVhu7tmcslay2gO2Z1QfcfX0JMACG41/u0RrI9QAAAABJRU5ErkJggg==)](https://onebot.dev)
 ![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
 
@@ -24,6 +24,26 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 使用 [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 为后端，[NoneBot2](https://github.com/nonebot/nonebot2) 为平台的极其简单的本地中文（汉语） AI chat 插件。
 
 首次加载等待时间视 Hugging Face 下载速度而定。
+
+## [更新说明](changelog.md)
+
+如有其他功能需求或疑问，欢迎提 issues，当然如果您实现了某些功能或修复了问题，也非常欢迎您提 PR。
+
+### 待办
+
+- [ ] 限制记忆轮数（~~在抄了，在抄了~~）
+- [ ] 图片输出功能（nonebot-plugin-htmlrender）（~~在抄了，在抄了~~）
+- [ ] 管理员在线配置
+  - [ ] 增加写入读取本地配置文件（json）以实现配置的在线热更新
+- [ ] @[Bot] 机器人 使用功能（调试阶段，我个人不太需要，不过后续加上吧）
+
+### 办结/功能
+
+- [x] 完善的默认配置，开箱即用。
+- [x] 模型自动下载并存放到指定位置（HuggingFace Hub提供）
+- [x] 保存对话记录以实现多轮对话
+- [x] 冷却时间（根据测试效果，默认 30 秒）
+- [x] 配置角色功能，基本实现
 
 ### 环境要求
 
@@ -205,7 +225,7 @@ pip install -U rouge_chinese nltk jieba datasets
 | 配置项         | 必填 |   类型    | 默认值                                                                             |             说明             |
 | -------------- | :--: | :-------: | ---------------------------------------------------------------------------------- | :--------------------------: |
 | chat_mode      |  否  |    str    | cpu                                                                                |    运行模式，cuda 或 cpu     |
-| chatglm_model  |  否  |    str    | "$User$/.cache/huggingface/modules/transformers_modules/THUDM/chatglm-6b-int4-qe/" | chatglm 模型及其配置文档路径 |
+| chatglm_model  |  否  |    str    | "./data/chatglm/model" | chatglm 模型及其配置文档路径 |
 | chatglm_path |  否  |    str    | "./data/chatglm/"                                                                  |       插件相关中间文件保存路径       |
 | chatglm_cmd    |  否  | list[str] | ["hi"]                                                                             |           对话命令           |
 | chat_cd        |  否  |    int    | 30                                                                                 |    冷却时间，避免高频调用    |
@@ -251,25 +271,6 @@ pip install -U rouge_chinese nltk jieba datasets
 | 清空记录 |   所有人   |  否   | 私聊/群聊 | 清空自己的对话历史记录  |
 | 导出记录 |   所有人   |  否   |   群聊    | 导出记录文件到群中      |
 | 清理全部 | 超级管理员 |  否   |   私聊    | 手动处理`out of memory` |
-
-## 待办
-
-- [x] 保存对话记录以实现多轮对话
-  - [x] 冷却时间（根据测试效果，默认 30 秒）
-  - [ ] 限制记忆轮数（~~在抄了，在抄了~~）
-- [ ] 配置角色功能，基本实现，正在物色适合适合 ChatGLM 的角色配置
-- [ ] 图片输出功能（~~在抄了，在抄了~~）
-- [ ] 管理员在线配置
-  - [ ] 增加写入读取本地配置文件（json）以实现配置的在线热更新
-- [ ] @[Bot] 机器人 使用功能（调试阶段，我个人不太需要，不过后续加上吧）
-
-如有其他功能需求，欢迎提 issues，当然如果您实现了某些功能或修复了问题，也非常欢迎您提 PR。
-
-### 办结
-
-尚无
-
-## [更新说明](changelog.md)
 
 ## 参考与致谢
 
