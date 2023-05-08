@@ -8,7 +8,7 @@ __plugin_meta__ = PluginMetadata(
     usage="hi[聊天内容]，清空记录，导出记录，设置chatglm角色",
     extra={
         "author": "daomingze",
-        "version": "0.1.5",
+        "version": "0.1.6",
         "priority": 8,
     },
 )

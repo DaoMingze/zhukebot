@@ -43,6 +43,7 @@ def check_cd(id):
 def check_memo(id):
     """基于发言人，检查记忆轮数"""
     deltamemo = memo.get(id, 0)
+    print(deltamemo)
     if deltamemo < config.chatglm_memo:
         memo[id] = deltamemo + 1
         return True

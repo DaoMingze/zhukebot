@@ -4,7 +4,7 @@ build = { includes = ["nonebot_plugin_chatglm"] }
 
 [project]
 name = "nonebot-plugin-chatglm"
-version = "0.1.5"
+version = "0.1.6"
 description = "基于ChatGLM-6B的NoneBot2插件"
 authors = [{ name = "dao_mingze", email = "dao_mingze@163.com" }]
 requires-python = ">=3.8"
@@ -15,8 +15,8 @@ dependencies = [
     "transformers>=4.27.1",
     "icetk>=0.0.4",
     "cpm-kernels>=1.0.11",
-    "nonebot-adapter-onebot>=2.1.0",
-    "nonebot2>=2.0.0rc3",
+    "nonebot-adapter-onebot>=2.2.0",
+    "nonebot2>=2.0.0rc4",
 ]
 
 [project.urls]

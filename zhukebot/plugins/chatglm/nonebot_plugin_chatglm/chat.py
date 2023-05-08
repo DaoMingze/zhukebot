@@ -53,45 +53,39 @@ else:
     chatGLM_chat = on_command(tuple(config.chatglm_cmd), priority=1)
 
 
-class prompt_context:
-    async def args(
-        self, bot: Bot, event: Event, message: Message = CommandArg()
-    ):
-        # group_id
-        self.qq_id = event.get_user_id()
-        self.query = message.extract_plain_text().strip()
-        flag_cd, deltatime = check_cd(self.qq_id)
-        if flag_cd:
-            await chatGLM_chat.finish(
-                Message(
-                    f"[CQ:at,qq={self.qq_id}]{nickname}认为您问得太快了，您需要{config.chatglm_cd - int(deltatime)}秒来思考这个问题的价值。"
-                )
-            )
-        # 判断简单问题
-        flag_stats, query = check_simple(self.query)
-        if flag_stats:
-            await chatGLM_chat.finish(
-                Message(f"[CQ:at,qq={self.qq_id}]{query}")
-            )
-        await chatGLM_chat.send(
-            Message(f"[CQ:at,qq={self.qq_id}]{nickname}正在运算，请稍候。")
-        )
-        # 判断是否角色扮演
-        if history := botrole.get(self.qq_id, []) == []:
-            # 判断记忆
-            if check_memo(self.qq_id):
-                self.history = readfile(self.qq_id, "json")
-            else:
-                self.history = []
-        print(f"角色记忆内容为{history}")
-
-
 @chatGLM_chat.handle()
-async def _chatgen(input: prompt_context):
+async def args(bot: Bot, event: Event, message: Message = CommandArg()):
+    # group_id
+    qq_id = event.get_user_id()
+    query = message.extract_plain_text().strip()
+    flag_cd, deltatime = check_cd(qq_id)
+    if flag_cd:
+        await chatGLM_chat.finish(
+            Message(
+                f"[CQ:at,qq={qq_id}]{nickname}认为您问得太快了，您需要{config.chatglm_cd - int(deltatime)}秒来思考这个问题的价值。"
+            )
+        )
+    # 判断简单问题
+    flag_stats, query = check_simple(query)
+    if flag_stats:
+        await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{query}"))
+    await chatGLM_chat.send(Message(f"[CQ:at,qq={qq_id}]{nickname}正在运算，请稍候。"))
+    # 判断是否角色扮演
+    if botrole.get(qq_id, []) != []:
+        history = botrole.get(qq_id, [])
+        print(f"角色记忆内容为{history}")
+    elif check_memo(qq_id):
+        history = readfile(qq_id, "json")
+    else:
+        history = []
+    await _chatgen(qq_id, query, history)
+
+
+async def _chatgen(qq_id, query, history):
     start = time.time()
     try:
-        response, new = model.chat(tokenizer, input.query, input.history)
-        savehistory(input.qq_id, new)
+        response, new = model.chat(tokenizer, query, history)
+        savehistory(qq_id, new)
         if response is None:
             raise RuntimeError("Error")
         message = f"{response}"
@@ -103,19 +97,19 @@ async def _chatgen(input: prompt_context):
             message += str(i)
         await chatGLM_chat.finish(Message(message))
     torch_gc()
-    await chat_answer(response)
+    await chat_answer(qq_id, response)
     end = time.time()
     print(end - start)
 
 
-async def chat_answer(bot: Bot, event: Event, response):
+async def chat_answer(qq_id, response):
     if config.chatglm_pic:  # 转图片
         if response.count("```") % 2 != 0:
             response += "\n```"
         img = await md_to_pic(response, width=config.chatglm_width)
         response = MessageSegment.image(img)
     if config.chatglm_rply:  # 回复方式
-        ans = MessageSegment.reply(event.message_id) + response
+        ans = MessageSegment.at(qq_id) + response
         await chatGLM_chat.finish(ans)
     else:
         await chatGLM_chat.finish(response, at_sender=True)
