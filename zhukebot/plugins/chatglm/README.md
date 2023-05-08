@@ -40,7 +40,7 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 ### 办结/功能
 
 - [x] 完善的默认配置，开箱即用。
-- [x] 模型自动下载并存放到指定位置（HuggingFace Hub提供）
+- [x] 模型自动下载并存放到指定位置（HuggingFace Hub 提供）
 - [x] 保存对话记录以实现多轮对话
 - [x] 冷却时间（根据测试效果，默认 30 秒）
 - [x] 配置角色功能，基本实现
@@ -187,7 +187,6 @@ tokenizer.save_pretrained(model_path,trust_remote_code=True,revision="main")
 model.save_pretrained(model_path,trust_remote_code=True,revision="main")
 ```
 
-
 手动下载：
 
 - [清华云盘](https://cloud.tsinghua.edu.cn/d/fb9f16d6dc8f482596c2/)（仅模型文件，是 6B 完整模型，显存较小需要量化使用，暂未设置，需要自行在`chat.py`文件中修改）
@@ -256,9 +255,9 @@ pip install -U rouge_chinese nltk jieba datasets
 
 ```python
 {
-    r"你好[吗]?|hello": "您好，很高兴与您在此相遇，但是您想问什么呢？",
-    r"你是[谁？]?": "我是 ChatGLM，一个参数 62 亿的人工智能语言模型，由清华大学和智谱 AI 训练开源，代号 ChatGLM-6B",
-    r"你的(主人|master)是[谁？]?": f"[CQ:at,qq={superusers}]",
+    r"你好 [吗]?|hello": "您好，很高兴与您在此相遇，但是您想问什么呢？",
+    r"你是 [谁？]?": "我是 ChatGLM，一个参数 62 亿的人工智能语言模型，由清华大学和智谱 AI 训练开源，代号 ChatGLM-6B",
+    r"你的（主人|master) 是 [谁？]?": f"[CQ:at,qq={superusers}]",
 }
 ```
 
