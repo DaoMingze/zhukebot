@@ -21,7 +21,7 @@
 
 > 由于 [`watchfiles`](https://pypi.org/project/watchfiles/) 模块暂不兼容 Python3.11，因此 nb-cli 实际运行的环境是 Python3.8-3.10，或是需要 Rust 编译。
 
-模拟交互检查工具：[Matcha](https://github.com/A-kirami/matcha) | ![licese](https://img.shields.io/github/license/A-kirami/matcha?style=flat-square) | ![GitHub release](https://img.shields.io/github/v/release/A-kirami/matcha?style=flat-square)
+模拟交互检查工具：[Matcha](https://github.com/A-kirami/matcha) | ![licese](https://img.shields.io/github/license/A-kirami/matcha?style=flat-square) | [![GitHub release](https://img.shields.io/github/v/release/A-kirami/matcha?style=flat-square)](https://github.com/A-kirami/matcha/releases)
 
 依赖
 

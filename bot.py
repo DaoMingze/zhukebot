@@ -31,7 +31,20 @@ driver.register_adapter(Adapter)
 # or modify `pyproject.toml` to load plugins
 nonebot.load_from_toml("pyproject.toml")
 # Modify some config / config depends on loaded configs
-# config = driver.config
+APSCHEDULER_CONFIG = {
+    "apscheduler.timezone": "Asia/Shanghai",
+    "apscheduler.executors.processpool": {
+        "type": "processpool",
+        "max_workers": "5",
+    },
+    "apscheduler.job_defaults.coalesce": "false",
+    "apscheduler.job_defaults.misfire_grace_time": "60",
+    "apscheduler.job_defaults.max_instances": "5",
+}
+
+config = driver.config
+if config.test_mode is False:
+    nonebot.load_plugin("nonebot_plugin_gocqhttp")
 # do something...
 app = nonebot.get_asgi()
 if __name__ == "__main__":
