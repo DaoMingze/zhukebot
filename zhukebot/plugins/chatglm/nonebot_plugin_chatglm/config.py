@@ -3,7 +3,6 @@ import os
 from nonebot import get_driver
 from nonebot.log import logger
 from pydantic import BaseSettings
-from torch import compile, cuda
 from transformers import AutoModel, AutoModelForSeq2SeqLM, AutoTokenizer
 
 
@@ -33,9 +32,6 @@ class Config(BaseSettings):
     nickname: list[str] = ["ChatGLM"]
     """机器人的昵称"""
     # 数值合法性检查
-    if chatglm_mode.lower() == "cuda":
-        if cuda.is_available is False:
-            chatglm_mode = "cpu"
 
     class Config:
         extra = "ignore"
@@ -75,6 +71,8 @@ tokenizer = AutoTokenizer.from_pretrained(
 )
 
 if config.chatglm_mode.lower() == "cuda":
+    from torch import compile, cuda
+
     model = (
         AutoModel.from_pretrained(
             model_path, trust_remote_code=True, revision="main"
