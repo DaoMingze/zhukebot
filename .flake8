@@ -1,4 +1,4 @@
 [flake8]
-ignore = E203, E266, E501,E722, W503, F401, F403, F405, F541, F841
+ignore = E203, E266, E501,E722, W503, F401, F403, F405, F541, F841, F811
 max-line-length = 79
 max-complexity = 18
