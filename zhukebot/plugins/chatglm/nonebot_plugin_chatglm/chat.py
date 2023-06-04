@@ -69,7 +69,7 @@ async def args(bot: Bot, event: Event, message: Message = CommandArg()):
     flag_stats, query = check_simple(query)
     if flag_stats:
         await chatGLM_chat.finish(Message(f"[CQ:at,qq={qq_id}]{query}"))
-    await chatGLM_chat.send(Message(f"[CQ:at,qq={qq_id}]{nickname}正在运算，请稍候。"))
+    # await chatGLM_chat.send(Message(f"[CQ:at,qq={qq_id}]{nickname}正在运算，请稍候。"))
     # 判断是否角色扮演
     if botrole.get(qq_id, []) != []:
         history = botrole.get(qq_id, [])
