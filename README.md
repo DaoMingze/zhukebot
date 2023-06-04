@@ -19,7 +19,7 @@
 
 运行环境：Debian 11、CUDA 11.8、Debian Bullseye Python3(3.9.2)、PyTorch 2.0、Nonebot 2
 
-> 由于 [`watchfiles`](https://pypi.org/project/watchfiles/) 模块暂不兼容 Python3.11，因此 nb-cli 实际运行的环境是 Python3.8-3.10，或是需要 Rust 编译。
+> 由于 `fastapi需要` [`watchfiles`](https://pypi.org/project/watchfiles) 而该模块暂不兼容 Python3.11，因此 nb-cli 实际运行的环境是 Python3.8-3.10，或是需要 Rust 编译。
 
 模拟交互检查工具：[Matcha](https://github.com/A-kirami/matcha) | ![licese](https://img.shields.io/github/license/A-kirami/matcha?style=flat-square) | [![GitHub release](https://img.shields.io/github/v/release/A-kirami/matcha?style=flat-square)](https://github.com/A-kirami/matcha/releases)
 
@@ -34,7 +34,7 @@
 - [ ] [ChatRWKV](https://github.com/BlinkDL/ChatRWKV) 支持插件，还在调试
 - [ ] 缝合[nonebot-plugin-hitokoto](https://github.com/A-kirami/nonebot-plugin-hitokoto)和[nonebot-plugin-everyday-en](https://github.com/MelodyYuuka/nonebot_plugin_everyday_en)
 
-## 成熟稳定方案：通过 API 实现
+## 基于 Termux 的方案
 
 <details>
 
