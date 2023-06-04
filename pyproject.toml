@@ -14,7 +14,7 @@ license = { text = "MIT" }
 
 [tool.nonebot]
 adapters = [
-    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
+    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" },
 ]
 plugins = [
     "nonebot_plugin_revoke",
@@ -22,6 +22,7 @@ plugins = [
     "nonebot_plugin_apscheduler",
     "nonebot_plugin_arkrecord",
     "nonebot_plugin_moyu",
+    "nonebot_plugin_pluginupdatecheck",
 ]
 plugin_dirs = ["zhukebot/plugins"]
 builtin_plugins = ["echo"]
