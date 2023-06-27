@@ -15,14 +15,16 @@ license = { text = "MIT" }
 [tool.nonebot]
 adapters = [
     { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" },
+    {name = "Console", module_name = "nonebot.adapters.console"},
 ]
 plugins = [
     "nonebot_plugin_revoke",
     "nonebot_plugin_help",
     "nonebot_plugin_apscheduler",
-    "nonebot_plugin_arkrecord",
     "nonebot_plugin_moyu",
     "nonebot_plugin_pluginupdatecheck",
+    "nonebot_plugin_saa",
+    "nonebot_plugin_htmlrender",
 ]
 plugin_dirs = ["zhukebot/plugins"]
 builtin_plugins = ["echo"]

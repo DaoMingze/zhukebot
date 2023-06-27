@@ -2,7 +2,7 @@
 
 # zhukebot
 
-![python](https://img.shields.io/badge/python-3.8~3.10-blue)[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+![python](https://img.shields.io/badge/python-3.8~3.11-blue)[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DaoMingze/zhukebot/main.svg)](https://results.pre-commit.ci/latest/github/DaoMingze/zhukebot/main)
 <br/>
 ![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)![GitHub repo size](https://img.shields.io/github/repo-size/daomingze/zhukebot)
@@ -17,15 +17,18 @@
 
 ## 简介
 
-运行环境：Debian 11、CUDA 11.8、Debian Bullseye Python3(3.9.2)、PyTorch 2.0、Nonebot 2
+运行环境：
+
+- OS：[Debian Stable(12 "bookwarm")](https://wiki.debian.org/DebianStable)，with Python3(3.11.2)
+- APT INSTALLED：nvidia-driver 525.105.17.1、nvidia-cuda-toolkit 11.8
+- PIP INSTALLED：PyTorch 2.0、nb-cli
 
 > 由于 `fastapi需要` [`watchfiles`](https://pypi.org/project/watchfiles) 而该模块暂不兼容 Python3.11，因此 nb-cli 实际运行的环境是 Python3.8-3.10，或是需要 Rust 编译。
-
-模拟交互检查工具：[Matcha](https://github.com/A-kirami/matcha) | ![licese](https://img.shields.io/github/license/A-kirami/matcha?style=flat-square) | [![GitHub release](https://img.shields.io/github/v/release/A-kirami/matcha?style=flat-square)](https://github.com/A-kirami/matcha/releases)
 
 依赖
 
 - 适配器：[OneBot V11 协议](https://onebot.adapters.nonebot.dev)
+- 模拟交互检查工具：改用`nonebot.adapters.console`
 
 插件清单
 

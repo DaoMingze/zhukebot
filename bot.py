@@ -2,7 +2,6 @@
 import os
 
 import nonebot
-from nonebot.adapters.onebot.v11 import Adapter
 
 right_path = __file__.rstrip(os.path.basename(__file__))  # 获取当前文件的所在路径
 os.chdir(right_path)  # 将工作路径改至目标路径
@@ -25,7 +24,17 @@ logger.add(
 nonebot.init()
 # Please DO NOT modify this file unless you know what you are doing!
 driver = nonebot.get_driver()
-driver.register_adapter(Adapter)
+config = driver.config
+if config.test_mode is False:
+    print(config.test_mode)
+    from nonebot.adapters.onebot.v11 import Adapter
+
+    driver.register_adapter(Adapter)
+    nonebot.load_plugin("nonebot_plugin_gocqhttp")
+else:
+    from nonebot.adapters.console import CONAdapter
+
+    driver.register_adapter(CONAdapter)
 
 # As an alternative, you should use command `nb`
 # or modify `pyproject.toml` to load plugins
@@ -42,13 +51,11 @@ APSCHEDULER_CONFIG = {
     "apscheduler.job_defaults.max_instances": "5",
 }
 
-config = driver.config
-if config.test_mode is False:
-    nonebot.load_plugin("nonebot_plugin_gocqhttp")
+
 # do something...
 app = nonebot.get_asgi()
 if __name__ == "__main__":
     nonebot.logger.warning(
         "Always use `nb run` to start the bot instead of manually running!"
     )
-    nonebot.run(app="__mp_main__:app")
+    nonebot.run()
