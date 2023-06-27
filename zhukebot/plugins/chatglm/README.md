@@ -62,6 +62,8 @@ _✨ NoneBot [ChatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 支持插件 ✨_
 
 现在默认使用 CPU 推理，方便开箱即用，但速度较慢。
 
+> 在 cpu 上运行量化后的模型需要安装 gcc 与 openmp。多数 Linux 发行版默认已安装。对于 Windows ，可在安装 TDM-GCC 时勾选 openmp。
+
 硬件需求上：训练>微调>推理，但本插件仅考虑推理应用场景。
 
 > none-adapter-onebot 要求 Python 3.8+

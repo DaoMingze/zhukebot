@@ -7,7 +7,8 @@ from transformers import AutoModel, AutoModelForSeq2SeqLM, AutoTokenizer
 
 
 class Config(BaseSettings):
-    chatglm_model: str = "./data/chatglm/model"
+    chatglm_model_name: str = "THUDM/chatglm2-6b-int4"
+    chatglm_model_path: str = "./data/chatglm/model"
     """ChatGLM 模型路径，可用HuggingFace Hub格式（将远程加载），默认使用INT-QE模型，降低硬件需求及压力"""
     chatglm_mode: str = "cpu"
     """模型加载模式，默认CPU加载"""
@@ -46,8 +47,9 @@ def torch_gc():
 
 
 config = Config(**get_driver().config.dict())  # 格式化加载配置
-model_name = "THUDM/chatglm-6b-int4-qe"
-model_path = config.chatglm_model
+model_name = config.chatglm_model_name
+model_path = config.chatglm_model_path
+
 if os.path.exists(model_path) is False:
     print(f"正在下载{model_name}，并保存到{model_path}")
     tokenizer = AutoTokenizer.from_pretrained(
@@ -87,8 +89,10 @@ else:
     model = AutoModel.from_pretrained(
         model_path, trust_remote_code=True, revision="main"
     ).float()
-
-model = compile(model)
+try:
+    model = compile(model)
+except:
+    pass
 model = model.eval()
 
 cd = {}
