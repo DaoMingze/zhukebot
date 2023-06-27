@@ -12,3 +12,4 @@ error.*.log
 zhukebot/plugins/chatglm/dist
 zhukebot/plugins/_chatrwkv
 zhukebot/plugins/sdwebui/nonebot_plugin_novelai
+zhukebot/plugins/nonebot-plugin-ChatGLM6B
