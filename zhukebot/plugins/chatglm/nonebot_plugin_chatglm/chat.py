@@ -50,7 +50,7 @@ if config.chatglm_tome:
         tuple(config.chatglm_cmd), rule=to_me(), priority=1
     )
 else:
-    chatGLM_chat = on_command(tuple(config.chatglm_cmd), priority=1)
+    chatGLM_chat = on_command(tuple(config.chatglm_cmd), priority=30)
 
 
 @chatGLM_chat.handle()
@@ -127,7 +127,7 @@ async def role(bot: Bot, event: Event, message: Message = CommandArg()):
 
 
 chatGLM_print = on_keyword(
-    [config.chatglm_cmd[0] + "export", "导出记录"], priority=40, block=True
+    [config.chatglm_cmd[0] + "export", "导出记录"], priority=20, block=True
 )
 
 
