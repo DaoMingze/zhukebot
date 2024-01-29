@@ -3,7 +3,9 @@ import os
 
 import nonebot
 
-right_path = __file__.rstrip(os.path.basename(__file__))  # 获取当前文件的所在路径
+right_path = __file__.rstrip(
+    os.path.basename(__file__)
+)  # 获取当前文件的所在路径
 os.chdir(right_path)  # 将工作路径改至目标路径
 
 # Custom your logger

@@ -43,7 +43,11 @@ async def anlas_handle(
                 await setanlas.finish(f"一次能给予的点数不超过1000")
             if await SUPERUSER(bot, event):
                 _, result = await anlas_set(at, anlas_change)
-                message = f"分配完成：" + MessageSegment.at(at) + f"的剩余点数为{result}"
+                message = (
+                    f"分配完成："
+                    + MessageSegment.at(at)
+                    + f"的剩余点数为{result}"
+                )
             else:
                 result, user_anlas = await anlas_set(user_id, -anlas_change)
                 if result:
@@ -57,7 +61,9 @@ async def anlas_handle(
                     )
                     await setanlas.finish(message)
                 else:
-                    await setanlas.finish(f"分配失败：点数不足，你的剩余点数为{user_anlas}")
+                    await setanlas.finish(
+                        f"分配失败：点数不足，你的剩余点数为{user_anlas}"
+                    )
             await setanlas.finish(message)
         else:
             await setanlas.finish(f"请以正整数形式输入点数")

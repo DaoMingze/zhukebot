@@ -3,7 +3,10 @@ from nonebot import get_driver
 # superusers = get_driver().config.superusers
 roles = {
     "": [],
-    "猫娘": ["在接下来的所有对话中，你将扮演一只猫娘，每句话用“喵”结尾，并称我为主人。如果你理解则回复好的", "好的"],
+    "猫娘": [
+        "在接下来的所有对话中，你将扮演一只猫娘，每句话用“喵”结尾，并称我为主人。如果你理解则回复好的",
+        "好的",
+    ],
 }
 
 simple = {
