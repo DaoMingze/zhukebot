@@ -123,7 +123,9 @@ async def role(bot: Bot, event: Event, message: Message = CommandArg()):
     qq_id = event.get_user_id()
     ctx = message.extract_plain_text().strip()
     saverole(qq_id, ctx)
-    await chatGLM_chooserole.finish(Message(f"[CQ:at,qq={qq_id}]您选取的角色是{ctx}"))
+    await chatGLM_chooserole.finish(
+        Message(f"[CQ:at,qq={qq_id}]您选取的角色是{ctx}")
+    )
 
 
 chatGLM_print = on_keyword(
@@ -136,7 +138,9 @@ async def user_export_handle(bot: Bot, event: Event):
     qq_id = event.get_user_id()
     if isinstance(event, PrivateMessageEvent):  # gocq不支持私聊传文件
         await chatGLM_print.finish(
-            Message(f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令")
+            Message(
+                f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令"
+            )
         )
     try:
         response = record + qq_id + ".json"

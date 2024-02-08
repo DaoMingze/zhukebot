@@ -56,13 +56,25 @@ aidraw_parser.add_argument(
     "-s", "--seed", "-种子", type=int, help="随机数种子", dest="seed"
 )
 aidraw_parser.add_argument(
-    "-b", "--batch", "-数量", type=int, default=1, help="生成数量", dest="batch"
+    "-b",
+    "--batch",
+    "-数量",
+    type=int,
+    default=1,
+    help="生成数量",
+    dest="batch",
 )
 aidraw_parser.add_argument(
     "-t", "--steps", "-步数", type=int, help="步数", dest="steps"
 )
 aidraw_parser.add_argument(
-    "-u", "--ntags", "-排除", default=" ", nargs="*", help="负面标签", dest="ntags"
+    "-u",
+    "--ntags",
+    "-排除",
+    default=" ",
+    nargs="*",
+    help="负面标签",
+    dest="ntags",
 )
 aidraw_parser.add_argument(
     "-e", "--strength", "-强度", type=float, help="修改强度", dest="strength"
@@ -88,7 +100,9 @@ aidraw_matcher = C.shell_command(
 
 @aidraw_matcher.handle()
 async def aidraw_check(args: ParserExit = ShellCommandArgs()):
-    aidraw_matcher.finish("命令解析出错了!请不要输入奇奇怪怪的字符哦~(引号不闭合也不可以哦)")
+    aidraw_matcher.finish(
+        "命令解析出错了!请不要输入奇奇怪怪的字符哦~(引号不闭合也不可以哦)"
+    )
 
 
 @aidraw_matcher.handle()
@@ -151,7 +165,9 @@ async def aidraw_get(
         if img_url:
             if config.sd_paid:
                 async with aiohttp.ClientSession() as session:
-                    logger.info(f"检测到图片，自动切换到以图生图，正在获取图片")
+                    logger.info(
+                        f"检测到图片，自动切换到以图生图，正在获取图片"
+                    )
                     async with session.get(img_url) as resp:
                         aidraw.add_image(await resp.read())
                     message = f"，已切换至以图生图" + message
@@ -167,7 +183,9 @@ async def aidraw_get(
                     aidraw, anlascost, hasanlas - anlascost, message=message
                 )
             else:
-                await aidraw_matcher.finish(f"你的点数不足，你的剩余点数为{hasanlas}")
+                await aidraw_matcher.finish(
+                    f"你的点数不足，你的剩余点数为{hasanlas}"
+                )
         else:
             await wait_fifo(aidraw, message=message)
     else:
@@ -281,8 +299,12 @@ async def _run_gennerate(aidraw: Draw):
     try:
         await aidraw.run()
     except ClientConnectorError:
-        await sendtosuperuser(f"远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动")
-        raise RuntimeError(f"远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动")
+        await sendtosuperuser(
+            f"远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
+        )
+        raise RuntimeError(
+            f"远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
+        )
     except ClientOSError:
         await sendtosuperuser(f"远程服务器崩掉了欸……")
         raise RuntimeError(f"服务器崩掉了欸……请等待主人修复吧")
