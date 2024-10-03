@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "label": "hello",
+  "message": "sweet world",
+  "color": "orange",
+  "labelColor": "grey",
+  "namedLogo": "simpleicons.org",
+  "logoSvg": "",
+  "logoColor": "",
+  "logoWidth": 10,
+  "style": "flat"
+}
