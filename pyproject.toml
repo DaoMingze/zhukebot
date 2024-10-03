@@ -2,6 +2,7 @@
 name = "zhukebot"
 version = "0.1.0"
 description = "烛客机器人"
+distribution =FALSE
 authors = [{ name = "dao_mingze", email = "dao_mingze@163.com" }]
 dependencies = [
     "nb-cli>=1.0.5",
@@ -49,7 +50,7 @@ exclude = '''
 
 [tool.ruff]
 line-length = 120  # 代码最大行宽
-select = [         # 选择的规则
+lint.select = [         # 选择的规则
     "F",    #pyflakes
     "E",    #pep8
     "W",    #pep8
@@ -61,4 +62,4 @@ select = [         # 选择的规则
     "PERF", #检测性能问题
     #"RUF",  #社区规则
 ]
-ignore = ["F401","UP009","RUF001","RUF003"]  # 忽略的规则
+lint.ignore = ["F401","UP009","RUF001","RUF003"]  # 忽略的规则
