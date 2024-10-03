@@ -2,22 +2,38 @@
 
 # zhukebot
 
-![python](https://img.shields.io/badge/python-3.8~3.11-blue)[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+![Python Version](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/DaoMingze/zhukebot/refs/heads/main/assets/badge/python.json)
+[![PDM-managed](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/DaoMingze/zhukebot/refs/heads/main/assets/badge/pdm.json)](https://pdm.fming.dev)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/DaoMingze/zhukebot/refs/heads/main/assets/badge/ruff_v2.json)](https://github.com/astral-sh/ruff)
+
+[![Code Style](https://img.shields.io/badge/code%20style-black-black?logo=python&logoColor=edb641)](https://github.com/psf/black)
+![Pyright](https://img.shields.io/badge/types-pyright-797952.svg?logo=python&logoColor=edb641)
+
+![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
+
+[![NoneBot Version](https://img.shields.io/badge/nonebot-2+-red.svg)](https://nonebot.dev/)
+
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DaoMingze/zhukebot/main.svg)](https://results.pre-commit.ci/latest/github/DaoMingze/zhukebot/main)
-<br/>
-![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)![GitHub repo size](https://img.shields.io/github/repo-size/daomingze/zhukebot)
+[![Ruff](https://github.com/DaoMingze/zhukebot/actions/workflows/ruff.yml/badge.svg?branch=main&event=push)](https://github.com/DaoMingze/zhukebot/actions/workflows/ruff.yml)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
+![GitHub repo size](https://img.shields.io/github/repo-size/daomingze/zhukebot)
 
 ![GitHub release](https://img.shields.io/github/v/release/daomingze/zhukebot)
 
 ![document style](https://img.shields.io/badge/doc%20style-pangu-white)
 
-烛客：我的 nonebot 机器人
+烛客：我的社交媒体机器人
 
 </div>
 
 ## 简介
 
-运行环境：
+- python技术栈：[nonebot](https://nonebot.dev)
+- JavaScript技术栈：[koishi](https://koishi.chat)
+
+### Nonebot
+
+#### 运行环境
 
 - OS：[Debian Stable(12 "bookwarm")](https://wiki.debian.org/DebianStable)，with Python3(3.11.2)
 - APT INSTALLED：nvidia-driver 525.105.17.1、nvidia-cuda-toolkit 11.8
@@ -25,19 +41,18 @@
 
 > 由于 `fastapi需要` [`watchfiles`](https://pypi.org/project/watchfiles) 而该模块暂不兼容 Python3.11，因此 nb-cli 实际运行的环境是 Python3.8-3.10，或是需要 Rust 编译。
 
-依赖
+#### 依赖
 
-- 适配器：[OneBot V11 协议](https://onebot.adapters.nonebot.dev)
-- 模拟交互检查工具：改用`nonebot.adapters.console`
+- 适配器
 
-插件清单
+#### 插件清单
 
 - [X] SDwebui，精简自 [nonebot-plugin-novelai](https://github.com/sena-nana/nonebot-plugin-novelai)，![licese](https://img.shields.io/github/license/sena-nana/nonebot-plugin-novelai?style=flat-square)
 - [X] ChatGLM，为清华开源的 [chatGLM-6B](https://github.com/THUDM/ChatGLM-6B) 提供 nonebot 插件。
 - [ ] [ChatRWKV](https://github.com/BlinkDL/ChatRWKV) 支持插件，还在调试
 - [ ] 缝合[nonebot-plugin-hitokoto](https://github.com/A-kirami/nonebot-plugin-hitokoto)和[nonebot-plugin-everyday-en](https://github.com/MelodyYuuka/nonebot_plugin_everyday_en)
 
-## 基于 Termux 的方案
+### 基于 Termux 的方案
 
 <details>
 
@@ -73,9 +88,9 @@ from tzlocal import get_localzone
 get_localzone()
 ```
 
-### 插件
+## 插件
 
-#### 核心功能插件
+### 核心功能插件
 
 适配器
 
@@ -85,7 +100,7 @@ get_localzone()
 
 定时任务：[nonebot-plugin-apscheduler](https://github.com/nonebot/plugin-apscheduler)，[![pypi package](https://img.shields.io/pypi/v/nonebot-plugin-apscheduler?style=social)](https://pypi.org/project/nonebot-plugin-apscheduler)
 
-#### AIGC 功能插件
+### AIGC 功能插件
 
 Chat 功能提供：笔记本（8G 显存），使用 [nonebot-plugin-ChatGLM6B](https://github.com/QNLanYang/nonebot_plugin_ChatGLM6B)
 
