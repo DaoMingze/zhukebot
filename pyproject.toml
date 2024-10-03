@@ -46,3 +46,19 @@ exclude = '''
 	| dist
 )/
 '''
+
+[tool.ruff]
+line-length = 120  # 代码最大行宽
+select = [         # 选择的规则
+    "F",    #pyflakes
+    "E",    #pep8
+    "W",    #pep8
+    "C90",  #McCobe
+    "I",    #isort
+    "UP",   #新版本语法
+    "N",    #命名规范检查
+    "PL",   #pylint静态代码检查
+    "PERF", #检测性能问题
+    #"RUF",  #社区规则
+]
+ignore = ["F401","UP009","RUF001","RUF003"]  # 忽略的规则
