@@ -122,7 +122,7 @@ async def aidraw_get(
         if config.sd_daylimit and not await SUPERUSER(bot, event):
             left = DayLimit.count(user_id, args.batch)
             if left == -1:
-                await aidraw_matcher.finish(f"今天你的次数不够了哦")
+                await aidraw_matcher.finish("今天你的次数不够了哦")
             else:
                 message = message + f"，今天你还能够生成{left}张"
         # 判断cd
@@ -144,7 +144,7 @@ async def aidraw_get(
         if not config.sd_nsfw:
             pattern = re.compile(rf"(\s|,|^)({HTAGS})(\s|,|$)")
             if re.search(pattern, aidraw.tags) is not None:
-                await aidraw_matcher.finish(f"H是不行的!")
+                await aidraw_matcher.finish("H是不行的!")
         if not args.override:
             aidraw.tags = (
                 BASE_TAG
@@ -166,13 +166,13 @@ async def aidraw_get(
             if config.sd_paid:
                 async with aiohttp.ClientSession() as session:
                     logger.info(
-                        f"检测到图片，自动切换到以图生图，正在获取图片"
+                        "检测到图片，自动切换到以图生图，正在获取图片"
                     )
                     async with session.get(img_url) as resp:
                         aidraw.add_image(await resp.read())
-                    message = f"，已切换至以图生图" + message
+                    message = "，已切换至以图生图" + message
             else:
-                await aidraw_matcher.finish(f"以图生图功能已禁用")
+                await aidraw_matcher.finish("以图生图功能已禁用")
         logger.debug(aidraw)
         # 初始化队列
         if aidraw.cost > 0:
@@ -189,7 +189,7 @@ async def aidraw_get(
         else:
             await wait_fifo(aidraw, message=message)
     else:
-        aidraw_matcher.finish(f"sd插件未开启")
+        aidraw_matcher.finish("sd插件未开启")
 
 
 async def wait_fifo(aidraw, anlascost=None, anlas=None, message=""):
@@ -243,7 +243,7 @@ async def fifo_gennerate(aidraw: Draw = None):
             im = await _run_gennerate(aidraw)
         except Exception as e:
             logger.exception("生成失败")
-            message = f"生成失败，"
+            message = "生成失败，"
             for i in e.args:
                 message += str(i)
             await bot.send_group_msg(message=message, group_id=aidraw.group_id)
@@ -300,18 +300,18 @@ async def _run_gennerate(aidraw: Draw):
         await aidraw.run()
     except ClientConnectorError:
         await sendtosuperuser(
-            f"远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
+            "远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
         )
         raise RuntimeError(
-            f"远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
+            "远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
         )
     except ClientOSError:
-        await sendtosuperuser(f"远程服务器崩掉了欸……")
-        raise RuntimeError(f"服务器崩掉了欸……请等待主人修复吧")
+        await sendtosuperuser("远程服务器崩掉了欸……")
+        raise RuntimeError("服务器崩掉了欸……请等待主人修复吧")
     # 若启用ai检定，取消注释下行代码，并将构造消息体部分注释
     # message = await check_safe_method(aidraw, img_bytes, message)
     # 构造消息体并保存图片
-    message = f"sdwebui绘画完成~"
+    message = "sdwebui绘画完成~"
     for i in aidraw.result:
         await save_img(aidraw, i, aidraw.group_id)
         message += MessageSegment.image(i)

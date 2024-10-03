@@ -39,7 +39,7 @@ async def set_(bot: Bot, event: GroupMessageEvent, args=CommandArg()):
         await set.finish(
             f"设置群聊{key}为{value}完成"
             if await config.set_value(event.group_id, key, value)
-            else f"不正确的赋值"
+            else "不正确的赋值"
         )
     else:
         group_config = await config.get_groupconfig(event.group_id)

@@ -27,11 +27,11 @@ async def anlas_handle(
     messageraw = args.extract_plain_text().strip()
     if not messageraw or messageraw == "help":
         await setanlas.finish(
-            f"点数计算方法(四舍五入):分辨率*数量*强度/45875\n.anlas+数字+@某人 将自己的点数分给对方\n.anlas check 查看自己的点数"
+            "点数计算方法(四舍五入):分辨率*数量*强度/45875\n.anlas+数字+@某人 将自己的点数分给对方\n.anlas check 查看自己的点数"
         )
     elif messageraw == "check":
         if await SUPERUSER(bot, event):
-            await setanlas.finish(f"Master不需要点数哦")
+            await setanlas.finish("Master不需要点数哦")
         else:
             anlas = await anlas_check(user_id)
             await setanlas.finish(f"你的剩余点数为{anlas}")
@@ -40,11 +40,11 @@ async def anlas_handle(
         if messageraw.isdigit():
             anlas_change = int(messageraw)
             if anlas_change > 1000:
-                await setanlas.finish(f"一次能给予的点数不超过1000")
+                await setanlas.finish("一次能给予的点数不超过1000")
             if await SUPERUSER(bot, event):
                 _, result = await anlas_set(at, anlas_change)
                 message = (
-                    f"分配完成："
+                    "分配完成："
                     + MessageSegment.at(at)
                     + f"的剩余点数为{result}"
                 )
@@ -53,7 +53,7 @@ async def anlas_handle(
                 if result:
                     _, at_anlas = await anlas_set(at, anlas_change)
                     message = (
-                        f"分配完成：\n"
+                        "分配完成：\n"
                         + MessageSegment.at(user_id)
                         + f"的剩余点数为{user_anlas}\n"
                         + MessageSegment.at(at)
@@ -66,9 +66,9 @@ async def anlas_handle(
                     )
             await setanlas.finish(message)
         else:
-            await setanlas.finish(f"请以正整数形式输入点数")
+            await setanlas.finish("请以正整数形式输入点数")
     else:
-        await setanlas.finish(f"请@你希望给予点数的人")
+        await setanlas.finish("请@你希望给予点数的人")
 
 
 async def anlas_check(user_id):
@@ -76,7 +76,7 @@ async def anlas_check(user_id):
         jsonpath.parent.mkdir(parents=True, exist_ok=True)
         async with aiofiles.open(jsonpath, "w+") as f:
             await f.write("{}")
-    async with aiofiles.open(jsonpath, "r") as f:
+    async with aiofiles.open(jsonpath) as f:
         jsonraw = await f.read()
         anlasdict: dict = json.loads(jsonraw)
         anlas = anlasdict.get(user_id, 0)
@@ -89,7 +89,7 @@ async def anlas_set(user_id, change):
     if newanlas < 0:
         return False, oldanlas
     anlasdict = {}
-    async with aiofiles.open(jsonpath, "r") as f:
+    async with aiofiles.open(jsonpath) as f:
         jsonraw = await f.read()
         anlasdict: dict = json.loads(jsonraw)
     anlasdict[user_id] = newanlas

@@ -91,16 +91,14 @@ class Config(BaseSettings):
         logger.debug(now)
         if now:
             if enable:
-                return f"sdwebui已经处于启动状态"
-            else:
-                if await cls.set_value(group_id, "on", "false"):
-                    return f"sdwebui已关闭"
+                return "sdwebui已经处于启动状态"
+            elif await cls.set_value(group_id, "on", "false"):
+                return "sdwebui已关闭"
+        elif enable:
+            if await cls.set_value(group_id, "on", "true"):
+                return "aidraw开始运行"
         else:
-            if enable:
-                if await cls.set_value(group_id, "on", "true"):
-                    return f"aidraw开始运行"
-            else:
-                return f"aidraw已经处于关闭状态"
+            return "aidraw已经处于关闭状态"
 
     async def __init_json(cls):
         # 初始化设置文件
@@ -115,7 +113,7 @@ class Config(BaseSettings):
         arg_ = arg if arg.startswith("sd_") else "sd_" + arg
         if arg_ in cls.keys():
             await cls.__init_json()
-            async with aiofiles.open(jsonpath, "r") as f:
+            async with aiofiles.open(jsonpath) as f:
                 jsonraw = await f.read()
                 configdict: dict = json.loads(jsonraw)
                 return configdict.get(group_id, {}).get(arg_, dict(cls)[arg_])
@@ -126,7 +124,7 @@ class Config(BaseSettings):
         # 获取当群所有设置值
         group_id = str(group_id)
         await cls.__init_json()
-        async with aiofiles.open(jsonpath, "r") as f:
+        async with aiofiles.open(jsonpath) as f:
             jsonraw = await f.read()
             configdict: dict = json.loads(jsonraw)
             baseconfig = {}
@@ -151,7 +149,7 @@ class Config(BaseSettings):
         if arg_ in cls.keys() and isinstance(value, type(dict(cls)[arg_])):
             await cls.__init_json()
             # 读取文件
-            async with aiofiles.open(jsonpath, "r") as f:
+            async with aiofiles.open(jsonpath) as f:
                 jsonraw = await f.read()
                 configdict: dict = json.loads(jsonraw)
             # 设置值
@@ -172,4 +170,4 @@ class Config(BaseSettings):
 
 
 config = Config(**get_driver().config.dict())
-logger.info(f"加载config完成" + str(config))
+logger.info("加载config完成" + str(config))

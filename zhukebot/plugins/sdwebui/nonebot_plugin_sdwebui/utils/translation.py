@@ -15,7 +15,7 @@ async def translate(text: str, to: str):
     if result:
         return result
     else:
-        logger.error(f"未找到可用的翻译引擎！")
+        logger.error("未找到可用的翻译引擎！")
         return text
 
 

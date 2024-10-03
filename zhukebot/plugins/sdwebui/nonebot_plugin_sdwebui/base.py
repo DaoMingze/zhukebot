@@ -134,8 +134,7 @@ class DrawBase:
                     * self.steps
                     / 2293750
                 )
-                if anlas < 2:
-                    anlas = 2
+                anlas = max(anlas, 2)
             if self.user_id in get_driver().config.superusers:
                 self.cost = 0
             else:
@@ -149,8 +148,7 @@ class DrawBase:
                 * self.steps
                 / 2293750
             )
-            if anlas < 2:
-                anlas = 2
+            anlas = max(anlas, 2)
             if self.user_id in get_driver().config.superusers:
                 self.cost = 0
             else:
@@ -188,8 +186,7 @@ class DrawBase:
                 height: float = config.sd_size / pow(ratio, 0.5)
                 width: float = height * ratio
         base = round(max(width, height) / 64)
-        if base > self.MAX_RESOLUTION:
-            base = self.MAX_RESOLUTION
+        base = min(base, self.MAX_RESOLUTION)
         if width <= height:
             return (round(width / height * base) * 64, 64 * base)
         else:
@@ -210,7 +207,7 @@ class DrawBase:
                     logger.error(await resp.text())
                     raise RuntimeError(f"与服务器沟通时发生{resp.status}错误")
                 img = await self.fromresp(resp)
-                logger.debug(f"获取到返回图片，正在处理")
+                logger.debug("获取到返回图片，正在处理")
 
                 # 将图片转化为jpg
                 if config.sd_save == 1:

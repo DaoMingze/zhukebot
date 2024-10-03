@@ -41,6 +41,12 @@
 
 > 由于 `fastapi需要` [`watchfiles`](https://pypi.org/project/watchfiles) 而该模块暂不兼容 Python3.11，因此 nb-cli 实际运行的环境是 Python3.8-3.10，或是需要 Rust 编译。
 
+#### 开发工具
+
+- 包管理器：PDM、UV
+- 编程检查：ruff（black、flake8）、pyright、pylint
+- 编辑环境：VS Code
+
 #### 依赖
 
 - 适配器
