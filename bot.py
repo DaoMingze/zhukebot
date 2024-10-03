@@ -3,9 +3,7 @@ import os
 
 import nonebot
 
-right_path = __file__.rstrip(
-    os.path.basename(__file__)
-)  # 获取当前文件的所在路径
+right_path = __file__.rstrip(os.path.basename(__file__))  # 获取当前文件的所在路径
 os.chdir(right_path)  # 将工作路径改至目标路径
 
 # Custom your logger
@@ -24,23 +22,27 @@ logger.add(
 """
 # You can pass some keyword args config to init function
 nonebot.init()
+app = nonebot.get_asgi()
 # Please DO NOT modify this file unless you know what you are doing!
 driver = nonebot.get_driver()
 config = driver.config
+print(config)
 if config.test_mode is False:
-    print(config.test_mode)
-    from nonebot.adapters.onebot.v11 import Adapter
+    from nonebot.adapters.onebot.v11 import Adapter as onebotAdapter
 
-    driver.register_adapter(Adapter)
-    nonebot.load_plugin("nonebot_plugin_gocqhttp")
+    driver.register_adapter(onebotAdapter)
 else:
-    from nonebot.adapters.console import CONAdapter
+    from nonebot.adapters.console import Adapter as ConsoleAdapter
 
-    driver.register_adapter(CONAdapter)
+    driver.register_adapter(ConsoleAdapter)
 
 # As an alternative, you should use command `nb`
 # or modify `pyproject.toml` to load plugins
-nonebot.load_from_toml("pyproject.toml")
+# nonebot.load_from_toml("pyproject.toml")
+nonebot.load_plugins("zhukebot/plugins")
+nonebot.load_builtin_plugins("echo")
+
+
 # Modify some config / config depends on loaded configs
 APSCHEDULER_CONFIG = {
     "apscheduler.timezone": "Asia/Shanghai",
@@ -55,9 +57,7 @@ APSCHEDULER_CONFIG = {
 
 
 # do something...
-app = nonebot.get_asgi()
+# app = nonebot.get_asgi()
 if __name__ == "__main__":
-    nonebot.logger.warning(
-        "Always use `nb run` to start the bot instead of manually running!"
-    )
-    nonebot.run()
+    # nonebot.logger.warning("Always use `nb run` to start the bot instead of manually running!")
+    nonebot.run(app="__mp_main__:app")

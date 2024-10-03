@@ -1,9 +1,19 @@
-from nonebot import get_driver
+from nonebot import get_driver, on_command
 from nonebot.log import logger
 from nonebot.permission import SUPERUSER
+from nonebot.plugin import PluginMetadata, inherit_supported_adapters
 
 driver = get_driver()
 nickname = driver.config.nickname.pop()
+
+__plugin_meta__ = PluginMetadata(
+    name="tool",
+    description="零散小工具",
+    usage="".strip(),
+    type="application",
+    homepage="https://github.com/DaoMingze/zhukebot",
+    supported_adapters=inherit_supported_adapters(),
+)
 
 
 async def sendtosuperuser(message):

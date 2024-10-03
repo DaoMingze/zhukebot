@@ -7,7 +7,7 @@ if sd_switch := driver.config.sd_switch is True:
 
     logger.info("已加载 SD WebUi 支持插件")
 elif sd_switch == "origin":
-    from .nonebot_plugin_novelai import *
+    # from .nonebot_plugin_novelai import *
 
     logger.info("已加载 原版 插件")
 else:

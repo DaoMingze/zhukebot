@@ -7,18 +7,13 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/DaoMingze/zhukebot/refs/heads/main/assets/badge/ruff_v2.json)](https://github.com/astral-sh/ruff)
 
 [![Code Style](https://img.shields.io/badge/code%20style-black-black?logo=python&logoColor=edb641)](https://github.com/psf/black)
-![Pyright](https://img.shields.io/badge/types-pyright-797952.svg?logo=python&logoColor=edb641)
+![Pyright](https://img.shields.io/badge/types-pyright-797952?logo=python&logoColor=edb641)
 
-![licese](https://img.shields.io/github/license/DaoMingze/zhukebot)
-
-[![NoneBot Version](https://img.shields.io/badge/nonebot-2+-red.svg)](https://nonebot.dev/)
-
+![licese](https://img.shields.io/github/license/DaoMingze/zhukebot?logo=scales)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DaoMingze/zhukebot/main.svg)](https://results.pre-commit.ci/latest/github/DaoMingze/zhukebot/main)
 [![Ruff](https://github.com/DaoMingze/zhukebot/actions/workflows/ruff.yml/badge.svg?branch=main&event=push)](https://github.com/DaoMingze/zhukebot/actions/workflows/ruff.yml)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDaoMingze%2Fzhukebot?ref=badge_shield)
 ![GitHub repo size](https://img.shields.io/github/repo-size/daomingze/zhukebot)
-
-![GitHub release](https://img.shields.io/github/v/release/daomingze/zhukebot)
 
 ![document style](https://img.shields.io/badge/doc%20style-pangu-white)
 
@@ -32,6 +27,9 @@
 - JavaScript技术栈：[koishi](https://koishi.chat)
 
 ### Nonebot
+
+[![NoneBot Version](https://img.shields.io/badge/nonebot-2+-red.svg)](https://nonebot.dev/)
+![GitHub release](https://img.shields.io/github/v/release/daomingze/zhukebot)
 
 #### 运行环境
 
@@ -47,9 +45,12 @@
 - 编程检查：ruff（black、flake8）、pyright、pylint
 - 编辑环境：VS Code
 
-#### 依赖
+#### 工作环境
 
-- 适配器
+- 应用场景：QQ
+- 协议：onebot
+- 协议前端：NTQQ+签名服务器
+- 服务后端：nonebot
 
 #### 插件清单
 

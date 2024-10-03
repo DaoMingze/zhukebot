@@ -1,36 +1,47 @@
 [project]
 name = "zhukebot"
-version = "0.1.0"
+version = "0.2.0"
 description = "烛客机器人"
-distribution =FALSE
 authors = [{ name = "dao_mingze", email = "dao_mingze@163.com" }]
-dependencies = [
-    "nb-cli>=1.0.5",
-    "nonebot2>=2.0.0rc3",
-    "nonebot-plugin-apscheduler>=0.2.0",
-]
-requires-python = ">=3.9"
+
+requires-python = ">=3.10"
 readme = "README.md"
 license = { text = "MIT" }
+dependencies = [
+    "nonebot-plugin-alconna>=0.52.3",
+]
 
 [tool.nonebot]
 adapters = [
-    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" },
+    {name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11"},
     {name = "Console", module_name = "nonebot.adapters.console"},
 ]
 plugins = [
+    "nonebot_bison",
     "nonebot_plugin_revoke",
-    "nonebot_plugin_help",
     "nonebot_plugin_apscheduler",
     "nonebot_plugin_moyu",
-    "nonebot_plugin_pluginupdatecheck",
-    "nonebot_plugin_saa",
     "nonebot_plugin_htmlrender",
-]
-plugin_dirs = ["zhukebot/plugins"]
-builtin_plugins = ["echo"]
+    "nonebot_plugin_status",
+    "nonebot_plugin_analysis_bilibili",
+    "nonebot_plugin_wordcloud",
+    "nonebot_plugin_skland_arksign",
+    "nonebot_plugin_avalon",
+    "nonebot_plugin_alconna",
+    "nonebot_plugin_treehelp",
+    "nonebot_plugin_saa"]
 
-[tool.pdm]
+
+[tool.pdm.resolution]
+respect-source-order = true
+
+[[tool.pdm.source]]
+name = "private"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+
+[[tool.pdm.source]]
+name = "pypi"
+url = "https://pypi.org/simple"
 
 [build-system]
 requires = ["pdm-pep517>=1.0"]
