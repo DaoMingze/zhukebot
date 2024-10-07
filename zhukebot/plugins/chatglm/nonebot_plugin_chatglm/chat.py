@@ -1,6 +1,4 @@
-import asyncio
 import os
-import re
 import shutil
 from collections import deque
 
@@ -11,7 +9,6 @@ from nonebot.adapters.onebot.v11 import (
     MessageSegment,
     PrivateMessageEvent,
 )
-from nonebot.exception import ParserExit
 from nonebot.log import logger
 from nonebot.params import CommandArg
 from nonebot.permission import SUPERUSER
@@ -46,9 +43,7 @@ async def chat_get(event: Event, args: ParserExit = CommandArg()):
 chat_queue: deque = deque([])
 
 if config.chatglm_tome:
-    chatGLM_chat = on_command(
-        tuple(config.chatglm_cmd), rule=to_me(), priority=1
-    )
+    chatGLM_chat = on_command(tuple(config.chatglm_cmd), rule=to_me(), priority=1)
 else:
     chatGLM_chat = on_command(tuple(config.chatglm_cmd), priority=30)
 
@@ -123,9 +118,7 @@ async def role(bot: Bot, event: Event, message: Message = CommandArg()):
     qq_id = event.get_user_id()
     ctx = message.extract_plain_text().strip()
     saverole(qq_id, ctx)
-    await chatGLM_chooserole.finish(
-        Message(f"[CQ:at,qq={qq_id}]您选取的角色是{ctx}")
-    )
+    await chatGLM_chooserole.finish(Message(f"[CQ:at,qq={qq_id}]您选取的角色是{ctx}"))
 
 
 chatGLM_print = on_keyword(
@@ -138,9 +131,7 @@ async def user_export_handle(bot: Bot, event: Event):
     qq_id = event.get_user_id()
     if isinstance(event, PrivateMessageEvent):  # gocq不支持私聊传文件
         await chatGLM_print.finish(
-            Message(
-                f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令"
-            )
+            Message(f"[CQ:at,qq={qq_id}]暂不支持私聊传文件，可以创建单人群聊后使用命令")
         )
     try:
         response = record + qq_id + ".json"
@@ -154,9 +145,7 @@ async def user_export_handle(bot: Bot, event: Event):
     )
 
 
-chatGLM_clear = on_keyword(
-    [config.chatglm_cmd[0] + "clear", "清空记录"], priority=40
-)
+chatGLM_clear = on_keyword([config.chatglm_cmd[0] + "clear", "清空记录"], priority=40)
 
 
 @chatGLM_clear.handle()

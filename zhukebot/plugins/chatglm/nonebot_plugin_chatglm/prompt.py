@@ -1,5 +1,3 @@
-from nonebot import get_driver
-
 # superusers = get_driver().config.superusers
 roles = {
     "": [],

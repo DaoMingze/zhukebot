@@ -41,9 +41,7 @@ class Draw(DrawBase):
             if self.img2img:
                 parameters.update(
                     {
-                        "init_images": [
-                            "data:image/jpeg;base64," + self.image
-                        ],
+                        "init_images": ["data:image/jpeg;base64," + self.image],
                         "denoising_strength": self.strength,
                     }
                 )

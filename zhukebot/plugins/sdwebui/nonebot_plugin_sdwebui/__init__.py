@@ -1,9 +1,5 @@
 from nonebot.plugin import PluginMetadata
 
-from . import config, manage
-from .aidraw import Draw
-from .help import help
-
 __plugin_meta__ = PluginMetadata(
     name="SD绘画",
     description="基于Stable Diffusion Webui，是对nonebot-plugin-novelai的精简",

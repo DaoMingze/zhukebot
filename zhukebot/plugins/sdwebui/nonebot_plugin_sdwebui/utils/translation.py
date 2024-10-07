@@ -96,9 +96,7 @@ async def translate_youdao(input: str, type: str):
         type = "ZH_CH2EN"
     async with aiohttp.ClientSession() as session:
         data = {"doctype": "json", "type": type, "i": input}
-        async with session.post(
-            "http://fanyi.youdao.com/translate", data=data
-        ) as resp:
+        async with session.post("http://fanyi.youdao.com/translate", data=data) as resp:
             if resp.status != 200:
                 logger.error(
                     f"有道翻译接口调用失败,错误代码{resp.status},{await resp.text()}"

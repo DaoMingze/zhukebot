@@ -147,10 +147,7 @@ async def aidraw_get(
                 await aidraw_matcher.finish("H是不行的!")
         if not args.override:
             aidraw.tags = (
-                BASE_TAG
-                + await config.get_value(group_id, "tags")
-                + ","
-                + aidraw.tags
+                BASE_TAG + await config.get_value(group_id, "tags") + "," + aidraw.tags
             )
             aidraw.ntags = LOW_QUALITY + aidraw.ntags
 
@@ -165,9 +162,7 @@ async def aidraw_get(
         if img_url:
             if config.sd_paid:
                 async with aiohttp.ClientSession() as session:
-                    logger.info(
-                        "检测到图片，自动切换到以图生图，正在获取图片"
-                    )
+                    logger.info("检测到图片，自动切换到以图生图，正在获取图片")
                     async with session.get(img_url) as resp:
                         aidraw.add_image(await resp.read())
                     message = "，已切换至以图生图" + message
@@ -183,9 +178,7 @@ async def aidraw_get(
                     aidraw, anlascost, hasanlas - anlascost, message=message
                 )
             else:
-                await aidraw_matcher.finish(
-                    f"你的点数不足，你的剩余点数为{hasanlas}"
-                )
+                await aidraw_matcher.finish(f"你的点数不足，你的剩余点数为{hasanlas}")
         else:
             await wait_fifo(aidraw, message=message)
     else:
@@ -271,9 +264,7 @@ async def fifo_gennerate(aidraw: Draw = None):
                 loop = get_running_loop()
                 loop.call_later(
                     revoke,
-                    lambda: loop.create_task(
-                        bot.delete_msg(message_id=message_id)
-                    ),
+                    lambda: loop.create_task(bot.delete_msg(message_id=message_id)),
                 )
 
     if aidraw:
@@ -302,9 +293,7 @@ async def _run_gennerate(aidraw: Draw):
         await sendtosuperuser(
             "远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
         )
-        raise RuntimeError(
-            "远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动"
-        )
+        raise RuntimeError("远程服务器拒绝连接，请检查配置是否正确，服务器是否已经启动")
     except ClientOSError:
         await sendtosuperuser("远程服务器崩掉了欸……")
         raise RuntimeError("服务器崩掉了欸……请等待主人修复吧")
@@ -325,9 +314,9 @@ async def _run_gennerate(aidraw: Draw):
 
 emoji = re.compile(
     "["
-    "\U0001F300-\U0001F64F"
-    "\U0001F680-\U0001F6FF"
-    "\u2600-\u2B55"
+    "\U0001f300-\U0001f64f"
+    "\U0001f680-\U0001f6ff"
+    "\u2600-\u2b55"
     "\U00010000-\U0010ffff]+"
 )
 
