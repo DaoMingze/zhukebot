@@ -1,5 +1,4 @@
 import asyncio
-import time
 
 from .backend import Draw
 
@@ -55,8 +54,7 @@ class FIFO:
     def __init__(self, sd_config):
         for i, v in sd_config:
             if i[0] == "/":
-                private = True
-        pass
+                pass
 
     def min_backend(self, backend):
         i, v = backend
@@ -73,11 +71,9 @@ class FIFO:
             try:
                 return await minback.run(aidraw)
             except:
-                queue = minback.queue
-                index = self.backends.index(minback)
+                self.backends.index(minback)
                 # calllater self.backends.insert(index,minback)
                 # self.backends.remove(minback)
-                pass
 
     async def get_models(self):
         return str(self.backends)

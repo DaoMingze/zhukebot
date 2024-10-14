@@ -1,6 +1,4 @@
-from nonebot import get_driver, on_command
-from nonebot.log import logger
-from nonebot.permission import SUPERUSER
+from nonebot import get_driver
 from nonebot.plugin import PluginMetadata, inherit_supported_adapters
 
 driver = get_driver()

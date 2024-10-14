@@ -10,11 +10,7 @@ from pydantic.fields import ModelField
 
 driver = get_driver()
 jsonpath = Path("data/sdwebui/config.json").resolve()
-nickname = (
-    list(driver.config.nickname)[0]
-    if len(driver.config.nickname)
-    else "sdwebui"
-)
+nickname = list(driver.config.nickname)[0] if len(driver.config.nickname) else "sdwebui"
 
 
 class Config(BaseSettings):

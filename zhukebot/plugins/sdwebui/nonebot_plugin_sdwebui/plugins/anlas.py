@@ -43,11 +43,7 @@ async def anlas_handle(
                 await setanlas.finish("一次能给予的点数不超过1000")
             if await SUPERUSER(bot, event):
                 _, result = await anlas_set(at, anlas_change)
-                message = (
-                    "分配完成："
-                    + MessageSegment.at(at)
-                    + f"的剩余点数为{result}"
-                )
+                message = "分配完成：" + MessageSegment.at(at) + f"的剩余点数为{result}"
             else:
                 result, user_anlas = await anlas_set(user_id, -anlas_change)
                 if result:

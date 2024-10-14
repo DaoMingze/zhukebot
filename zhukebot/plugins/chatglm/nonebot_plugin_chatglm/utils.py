@@ -64,9 +64,9 @@ def saverole(id: str, role: str = ""):
 
 emoji = re.compile(
     "["
-    "\U0001F300-\U0001F64F"
-    "\U0001F680-\U0001F6FF"
-    "\u2600-\u2B55"
+    "\U0001f300-\U0001f64f"
+    "\U0001f680-\U0001f6ff"
+    "\u2600-\u2b55"
     "\U00010000-\U0010ffff]+"
 )
 

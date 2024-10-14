@@ -178,15 +178,18 @@ ChatGLM-6B 系列模型
 自动下载后转移模型到指定路径
 
 ```python
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoModel, AutoTokenizer
+
 model_name = input("HF HUB 路径，例如 THUDM/chatglm-6b-int4-qe: ")
 model_path = input("本地存放路径，例如 ./path/modelname: ")
-#用 AutoModel.from_pretrained() 下载模型
-tokenizer = AutoTokenizer.from_pretrained(model_name,trust_remote_code=True,revision="main")
-model = AutoModel.from_pretrained(model_name,trust_remote_code=True,revision="main")
-#用 PreTrainedModel.save_pretrained() 保存模型到指定位置
-tokenizer.save_pretrained(model_path,trust_remote_code=True,revision="main")
-model.save_pretrained(model_path,trust_remote_code=True,revision="main")
+# 用 AutoModel.from_pretrained() 下载模型
+tokenizer = AutoTokenizer.from_pretrained(
+    model_name, trust_remote_code=True, revision="main"
+)
+model = AutoModel.from_pretrained(model_name, trust_remote_code=True, revision="main")
+# 用 PreTrainedModel.save_pretrained() 保存模型到指定位置
+tokenizer.save_pretrained(model_path, trust_remote_code=True, revision="main")
+model.save_pretrained(model_path, trust_remote_code=True, revision="main")
 ```
 
 手动下载：

@@ -20,9 +20,7 @@ inputs = tokenizer.build_inputs_for_generation(inputs, max_gen_length=512)
 
 inputs = {key: value.cuda() for key, value in inputs.items()}
 
-outputs = model.generate(
-    **inputs, max_length=512, eos_token_id=tokenizer.eop_token_id
-)
+outputs = model.generate(**inputs, max_length=512, eos_token_id=tokenizer.eop_token_id)
 
 print(tokenizer.decode(outputs[0].tolist()))
 
@@ -34,9 +32,7 @@ inputs = tokenizer(
 )
 inputs = tokenizer.build_inputs_for_generation(inputs, max_gen_length=512)
 inputs = inputs.to("cuda")
-outputs = model.generate(
-    **inputs, max_length=512, eos_token_id=tokenizer.eop_token_id
-)
+outputs = model.generate(**inputs, max_length=512, eos_token_id=tokenizer.eop_token_id)
 print(tokenizer.decode(outputs[0].tolist()))
 
 # Training

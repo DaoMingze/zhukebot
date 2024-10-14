@@ -1,7 +1,6 @@
 import os
 
 from nonebot import get_driver
-from nonebot.log import logger
 from pydantic import BaseSettings
 from transformers import AutoModel, AutoModelForSeq2SeqLM, AutoTokenizer
 
@@ -58,9 +57,7 @@ if os.path.exists(model_path) is False:
     model = AutoModelForSeq2SeqLM.from_pretrained(
         model_name, trust_remote_code=True, revision="main"
     )
-    tokenizer.save_pretrained(
-        model_path, trust_remote_code=True, revision="main"
-    )
+    tokenizer.save_pretrained(model_path, trust_remote_code=True, revision="main")
     model.save_pretrained(model_path, trust_remote_code=True, revision="main")
 elif os.path.exists(model_path):
     print(f"正从{model_path}加载模型")
@@ -76,9 +73,7 @@ if config.chatglm_mode.lower() == "cuda":
     from torch import compile, cuda
 
     model = (
-        AutoModel.from_pretrained(
-            model_path, trust_remote_code=True, revision="main"
-        )
+        AutoModel.from_pretrained(model_path, trust_remote_code=True, revision="main")
         .half()
         .cuda()
     )
