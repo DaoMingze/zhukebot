@@ -7,14 +7,14 @@ repos:
         args: ["--config", "./pyproject.toml"]
     # flake8
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.2
+    rev: 7.2.0
     hooks:
       - id: flake8
         args: ["--config", "./.flake8"]
     # ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.11.2
+    rev: v0.11.5
     hooks:
       # Run the linter.
       - id: ruff
