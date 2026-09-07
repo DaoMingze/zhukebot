@@ -1,27 +1,27 @@
 repos:
   # black
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.5.1
     hooks:
       - id: black
         args: ["--config", "./pyproject.toml"]
     # flake8
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.2
+    rev: 7.3.0
     hooks:
       - id: flake8
         args: ["--config", "./.flake8"]
     # ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.11.2
+    rev: v0.16.6
     hooks:
       # Run the linter.
       - id: ruff
       # Run the formatter.
       - id: ruff-format
   - repo: https://github.com/Zac-HD/shed
-    rev: 2024.10.1
+    rev: 2025.6.1
     hooks:
       - id: shed
         # args: [--refactor, --py311-plus]
