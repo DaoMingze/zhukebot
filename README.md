@@ -92,6 +92,7 @@
 
 ```Python
 from tzlocal import get_localzone
+
 get_localzone()
 ```
 
